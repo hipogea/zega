@@ -8,7 +8,7 @@ private $_valor;
         $this->_modelo='Valorimpuestos';
 
     }
-  public function getImpuesto($codimpuesto,$fecha){
+  public function getImpuesto($codimpuesto,$fecha=null){
       if(is_null($fecha)){
           $fecha=date('Y-m-d');
       }else{

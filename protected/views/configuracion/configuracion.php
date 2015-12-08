@@ -3,6 +3,13 @@
 /* @var $model Settings */
 /* @var $form CActiveForm */
 ?>
+
+
+
+<h1><?php echo CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."config1.png");?> Configuracion</h1>
+
+
+
 <div class="division">
 
 <div class="form">
