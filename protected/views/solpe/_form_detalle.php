@@ -6,7 +6,7 @@
 <div style="overflow:auto;">
 <div class="division">
 <div class="wide form">
-	<?php $this->widget('ext.loading.LoadingWidget'); ?>
+
  <?php  
  
  $modelopadre=Solpe::model()->findByPk($idcabeza);
