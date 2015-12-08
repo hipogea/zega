@@ -12,7 +12,8 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-responsive.min.css');
     $cs->registerCssFile($baseUrl.'/css/abound.css');
-    $cs->registerCssFile($baseUrl.'/css/miestilo.css');
+    $cs->registerCssFile($baseUrl.'/css/miestilo.css'); ///sas
+
    
     ?>
     
