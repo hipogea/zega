@@ -200,8 +200,7 @@ class Docompra extends ModeloGeneral
 
 
 	public function afterSave() {
-
-
+          $this->refresh();
 		$this->colocapuentesolpe();  ///actualiza la tabla puente de la SOLPE
 		$this->colocaimpuestositem();
 		return parent::afterSave();
@@ -318,6 +317,8 @@ class Docompra extends ModeloGeneral
 		));
 	}
 
-
+public function colocaimpuestositem(){
+	yii::app()->impuestos->colocaimpuestos($this->id,$this->ocompra->id,$this->ocompra->coddocu,$this->ocompra->moneda);
+}
 
 }

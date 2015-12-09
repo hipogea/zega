@@ -58,28 +58,7 @@ class ModeloGeneral extends CActiveRecord
 	/*esta funcion devuelve llena los impeustos para
 	los items  , x supesto que los guarad en la tabla impeustosaplicados */
 	public function colocaimpuestositem(){
-		//encontrando los impuestos habilitados para este documento
-		if(!$this->isdocParent) {
-			$impuparaestedoc = Impuestosdocu::model ()->findAll ( "codocu=:vcodocu" , array ( ":vcodocu" => Documentos::model()->findByPk($this->documento)->coddocupadre ) );
-				/*VAR_DUMP($impuparaestedoc);
-			 yii::app()->end();*/
-			$registropadre=Documentos::documentopadre($this->documento);
-		 if(!is_null($registropadre)){
-			 $idpadre=$registropadre->getPrimaryKey();
-		 }
 
-
-			foreach ( $impuparaestedoc as $row ) {
-				MiFactoria::colocaImpuesto (
-					$this->getPrimaryKey () ,
-					$this->{$this->campoprecio} *$this->cant,
-					$this->documento ,
-					$row->codimpuesto,$idpadre);
-			}
-			return true;
-		} else {
-			return false;
-		}
     }
 
 	public function devuelveimpuestos(){
