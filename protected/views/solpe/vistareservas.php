@@ -1,6 +1,6 @@
 
 <?PHP
-echo Chtml::image(Yii::app()->getTheme()->baseUrl.'/img/user_business.png','hola', array('height'=>15,'width'=>15));
+echo CHtml::image(Yii::app()->getTheme()->baseUrl.'/img/user_business.png','hola', array('height'=>15,'width'=>15));
 ?>
 <h1>Este Item</h1>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
