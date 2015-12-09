@@ -293,7 +293,52 @@ echo CHtml::ajaxSubmitButton("Ver detalle material.",
 		<?php echo $form->error($model,'textodetalle'); ?>
 	</div>
 
-  <?php $this->widget('ext.registraidsession.registraidsession',array('model'=>$model));?>
+	<?php
+
+
+
+	$this->widget('application.components.widgets.XHeditor',array(
+
+		'language'=>'en', //options are en, zh-cn, zh-tw
+
+		'config'=>array(
+
+			'id'=>'xh1',
+
+			'name'=>'xh',
+
+			'tools'=>'mini', // mini, simple, full or from XHeditor::$_tools, tool names are case sensitive
+
+			'width'=>'100%',
+
+			//see XHeditor::$_configurableAttributes for more
+
+		),
+
+		'contentValue'=>'Enter your text here', // default value displayed in textarea/wysiwyg editor field
+
+		'htmlOptions'=>array('rows'=>5, 'cols'=>10),// to be applied to textarea
+
+	));
+
+	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <?php // $this->widget('ext.registraidsession.registraidsession',array('model'=>$model));?>
 
 	
 	<div class="row buttons">
