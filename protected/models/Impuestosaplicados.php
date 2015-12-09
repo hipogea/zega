@@ -9,10 +9,8 @@
  * @property string $codocu
  * @property string $codimpuesto
  * @property string $valor
- *
- * The followings are the available model relations:
- * @property Tempdpeticion $hidocu0
- * @property Tempdpeticion $codocu0
+ * @property string $hidocupadre
+ * @property string $codmon
  */
 class Impuestosaplicados extends CActiveRecord
 {
@@ -32,15 +30,10 @@ class Impuestosaplicados extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('hidocu, codocu, codimpuesto, valor', 'required'),
-			array('hidocu, codocu, codimpuesto,hidocupadre, valor', 'safe','on'=>'insert,update'),
-			array('hidocu', 'length', 'max'=>20),
-			array('codocu, codimpuesto', 'length', 'max'=>3),
-			array('valor', 'length', 'max'=>10),
-			array('valor', 'safe', 'on'=>'actualizaprecio'),
-			// The following rule is used by search().
+			array('hidocu, codocu, codimpuesto, valor, hidocupadre, codmon', 'required'),
+
 			// @todo Please remove those attributes that should not be searched.
-			array('id, hidocu, codocu, codimpuesto,hidocupadre, valor', 'safe', 'on'=>'search'),
+			array('id, hidocu, codocu, codimpuesto, valor, hidocupadre, codmon', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +50,6 @@ class Impuestosaplicados extends CActiveRecord
 
 		);
 	}
-
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -69,6 +61,8 @@ class Impuestosaplicados extends CActiveRecord
 			'codocu' => 'Codocu',
 			'codimpuesto' => 'Codimpuesto',
 			'valor' => 'Valor',
+			'hidocupadre' => 'Hidocupadre',
+			'codmon' => 'Codmon',
 		);
 	}
 
@@ -95,6 +89,8 @@ class Impuestosaplicados extends CActiveRecord
 		$criteria->compare('codocu',$this->codocu,true);
 		$criteria->compare('codimpuesto',$this->codimpuesto,true);
 		$criteria->compare('valor',$this->valor,true);
+		$criteria->compare('hidocupadre',$this->hidocupadre,true);
+		$criteria->compare('codmon',$this->codmon,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -15,12 +15,12 @@ private $_valor;
           $fecha=date('Y-m-d',strtotime($fecha));
       }
 
-      $criterio=New DBCriteria();
+      $criterio=New CDBCriteria();
       $criterio->addCondition("activo='1' and hcodimpuesto=:vcodimpuesto");
       $criterio->addCondition("ffinal >= :vfecha AND finicio <= :vfecha ");
       $criterio->params=array(":vfecha"=>$fecha,":vcodimpuesto"=>$codimpuesto);
       $modelo=$this->_modelo;
-      $this->_valor=$modelo::model()->find( $criterio);
+      $this->_valor=$modelo::model()->find( $criterio)->valor;
      if( is_null($this->_valor))
          throw new CHttpException(500,'No se pudo encontrar el valor del impuesto para esta fecha');
    return  $this->_valor;
@@ -57,8 +57,8 @@ private $_valor;
 
 
     private function criter($iddocu,$codocu,$codimpuesto){
-        $criterio=New DBCriteria();
-        $criterio->addCondition=array('codimpuesto=:vcodimpuesto AND codocu=:vcodocu AND iddocu =:viddocu ');
+        $criterio=New CDBCriteria();
+        $criterio->addCondition('codimpuesto=:vcodimpuesto AND codocu=:vcodocu AND iddocu =:viddocu ');
         $criterio->params=array(
             ':vcodimpuesto'=>$codimpuesto,
             ':vcodocu'=>$codocu,
@@ -68,8 +68,8 @@ private $_valor;
     }
 
     private function  criterdoc ($iddocu,$codocu){
-        $criterio=New DBCriteria();
-        $criterio->addCondition=array(' codocu=:vcodocu AND iddocu =:viddocu ');
+        $criterio=New CDBCriteria();
+        $criterio->addCondition(' codocu=:vcodocu AND iddocu =:viddocu ');
         $criterio->params=array(
             ':vcodocu'=>$codocu,
             ':viddocu'=>$iddocu,
@@ -107,9 +107,9 @@ private $_valor;
 
     }
 
-    private function criterdoci ($iddetalle,$iddocu,$codocu,$codimpuesto){
-        $criterio=New DBCriteria();
-        $criterio->addCondition=array('iddetalle=:viddetalle AND  codocu=:vcodocu AND iddocu =:viddocu ');
+    private function criterdoci ($iddetalle,$iddocu,$codocu,$codimpuesto,$monto){
+        $criterio=New CDBCriteria();
+        $criterio->addCondition('hidocu=:viddetalle AND  codocu=:vcodocu AND hidocupadre =:viddocu ');
         $criterio->params=array(
             ':vcodocu'=>$codocu,
             ':viddocu'=>$iddocu,
@@ -130,7 +130,7 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon){
      **************************************/
   $varios=Impuestosdocuaplicado::model()->findAll($this->criterdoc($iddocu,$codocu));
     foreach($varios as $fila){
-      $filaimpuesto=Impuestosaplicados::model()->find($this->criterdoci($iddetalle,$iddocu,$codocu,$fila->codimpuesto));
+      $filaimpuesto=Impuestosaplicados::model()->find($this->criterdoci($iddetalle,$iddocu,$codocu,$fila->codimpuesto,$monto));
         if(is_null($filaimpuesto)){
             $filaimpuesto=New Impuestosaplicados();
         }
@@ -140,9 +140,11 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon){
             'hidocupadre'=>$iddocu,
             'hidocu'=>$iddetalle,
             'codmon'=>$codmon,
-            'valor'=>$this->getImpuesto($fila->codimpuesto),
+            'valor'=>$this->getImpuesto($fila->codimpuesto)*$monto,
         ));
+       // print_r($filaimpuesto->attributes);yii::app()->end();
         $filaimpuesto->save();
+          //  print_r($filaimpuesto->geterrors());yii::app()->end();
 
     }
 

@@ -318,7 +318,7 @@ class Docompra extends ModeloGeneral
 	}
 
 public function colocaimpuestositem(){
-	yii::app()->impuestos->colocaimpuestos($this->id,$this->ocompra->id,$this->ocompra->coddocu,$this->ocompra->moneda);
+	yii::app()->impuestos->colocaimpuestos($this->id,$this->ocompra->idguia,$this->ocompra->coddocu,$this->ocompra->moneda,$this->punitdes*$this->cant);
 }
 
 }
