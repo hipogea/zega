@@ -107,19 +107,21 @@ private $_valor;
 
     }
 
-    private function criterdoci ($iddetalle,$iddocu,$codocu,$codimpuesto,$monto){
+    private function criterdoci ($iddetalle,$iddocu,$codocu,$codimpuesto){
         $criterio=New CDBCriteria();
-        $criterio->addCondition('hidocu=:viddetalle AND  codocu=:vcodocu AND hidocupadre =:viddocu ');
+        $criterio->addCondition('codimpuesto=:vcodimpuesto AND hidocu=:viddetalle AND  codocu=:vcodocu AND hidocupadre =:viddocu ');
         $criterio->params=array(
             ':vcodocu'=>$codocu,
             ':viddocu'=>$iddocu,
             ':viddetalle'=>$iddetalle,
+            ':vcodimpuesto'=>$codimpuesto,
+
         );
         return $criterio;
     }
 
 
-public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon){
+public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
     /************************************
      * Esta funcion coloca los impuestos a un registro hijo de
      * un documento
@@ -129,10 +131,12 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon){
      *
      **************************************/
   $varios=Impuestosdocuaplicado::model()->findAll($this->criterdoc($iddocu,$codocu));
+   // print_r($varios);yii::app()->end();
     foreach($varios as $fila){
-      $filaimpuesto=Impuestosaplicados::model()->find($this->criterdoci($iddetalle,$iddocu,$codocu,$fila->codimpuesto,$monto));
+      $filaimpuesto=Impuestosaplicados::model()->find($this->criterdoci($iddetalle,$iddocu,$codocu,$fila->codimpuesto));
         if(is_null($filaimpuesto)){
             $filaimpuesto=New Impuestosaplicados();
+            //echo "salio nuevo ".$filaimpuesto->id."  <br>";
         }
         $filaimpuesto->setAttributes(array(
             'codimpuesto'=>$fila->codimpuesto,
@@ -142,11 +146,14 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon){
             'codmon'=>$codmon,
             'valor'=>$this->getImpuesto($fila->codimpuesto)*$monto,
         ));
-       // print_r($filaimpuesto->attributes);yii::app()->end();
+       //echo " impuesto :". $fila->codimpuesto." <br>";
+       // print_r($filaimpuesto->attributes);
+       // echo " cambio  <br><br><br>";
         $filaimpuesto->save();
           //  print_r($filaimpuesto->geterrors());yii::app()->end();
 
     }
+  //  ;yii::app()->end();
 
 }
 

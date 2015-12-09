@@ -269,6 +269,7 @@ class Docompratemp extends ModeloGeneral
 
 	public static function getTotal($provider)
 	{
+		//$descuento=$this->ocompra->descuento/100;
 		$totalbruto=0;
 		$totaldescuento=0;
 		$total=0;
@@ -300,7 +301,7 @@ class Docompratemp extends ModeloGeneral
 			//$this->ultimares=" ".strtoupper(trim($this->usuario=Yii::app()->user->name))." ".date("H:i")." :".$this->ultimares;
 		}
 		///$this->colocaimpuestositem(); //aqui no esto debe de hacerlo el modelo original no el tempral
-
+		$this->punitdes=$this->punit*(1-$this->ocompra->descuento/100);
 		return parent::beforeSave();
 	}
 	/**

@@ -211,7 +211,7 @@
             )); */?>
          <?php
             if ( !$model->isNewRecord )  {
-				$this->renderpartial('vw_detalle',array('eseditable'=>$this->eseditable($model->codestado),'filtro'=>$model->idguia));
+				$this->renderpartial('vw_detalle',array('model'=>$model,'eseditable'=>$this->eseditable($model->codestado),'filtro'=>$model->idguia));
 				}
             ?>
 	<?php
