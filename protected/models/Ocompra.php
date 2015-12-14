@@ -499,4 +499,16 @@ public $maximovalor;
 		}
 		return $valor;
 	}
+
+	private function criteriofiltro (){
+		$criterio=New CDBCriteria();
+		$criterio->addCondition('codestado',array(ESTADO_PREVIO,ESTADO_ANULADO)) ;
+		$criterio->addNotInCondition('codestado',array(ESTADO_PREVIO,ESTADO_ANULADO)) ;
+
+	}
+	public static function historicoprecios($codart){
+		
+
+	}
+
 }

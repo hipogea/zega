@@ -25,30 +25,13 @@
 <div class="row">
 
 						<?php echo $form->labelEx($model,'tipoitem'); ?>
-						<?php  $datos = array('M' => 'Material','S'=> 'Servicio');
-							echo $form->DropDownList($model,'tipoitem',$datos, array('empty'=>'--Seleccione un tipo--')  )  ;	?>
-						<?php echo $form->error($model,'tipoitem'); ?>
-	
-</div>
-<div class="row">
-
-						<?php echo $form->labelEx($model,'tipoimputacion'); ?>
-						<?php  $datos = array('A' => 'Libre','F'=> 'Orden','K'=> 'Ceco');
-							echo $form->DropDownList($model,'tipoimputacion',$datos, array(
-									 'ajax' => array('type' => 'POST', 
-									    'url' => CController::createUrl('Ocompra/muestraimput'), //  la acción que va a cargar el segundo div 
-									    'update' => '#Chanchito' // el div que se va a actualizar
-											  ),
-							'empty'=>'--Seleccione imputacion--') 
-							 )  ;	?>
-						<?php echo $form->error($model,'tipoimputacion'); ?>
+						<?php //print_r($model->attributes);yii::app()->end(); ?>
+						<?php echo Chtml::textField('cantidax',$model->tipoitem,array('disabled'=>'disabled','maxlenght'=>1)); ?>
 	
 </div>
 
-<div id="Chanchito" >
 
 
-</div>
 
 
 
@@ -110,6 +93,44 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'um'); ?>
+
+
+		<?php  echo Chtml::ajaxLink(
+			Chtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."filter.png"),
+			CController::createUrl('Ums/cargaum'), array(
+				'type' => 'POST',
+				'url' => CController::createUrl('Ums/cargaum'), //  la acci?n que va a cargar el segundo div
+				'update' => '#Docompratemp_um', // el div que se va a actualizar
+				'data'=>array('codigomaterial'=>'js:Docompratemp_codart.value'),
+			)
+
+		);?>
+
+		<?php IF($model->isNewRecord ){ ?>
+<?php
+//$datos = CHtml::listData(Ums::model()->findAll(),'um','desum');
+			$datos=array();
+			echo $form->DropDownList($model,'um',$datos, array(  'maxlength'=>4)  )  ;
+			?>
+		<?php }  else { ?>
+			<?php echo $form->DropDownList($model,'um',Alconversiones::Listadoums($model->codart), array('empty'=>'--Um--', 'maxlength'=>4)  )  ; ?>
+
+
+		<?php   } ?>
+
+
+
+
+		<?php echo $form->error($model,'um'); ?>
+
+	</div>
+
+
+
+
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'punit'); ?>
 		<?php echo $form->textField($model,'punit'); ?>
 		<?php echo $form->error($model,'punit'); ?>
@@ -166,14 +187,7 @@
 	</div>
 
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'um'); ?>
-		<?php 
-			$datos = CHtml::listData(Ums::model()->findAll(),'um','desum');
-					echo $form->DropDownList($model,'um',$datos, array('empty'=>'--Unidad de medida--')  )  ;						     
- 			?>
-		<?php echo $form->error($model,'um'); ?>
-	</div>
+
 
 
 	<div class="row">

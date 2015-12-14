@@ -45,8 +45,9 @@ class Impuestosaplicados extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tempdpeticion' => array(self::BELONGS_TO, 'dpeticion', array('hidocu'=>'id','codocu'=>'codocu')),
-			'dpeticion' => array(self::BELONGS_TO, 'Tempdpeticion', array('hidocu'=>'id','codocu'=>'codocu')),
+			//'tempdpeticion' => array(self::BELONGS_TO, 'dpeticion', array('hidocu'=>'id','codocu'=>'codocu')),
+			//'dpeticion' => array(self::BELONGS_TO, 'Tempdpeticion', array('hidocu'=>'id','codocu'=>'codocu')),
+			'Impuestos'=>array(self::BELONGS_TO, 'Impuestos', array('codimpuesto'=>'codimpuesto')),
 
 		);
 	}

@@ -84,6 +84,7 @@ class Docompratemp extends ModeloGeneral
 			array('codservicio', 'length', 'max'=>6),
 			array('ceco, orden', 'length', 'max'=>12),
 			array('codentro', 'length', 'max'=>4),
+			array('tipoitem', 'safe'),
 			array('punit,cant, punitdes', 'safe','on'=>'descuento'),
 			array('detalle,iddesolpe,cant,codentro,codigoalma,punit,codart,descri,um, hidguia,tipoimputacion,orden', 'safe'),
 			// The following rule is used by search().

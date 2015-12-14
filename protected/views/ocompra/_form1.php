@@ -237,6 +237,23 @@
                         'visiblex'=>array(ESTADO_CREADO),
 
                     ),
+
+                    'tool'=>array(
+                        'type'=>'C',
+                        'ruta'=>array($this->id.'/creadetalleserv',array(
+                            'idcabeza'=>$model->idguia,
+                            'cest'=>$model->{$this->campoestado},
+                            //"id"=>$model->n_direc,
+                            "asDialog"=>1,
+                            "gridId"=>'detalle-grid',
+                        )
+                        ),
+                        'dialog'=>'cru-dialogdetalle',
+                        'frame'=>'cru-detalle',
+                        'visiblex'=>array(ESTADO_CREADO),
+
+                    ),
+
                     'minus'=>array(
                         'type'=>'D',
                         'ruta'=>array($this->id.'/borraitems',array()),

@@ -18,7 +18,7 @@ function(){
         $.blockUI({ css: { 
             border: 'none', 
             padding: '15px', 
-            backgroundColor: '#000', 
+            backgroundColor: '#0a0',
             '-webkit-border-radius': '10px', 
             '-moz-border-radius': '10px', 
             opacity: .5, 
@@ -26,7 +26,7 @@ function(){
         } }); 
  
         setTimeout($.unblockUI, 2000);
-            $(this).css("display", "none");
+           /* $(this).css("display", "none");*/
 
     }
 

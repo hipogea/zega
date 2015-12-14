@@ -157,7 +157,33 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
 
 }
 
+    private function criterimp($codocu,$idocu){
+        $criterio=New CDBCriteria();
+        $criterio->addCondition('hidocu=:vidocu AND  codocu=:vcodocu ');
+        $criterio->params=array(
+            ':vcodocu'=>$codocu,
+            ':vidocu'=>$idocu,
+        );
+        //$criterio->with = array('Impuestos');
+        //$criterio->select = 't.descripcion, t1.valor';
+        $criterio->group=" hidocu,codocu,codimpuesto";
+        return $criterio;
+    }
 
+
+    /******
+     * funcioque regresa un data provider de datos de impñuestos para un domcuento especificado
+     */
+public function dataimpuestos($codocu,$idocu){
+    $cr=$this->criterimp($codocu,$idocu);
+    $rawData=Yii::app()->db->createCommand()
+        ->select('a.descripcion,a.abreviatura,sum(b.valor) ')
+        ->from('{{Impuestos}} a ')
+        ->join('{{Impuestosaplicados}} b', 'a.codimpeusto=b.codimpuesto')
+        ->where($cr->condition, $cr->params)
+        ->group($cr->group)
+        ->queryAll();
+            }
 
 }
 ?>

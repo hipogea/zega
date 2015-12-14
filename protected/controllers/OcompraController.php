@@ -171,7 +171,9 @@ public function actionVerDocumento($id){
             $model=new Docompratemp();
         $model->estadodetalle=ESTADO_PREVIO;
         $model->idusertemp=Yii::app()->user->id;
-            $model->valorespordefecto($this->documentohijo);
+
+        $model->valorespordefecto($this->documentohijo);
+        $model->tipoitem='M';
             if(isset($_POST['Docompratemp']))		{
                 $model->attributes=$_POST['Docompratemp'];
                 $model->coddocu=$this->documentohijo; ///detalle guia
