@@ -26,6 +26,11 @@
 		<?php echo $form->error($model,'codocu'); ?>
 	</div>
 	<div class="row">
+		<?php echo $form->labelEx($model,'longitudcampo'); ?>
+		<?php echo $form->textField($model,'longitudcampo',array('size'=>5,'maxlength'=>5)); ?>
+		<?php echo $form->error($model,'longitudcampo'); ?>
+	</div>
+	<div class="row">
 		<?php echo $form->labelEx($model,'nombre_campo'); ?>
 		<?php echo $form->textField($model,'nombre_campo',array('size'=>60,'maxlength'=>60)); ?>
 		<?php echo $form->error($model,'nombre_campo'); ?>
@@ -126,6 +131,12 @@
 		<?php echo $form->labelEx($model,'esdetalle'); ?>
 		<?php echo $form->textField($model,'esdetalle'); ?>
 		<?php echo $form->error($model,'esdetalle'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'totalizable'); ?>
+		<?php echo $form->checkBox($model,'totalizable'); ?>
+		<?php echo $form->error($model,'totalizable'); ?>
 	</div>
 
 	<div class="row buttons">

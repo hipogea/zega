@@ -59,7 +59,7 @@ class Docompratemp extends ModeloGeneral
 		// will receive user inputs.
 		return array(
 
-			array('hidguia,codart,idusertemp,tipoimputacion,ceco,coddocu,punit,punitdes,disp,stock,estado detalle,iddesolpe,codentro,codigoalma,descri,tipoitem,cant,um','safe','on'=> 'ingresodesolpe'),
+			array('hidguia,codart,idusertemp,ceco,coddocu,punit,punitdes,disp,stock,estado detalle,iddesolpe,codentro,codigoalma,descri,tipoitem,cant,um','safe','on'=> 'ingresodesolpe'),
 			array('cant','verificaconsistencia','on'=>'ingresodesolpe'),
 
 

@@ -147,6 +147,18 @@
 		<?php echo $form->error($model,'registrosporpagina'); ?>
 	</div>
 
+			<div class="row">
+				<?php echo $form->labelEx($model,'xresumen'); ?>
+				<?php echo $form->textField($model,'xresumen'); ?>
+				<?php echo $form->error($model,'xresumen'); ?>
+			</div>
+
+			<div class="row">
+				<?php echo $form->labelEx($model,'yresumen'); ?>
+				<?php echo $form->textField($model,'yresumen'); ?>
+				<?php echo $form->error($model,'yresumen'); ?>
+			</div>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'tienepie'); ?>
 		<?php echo $form->checkBox($model,'tienepie'); ?>

@@ -39,7 +39,7 @@ class Docompra extends ModeloGeneral
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cant, punit,  descri, tipoitem, tipoimputacion, um', 'required'),
+			array('cant, punit,  descri, tipoitem, um', 'required'),
 			array('cant, punit, stock', 'numerical'),
 			//array('numcot', 'length', 'max'=>7),
 			array('codart', 'length', 'max'=>8),

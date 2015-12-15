@@ -268,8 +268,8 @@ public function actionconfig ()
 }
 
  public function actionRutas(){
-	 var_dump(yii::app()->impuestos->dataimpuestos('210',115)->getdata());
-	 yii::app()->end();
+	 /*var_dump(yii::app()->impuestos->dataimpuestos('210',135));
+	 yii::app()->end();*/
 
 
 	 echo " Yii::getPathOfAlias('webroot') :  ".Yii::getPathOfAlias('webroot')."<br>";

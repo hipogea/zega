@@ -20,10 +20,11 @@ private $_valor;
       $criterio->addCondition("ffinal >= :vfecha AND finicio <= :vfecha ");
       $criterio->params=array(":vfecha"=>$fecha,":vcodimpuesto"=>$codimpuesto);
       $modelo=$this->_modelo;
+      //var_dump($modelo::model()->find( $criterio)->attributes);yii::app()->end();
       $this->_valor=$modelo::model()->find( $criterio)->valor;
      if( is_null($this->_valor))
          throw new CHttpException(500,'No se pudo encontrar el valor del impuesto para esta fecha');
-   return  $this->_valor;
+   return  $this->_valor/100;
   }
 
     private function verificafechas($codimpuesto){
@@ -93,17 +94,19 @@ private $_valor;
          ************************************/
 
 
-        $registro=Impuestosaplicados::model()->find($this->criter($iddocu,$codocu,$codimpuesto));
+        $registro=Impuestosdocuaplicado::model()->find($this->criter($iddocu,$codocu,$codimpuesto));
         if(is_null($registro)){
             $modelo=new Impuestosdocuaplicado();
             $modelo->setAttributes(array(
                 'codimpuesto'=>$codimpuesto,
                 'codocu'=>$codocu,
                 'iddocu'=>$iddocu,
-                'idvalorvigente'=>$this->getImpuesto($codimpuesto),
+                'valorimpuesto'=>$this->getImpuesto($codimpuesto)+0,
             ));
+           // var_dump($modelo->valor)
             return $modelo->save();
         }
+        return false;
 
     }
 
@@ -159,14 +162,14 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
 
     private function criterimp($codocu,$idocu){
         $criterio=New CDBCriteria();
-        $criterio->addCondition('hidocu=:vidocu AND  codocu=:vcodocu ');
+        $criterio->addCondition('hidocupadre=:vidocu AND  codocu=:vcodocu ');
         $criterio->params=array(
             ':vcodocu'=>$codocu,
             ':vidocu'=>$idocu,
         );
         //$criterio->with = array('Impuestos');
         //$criterio->select = 't.descripcion, t1.valor';
-        $criterio->group=" hidocu,codocu,codimpuesto";
+        $criterio->group=" a.codimpuesto,a.descripcion,a.abreviatura";
         return $criterio;
     }
 
@@ -177,13 +180,30 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
 public function dataimpuestos($codocu,$idocu){
     $cr=$this->criterimp($codocu,$idocu);
     $rawData=Yii::app()->db->createCommand()
-        ->select('a.descripcion,a.abreviatura,sum(b.valor) ')
-        ->from('{{Impuestos}} a ')
-        ->join('{{Impuestosaplicados}} b', 'a.codimpeusto=b.codimpuesto')
+        ->select('a.descripcion,a.abreviatura,sum(b.valor) as valorap ')
+        ->from('{{impuestos}} a ')
+        ->join('{{impuestosaplicados}} b', 'a.codimpuesto=b.codimpuesto')
         ->where($cr->condition, $cr->params)
         ->group($cr->group)
         ->queryAll();
-            }
+  //return  $rawData;
+
+return new CArrayDataProvider
+        ($rawData,
+            array(
+                'sort'=>array(
+                'attributes'=>array(
+                                'descripcion', 'abreviatura', 'valorap',
+                                    ),
+                            ),
+
+                    )
+        );
+}
+
+
+
+
 
 }
 ?>

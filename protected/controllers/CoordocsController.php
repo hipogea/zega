@@ -219,8 +219,9 @@ public function makeColumnas($proveedorestilo,$amontobase,$amontoagregado){
 							  'name'=>$registroestilo->nombre_campo,
 							  'header'=>$registroestilo->aliascampo,
 							'type'=>'raw',
-
+							//'value'=>'is_numeric($data->'.$registroestilo->nombre_campo.')?MiFactoria::decimal($data->'.$registroestilo->nombre_campo.',2):$data->'.$registroestilo->nombre_campo.'',
 							'footer'=>(in_array($registroestilo->nombre_campo,array_keys($amontobase)))? ($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo]).'':'',
+							'footer'=>($registroestilo->totalizable=='1')? ($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo]).'':'',
 							//'footer'=>
 							'htmlOptions'=> array ( 'width' => $registroestilo->longitudcampo*5 ),
 							'footerHtmlOptions'=>array('class' =>'piegrid'),
@@ -235,31 +236,16 @@ public function makeColumnas($proveedorestilo,$amontobase,$amontoagregado){
 return array_values($arraycolumnas);
 }
 
-	/***
-	 * @param $iddocu  : ID del documento padre
-	 * @param $codocu : codigo del documento padre
-	 */
-
-	public function pintaimpuesto($iddocu,$codocu){
-
-      //$documentopadre=Documentos::documentopadre($codocu);
-
-
-	}
 
 
 	public function actionhacereporte($id,$idfiltrodocu,$file=0){ //id del reporte y el ID del modelo a reportar
-
 		$this->layout="";
 		$id=MiFactoria::cleanInput((int)$id);
 		$idfiltrodocu=MiFactoria::cleanInput((int)$idfiltrodocu);
 		$modelo=$this->loadModel($id);
 		$nombremodelo=$modelo->modelo;
-
-
 		///////////////////////////////////////////////////////
 		///sancao el numero de paginas
-
 		$criterio=New CDbCriteria;
 		$criterio->addCondition($modelo->campofiltro."=:vidifiltrodocu");
 		$criterio->params=ARRAY(":vidifiltrodocu"=>$idfiltrodocu);
@@ -270,8 +256,7 @@ return array_values($arraycolumnas);
 		$numeropaginas=ceil($registrostotales/$modelo->registrosporpagina);
 		//$numeropaginas=3;
 		$proveedorestilo=$modelo->hijos;
-		$proveedordatos->camposasumar=array('preciounit','cant');
-
+		$proveedordatos->camposasumar=Coordreporte::totalizables($id);
 		$mpdf=Yii::app()->ePdf->mpdf(
 			'',trim($modelo->tamanopapel));
 		if(!is_null($modelo->estilo)) {
@@ -286,16 +271,13 @@ return array_values($arraycolumnas);
 		if($modelo->tienepie=='1')
 		$mpdf->SetFooter('Usuario   :  '.yii::app()->user->um->loadUserById(yii::app()->user->id)->username.'|'.date("d-m-Y   H : i : s").'|{PAGENO}{nbpg}');
 		$mpdf->SetDisplayMode('fullpage');
-
-
   /*echo var_dump($proveedordatos);
 		yii::app()->end();*/
-		$arraycamposasumar=array('preciounit','cant');
+	//	$arraycamposasumar=array('subto','cant');
 		$amontobase=array();
-		foreach($arraycamposasumar as $mclave => $mvalor){
+		/*foreach($arraycamposasumar as $mclave => $mvalor){
 			$amontobase[$mvalor]=0;
-		}
-
+		}*/
       /*echo $this->cabecera($filamuestracabecera,$proveedorestilo,$modelo);
 		yii::app()->end();*/
 $cadena="";
@@ -308,7 +290,7 @@ $cadena="";
 			   $criterioporpagina->limit=$modelo->registrosporpagina;
 			    $criterioporpagina->offset=$modelo->registrosporpagina*($i-1);
 			    $proveedorporpagina=new Miproveedor($nombremodelo,array('pagination' => false,"criteria"=>$criterioporpagina));
-			   $proveedorporpagina->camposasumar=$arraycamposasumar;
+			   $proveedorporpagina->camposasumar=Coordreporte::totalizables($id);
                   $amontoagregado= $proveedorporpagina->Total();
 			 	$cadena=$this->renderpartial('reporte',
 					array(
@@ -317,11 +299,19 @@ $cadena="";
 						'proveedordatos'=>$proveedorporpagina,
 						'modelo'=>$modelo,
 					),TRUE,	true);
+			   if($i==$numeropaginas){
+				   $cadena.=$this->colocaimpuestos($modelo->codocu,$idfiltrodocu,$modelo->xresumen,$modelo->yresumen);
+			   }
 			   $amontobase=$this->sumaarray($amontobase,$amontoagregado);
+
 			   $mpdf->WriteHTML($cadena,2);
 			   if($i<$numeropaginas)
 			   $mpdf->AddPage();
+
 		   }
+
+
+
   //echo $cadena;
 		if(Yii::app()->settings->get('documentos', 'documentos_selloagua')=='1') {
 					$mpdf->SetWatermarkImage(yii::app()->getBaseUrl(false).Yii::app()->settings->get('documentos', 'documentos_archivo_sello_agua').DIRECTORY_SEPARATOR.'NOAPROBADO.JPG');
@@ -329,13 +319,17 @@ $cadena="";
 		}
 
 
-		//$vacr=md5(time());
-		if($file==1){
-			$mpdf->Output('assets/'.$filamuestracabecera->coddocu.$filamuestracabecera->idguia.'_'.yii::app()->user->id.'.pdf','F');
 
-		}else{
-			$mpdf->Output();
-		}
+
+
+		//if($file==1){
+			$ruta='assets/'.$filamuestracabecera->coddocu.$filamuestracabecera->idguia.'_'.yii::app()->user->id.'.pdf';
+			$mpdf->Output($ruta,'F');
+
+			$this->render('pdf',array('ruta'=>yii::app()->getBaseUrl(false).DIRECTORY_SEPARATOR.$ruta));
+		//}else{
+		//	$mpdf->Output();
+		//}
 
 		//////////////////////////////////////////
 
@@ -473,7 +467,12 @@ public function actioncargacampos(){
 																		");
                     Yii::app()->end();
                 }
-
+			/*print_r($model->attributes);
+			echo  "<br><br>";
+			var_dump($model->save());
+			echo  "<br><br> errores : ";
+			print_r($model->geterrors());
+			yii::app()->end();*/
             $this->redirect(array('view','id'=>$model->id));
         }
 
@@ -536,7 +535,7 @@ public function actioncargacampos(){
 	 */
 	public function loadModel($id)
 	{
-		$model=Coordocs::model()->findByPk($id);
+		$model=Coordocs::model()->findByPk($id+0);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -554,4 +553,9 @@ public function actioncargacampos(){
 			Yii::app()->end();
 		}
 	}
+
+	private function colocaimpuestos($codocu,$idocu,$xresumen,$yresumen){
+	  return $this->renderpartial("impuesto",array('xresumen'=>$xresumen,'yresumen'=>$yresumen,'codocu'=>$codocu,'idocu'=>$idocu),true,true);
+     }
+
 }

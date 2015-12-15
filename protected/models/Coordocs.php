@@ -29,9 +29,10 @@ class Coordocs extends ModeloGeneral
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('xgeneral,nombrereporte, campoestado, ygeneral, xlogo, ylogo,codcen,modelo, codocu', 'required'),
+			array('xgeneral,nombrereporte,  ygeneral, xlogo, ylogo,codcen,modelo, codocu', 'required'),
 			array('xgeneral, ygeneral, xlogo, ylogo', 'numerical', 'integerOnly'=>true),
 			array('codocu', 'length', 'max'=>3),
+			array('xresumen,yresumen', 'safe'),
 			array('id, xgeneral,campoestado,estilo,tienelogo,sociedad,tienepie,registrosporpagina,campofiltro,x_grilla,y_grilla, ygeneral,esdetalle,tamanopapel,nombrereporte,detalle, xlogo, ylogo,codcen,modelo, codocu', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -98,14 +99,11 @@ class Coordocs extends ModeloGeneral
 		));
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Coordocs the static model class
-	 */
 	public static function model($className=__CLASS__)
 	{
+
 		return parent::model($className);
 	}
+
+
 }

@@ -14,6 +14,8 @@ CONST ESTADO_DOCOMPRA_NUEVO='10';  // DESOLPECOMRPA CREADO
 CONST ESTADO_DOCOMPRA_APROBADO='20';// DESOLPECOMRPA APROBADO
 CONST ESTADO_DOCOMPRA_ANULADO='40';// DESOLPECOMRPA ANULADO
 const ESTADO_DESOLPECOMPRA_ANULADO='30';
+const ESTADO_DOCOMPRA_CREADO='10';
+
 class OcompraController extends ControladorBase
 {
 
@@ -1998,7 +2000,9 @@ public function actionVerdetalle($id)
 
                        $row->setScenario('cambiaestado');
                        $row->estadodetalle=ESTADO_DOCOMPRA_CREADO;
-                       $mensaje .= ($row->save()) ? "" : " No se pudo anular el item " . $row->item . "<br>";
+                       $mensaje .= ($row->save()) ? "" : " No se pudo revertir  el item " . $row->item . "<br>";
+                       /*print_r($row->geterrors());
+                       print_r($row->geterrors());yii::app()->end();*/
 
 
                    }
@@ -2047,24 +2051,17 @@ public function actionVerdetalle($id)
 
 
     public function actionAgregaimpuesto($idguia){
-
-            $model=new Impuestosdocuaplicado;
+           $model=new Impuestosdocuaplicado;
          $modelocabeza=$this->loadModel($idguia);
-           // $model->setscenario("agregaritemscompra");
-           // $this->performAjaxValidation1($model);
-            if(isset($_POST['Impuestosdocuaplicado']))
-            {
-                 $model->setAttributes(array('valorimpuesto'=>Valorimpuestos::getimpuesto ($_POST['Impuestosdocuaplicado']['codimpuesto'] ),'iddocu'=>$modelocabeza->idguia,'codocu'=>$modelocabeza->coddocu,'codimpuesto'=>$_POST['Impuestosdocuaplicado']['codimpuesto']),true);
-               if( !$model->save()){
-                   print_r($model->geterrors());
-                   yii::app()->end();
-               }
-
-
+             if(isset($_POST['Impuestosdocuaplicado']))            {
+                // $model->setAttributes(array('valorimpuesto'=>Valorimpuestos::getimpuesto ($_POST['Impuestosdocuaplicado']['codimpuesto'] ),'iddocu'=>$modelocabeza->idguia,'codocu'=>$modelocabeza->coddocu,'codimpuesto'=>$_POST['Impuestosdocuaplicado']['codimpuesto']),true);
+             /* echo "post impuesto". $_POST['Impuestosdocuaplicado']['codimpuesto'];
+                 Yii::app()->end();*/
+                 if( yii::app()->impuestos->insertaplantilla($modelocabeza->idguia,$modelocabeza->coddocu,$_POST['Impuestosdocuaplicado']['codimpuesto'])
+             ) {
 
                 if (!empty($_GET['asDialog']))
                 {
-                    //Close the dialog, reset the iframe and update the grid
                     echo CHtml::script("window.parent.$('#cru-dialogdetalle').dialog('close');
 													                    window.parent.$('#cru-detalle').attr('src','');
 																		window.parent.$.fn.yiiGridView.update('impuestos-grid');
@@ -2073,21 +2070,13 @@ public function actionVerdetalle($id)
                     Yii::app()->end();
                 }
             }
-
+             }
             if (!empty($_GET['asDialog']))
                 $this->layout = '//layouts/iframe';
             //$modeloaux=$modelo
             $this->render('_form_impuesto',array('impuestosyaregistrados'=>$modelocabeza->impuestosaplicados(),
                 'modeloimpuesto'=>$model, 'codigodoc'=>$modelocabeza->coddocu,'idcabeza'=>$idguia
             ));
-
-
-
-
-
-
-
-
     }
 
 public function actionReporte($id){

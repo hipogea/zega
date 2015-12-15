@@ -105,6 +105,21 @@
 
                     ),
 
+
+                    'camera'=>array(
+                        'type'=>'D', //AJAX LINK
+                      'ruta'=>array('coordocs/hacereporte',array('id'=>$model->idreporte,'idfiltrodocu'=>$model->idguia,'file'=>0)),
+
+                        'opajax'=>array(
+                            'type'=>'POST',
+                            'ruta'=>array('coordocs/hacereporte',array('id'=>$model->idreporte,'idfiltrodocu'=>$model->idguia,'file'=>0)),
+                              'update' => '#zona_pdf',
+                        ),
+
+                        'visiblex'=>array(ESTADO_ACEPTADO),
+
+                    ),
+
                     'config'=>array(
                         'type'=>'B',
                         'ruta'=>array($this->id.'/procesardocumento',array('id'=>$model->idguia,'ev'=>64)),

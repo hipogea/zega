@@ -335,15 +335,13 @@ public function afterSave() {
 
 public static function model($className=__CLASS__)
 {
+
 	return parent::model($className);
 }
 
-	/**
-	 * @return string the associated database table name
-	 */
 	public function tableName()
-{
-	return Yii::app()->params['prefijo'].'alkardex'; //ESTO SE COLOCO PARA EVADR UN ERROR
-}
+	{
+		return null; //ESTO SE COLOCO PARA EVADR UN ERROR
+	}
 
 }

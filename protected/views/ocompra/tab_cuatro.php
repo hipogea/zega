@@ -27,3 +27,6 @@ echo $form->DropDownList($model,'idreporte', $datos1,array('prompt' =>'Seleccion
 
     </div>
 
+<div id="zona_pdf">
+
+</div>
