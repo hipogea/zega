@@ -5,7 +5,8 @@
 ?>
 
 <div class="form">
-
+	<div class="division">
+	<div class="wide form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'grupocc-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -15,7 +16,6 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -42,9 +42,10 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Editar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+	</div></div>

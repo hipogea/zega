@@ -94,7 +94,7 @@ class SolpeController extends Controller
 
 	public function actionreservaautomatica($id) {
 		$model=Solpe::model()->findByPk($id);
-		if($model->escompra=='0') {  //Solo solpes que no sean de compras
+		if($model->escompra<>'1') {  //Solo solpes que no sean de compras
 		//
 		$mensa="";
 		$registroshijos=$model->solpe_desolpe;

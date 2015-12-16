@@ -133,6 +133,8 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
      * codocu: El codocu del documento
      *
      **************************************/
+
+    ///primero verificamos que no haya ningun impuesto que este dentro de la cabecer adel domeumento
   $varios=Impuestosdocuaplicado::model()->findAll($this->criterdoc($iddocu,$codocu));
    // print_r($varios);yii::app()->end();
     foreach($varios as $fila){
@@ -203,8 +205,18 @@ return new CArrayDataProvider
         );
 }
 
+   private function criterdelete($iddetalle,$idocupadre,$codocu){
+       $cri=New CDBCriteria();
+       $cri->addCondition("hidocu=:viddetalle AND codocu=:vcodocu AND hidocupadre=:vhidocupadre");
+       $cri->params=array(":viddetalle"=> $iddetalle,":vcodocu"=>$codocu,":vhidocupadre"=>$idocupadre);
+       RETURN $cri;
+   }
 
+public function borraimpuestos($iddetalle,$idocupadre,$codocu){
 
+    Impuestosaplicados::model()->deleteAll($this->criterdelete($iddetalle,$idocupadre,$codocu));
+    return true;
+}
 
 
 }

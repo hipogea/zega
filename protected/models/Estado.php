@@ -42,7 +42,7 @@ class Estado extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public_estado';
+		return '{{estado}}';
 	}
 
 	/**
@@ -57,6 +57,7 @@ class Estado extends CActiveRecord
 			array('ordenn, eseditable, esanulable', 'numerical', 'integerOnly'=>true),
 			array('codestado', 'length', 'max'=>2),
 			array('codocu', 'length', 'max'=>3),
+			array('nocalculable', 'safe'),
 			array('estado, creadopor, modificadopor', 'length', 'max'=>25),
 			array('creadoel, modificadoel', 'length', 'max'=>20),
 			// The following rule is used by search().
@@ -161,11 +162,48 @@ class Estado extends CActiveRecord
 					return false;
 				}
 
-							}	
+							}
+
+
+	public static function estadosnocalculablesdetalle ($codocu){ ///$CODOCU es el codigo del docuenmtno padre
+		/*esta funcion devuel los estado del detalle de un domcuento
+		*  que no son calculables x ejemplo una item anualado o cualquier otro estado que no s etome necuenta
+		 *
+		 */
+		$codocu=MiFactoria::cleanInput($codocu);
+		$documentohijo=Documentos::model()->find("coddocupadre='".$codocu."'");
+		//var_dump($documentohijo);
+		if(!is_null($documentohijo)){
+			return Yii::app()->db->createCommand()
+				->select('codestado')
+				->from('{{estado}}')
+				->where("codocu=:vcodocu AND nocalculable='1' ",
+					array(":vcodocu"=>$documentohijo->coddocu)
+				)->queryColumn();
+		} else {
+			return array();
+		}
+
+
+	}
+
+	public static function estadosnocalculables($codocu){
+		/*esta funcion devuel los estado del detalle de un domcuento
+		*  que no son calculables x ejemplo una item anualado o cualquier otro estado que no s etome necuenta
+		 *
+		 */
+		$codocu=MiFactoria::cleanInput($codocu);
+
+			return Yii::app()->db->createCommand()
+				->select('codestado')
+				->from('{{estado}}')
+				->where("codocu=:vcodocu AND nocalculable='1' ",
+					array(":vcodocu"=>$codocu)
+				)->queryColumn();
 
 
 
-
+	}
 
 
 

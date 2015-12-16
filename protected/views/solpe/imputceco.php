@@ -2,7 +2,7 @@
 	    <div class="row">
 		<?php echo $form->labelEx($model,'imputacion'); ?>
 		<?php
-		if ($modelopadre->escompra=='0') { //si se trata de una solped imputada
+		if ($modelopadre->escompra<>'1') { //si se trata de una solped imputada
 		if ($habilitado=='')
 		
 						{	$this->widget('ext.matchcode.MatchCode',array(

@@ -237,4 +237,6 @@ class Documentos extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+
 }

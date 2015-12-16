@@ -1495,18 +1495,66 @@ DROP TABLE IF EXISTS `vw_observaciones`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`neologys`@`localhost` SQL SECURITY DEFINER VIEW `vw_observaciones` AS select `c`.`codpropietario` AS `codpropietario`,`c`.`idinventario` AS `idinventario`,`a`.`hidinventario` AS `hidinventario`,`a`.`fecha` AS `fecha`,`a`.`descri` AS `descri`,`a`.`mobs` AS `mobs`,`a`.`usuario` AS `usuario`,`a`.`id` AS `id`,`a`.`codestado` AS `codestado`,`b`.`estado` AS `estado`,`c`.`codigoaf` AS `codigoaf`,`c`.`codigosap` AS `codigosap`,`c`.`codlugar` AS `codlugar`,`c`.`descripcion` AS `descripcion`,`c`.`marca` AS `marca`,`c`.`modelo` AS `modelo`,`c`.`serie` AS `serie`,`c`.`codcentro` AS `codcentro` from ((`public_observaciones` `a` join `public_estado` `b`) join `public_inventario` `c`) where ((`a`.`codestado` = `b`.`codestado`) and (`a`.`hidinventario` = `c`.`idinventario`) and (`b`.`codocu` = `a`.`codocu`));
 
--- --------------------------------------------------------
 
---
--- Estructura para la vista `vw_ocompra`
---
 DROP TABLE IF EXISTS `vw_ocompra`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`neologys_julito`@`190.117.161.10` SQL SECURITY DEFINER VIEW `vw_ocompra` AS select `coti`.`numcot` AS `numcot`,`coti`.`codpro` AS `codpro`,`coti`.`fecdoc` AS `fecdoc`,`coti`.`codcon` AS `codcon`,`coti`.`codestado` AS `codestado`,`coti`.`texto` AS `texto`,`coti`.`textolargo` AS `textolargo`,`coti`.`tipologia` AS `tipologia`,`coti`.`moneda` AS `moneda`,`coti`.`orcli` AS `orcli`,`ums`.`desum` AS `desum`,`coti`.`descuento` AS `descuento`,`coti`.`usuario` AS `usuario`,`coti`.`coddocu` AS `coddocu`,`coti`.`creado` AS `creado`,`coti`.`modificado` AS `modificado`,`coti`.`creadopor` AS `creadopor`,`coti`.`creadoel` AS `creadoel`,`coti`.`modificadopor` AS `modificadopor`,`coti`.`modificadoel` AS `modificadoel`,`coti`.`codtipofac` AS `codtipofac`,`coti`.`codsociedad` AS `codsociedad`,`coti`.`codgrupoventas` AS `codgrupoventas`,`coti`.`codtipocotizacion` AS `codtipocotizacion`,`coti`.`validez` AS `validez`,`coti`.`codcentro` AS `codcentro`,`coti`.`nigv` AS `nigv`,`coti`.`codobjeto` AS `codobjeto`,`coti`.`fechapresentacion` AS `fechapresentacion`,`coti`.`fechanominal` AS `fechanominal`,`coti`.`idguia` AS `idguia`,`x`.`id` AS `id`,`x`.`codentro` AS `codentro`,`x`.`codigoalma` AS `codigoalma`,`x`.`codart` AS `codart`,`x`.`disp` AS `disp`,`x`.`cant` AS `cant`,`x`.`punit` AS `punit`,`x`.`item` AS `item`,`x`.`descri` AS `descri`,`x`.`stock` AS `stock`,`x`.`detalle` AS `detalle`,`x`.`tipoitem` AS `tipoitem`,`x`.`estadodetalle` AS `estadodetalle`,`x`.`um` AS `um`,`x`.`hidguia` AS `hidguia`,`x`.`codservicio` AS `codservicio`,`x`.`tipoimputacion` AS `tipoimputacion`,(`x`.`punit` * `x`.`cant`) AS `subto`,`t_moneda`.`desmon` AS `desmon`,`tipofacturacion`.`tipofacturacion` AS `tipofacturacion`,`estado`.`estado` AS `estado`,`sociedades`.`rucsoc` AS `rucsoc`,`sociedades`.`dsocio` AS `dsocio`,`contactos`.`c_nombre` AS `c_nombre`,`t_moneda`.`simbolo` AS `simbolo`,`contactos`.`c_cargo` AS `c_cargo`,`contactos`.`c_tel` AS `c_tel`,`contactos`.`c_mail` AS `c_mail`,`clipro`.`despro` AS `despro`,`clipro`.`rucpro` AS `rucpro`,`clipro`.`emailpro` AS `emailpro`,`documentos`.`desdocu` AS `desdocu`,`tenores`.`mensaje` AS `textocabeza`,`tenores1`.`mensaje` AS `textopie`,`trabajadores`.`ap` AS `ap`,`trabajadores`.`am` AS `am`,`trabajadores`.`nombres` AS `nombres`,`trabajadores`.`telfijo` AS `telfijo`,`trabajadores`.`telmoviles` AS `telmoviles`,`direcciones`.`c_direc` AS `c_direc`,`x`.`punitdes` AS `punitdes` from (((((((((((((`public_ocompra` `coti` join `public_docompra` `x`) join `public_sociedades` `sociedades`) join `public_documentos` `documentos`) join `public_clipro` `clipro`) join `public_contactos` `contactos`) join `public_tipofacturacion` `tipofacturacion`) join `public_t_moneda` `t_moneda`) join `public_tenores` `tenores`) join `public_tenores` `tenores1`) join `public_estado` `estado`) join `public_trabajadores` `trabajadores`) join `public_direcciones` `direcciones`) join `public_ums` `ums`) where ((`coti`.`codsociedad` = `sociedades`.`socio`) and (`coti`.`coddocu` = `documentos`.`coddocu`) and (`coti`.`codpro` = `clipro`.`codpro`) and (`coti`.`idcontacto` = `contactos`.`id`) and (`coti`.`codtipofac` = `tipofacturacion`.`codtipofac`) and (`coti`.`moneda` = `t_moneda`.`codmoneda`) and (`coti`.`tenorsup` = `tenores`.`posicion`) and (`coti`.`coddocu` = `tenores`.`coddocu`) and (`coti`.`codsociedad` = `tenores`.`sociedad`) and (`coti`.`tenorinf` = `tenores1`.`posicion`) and (`coti`.`coddocu` = `tenores1`.`coddocu`) and (`coti`.`codsociedad` = `tenores1`.`sociedad`) and (`x`.`um` = `ums`.`um`) and (`coti`.`idguia` = `x`.`hidguia`) and (`coti`.`codestado` = `estado`.`codestado`) and (`coti`.`codresponsable` = `trabajadores`.`codigotra`) and (`coti`.`direcentrega` = `direcciones`.`n_direc`) and (`coti`.`coddocu` = `estado`.`codocu`)) order by `x`.`item`;
-
 -- --------------------------------------------------------
 
---
+create VIEW `vw_ocompra` AS select `coti`.`numcot` AS `numcot`,`coti`.`codpro` AS `codpro`,
+ `coti`.`fecdoc` AS `fecdoc`,`coti`.`codcon` AS `codcon`,`coti`.`codestado` AS `codestado`,
+`coti`.`texto` AS `texto`,`coti`.`textolargo` AS `textolargo`,`coti`.`tipologia` AS `tipologia`,
+ `coti`.`moneda` AS `moneda`,`coti`.`orcli` AS `orcli`,`ums`.`desum` AS `desum`,`coti`.`descuento` AS
+    `descuento`,`coti`.`usuario` AS `usuario`,`coti`.`coddocu` AS `coddocu`,`coti`.`creado` AS `creado`,
+`coti`.`modificado` AS `modificado`,`coti`.`creadopor` AS `creadopor`,`coti`.`creadoel` AS `creadoel`,
+`coti`.`modificadopor` AS `modificadopor`,`coti`.`modificadoel` AS `modificadoel`,`coti`.`codtipofac` AS
+    `codtipofac`,`coti`.`codsociedad` AS `codsociedad`,`coti`.`codgrupoventas` AS `codgrupoventas`,
+`coti`.`codtipocotizacion` AS `codtipocotizacion`,`coti`.`validez` AS `validez`,`coti`.`codcentro` AS
+    `codcentro`,`coti`.`nigv` AS `nigv`,`coti`.`codobjeto` AS `codobjeto`,`coti`.`fechapresentacion` AS
+    `fechapresentacion`,`coti`.`fechanominal` AS `fechanominal`,`coti`.`idguia` AS `idguia`,`x`.`id` AS
+    `id`,`x`.`codentro` AS `codentro`,`x`.`codigoalma` AS `codigoalma`,`x`.`codart` AS `codart`,`x`.`disp`
+    AS `disp`,`x`.`cant` AS `cant`,`x`.`punit` AS `punit`,`x`.`item` AS `item`,`x`.`descri` AS `descri`,
+`x`.`stock` AS `stock`,`x`.`detalle` AS `detalle`,`x`.`tipoitem` AS `tipoitem`,coti.descuento*x.punit*x.cant/100 as descontado,
+                              x.punit*x.cant*(1-coti.descuento/100)  as totalneto,
+`x`.`estadodetalle` AS `estadodetalle`,`x`.`um` AS `um`,`x`.`hidguia` AS `hidguia`,`x`.`codservicio` AS
+`codservicio`,`x`.`tipoimputacion` AS `tipoimputacion`,(`x`.`punit` * `x`.`cant`) AS
+    `subto`,`t_moneda`.`desmon` AS `desmon`,`tipofacturacion`.`tipofacturacion` AS `tipofacturacion`,
+`estado`.`estado` AS `estado`,`sociedades`.`rucsoc` AS `rucsoc`,`sociedades`.`dsocio` AS `dsocio`,`contactos`.`c_nombre`
+    AS `c_nombre`,`t_moneda`.`simbolo` AS `simbolo`,`contactos`.`c_cargo` AS `c_cargo`,`contactos`.`c_tel` AS
+    `c_tel`,`contactos`.`c_mail` AS `c_mail`,`clipro`.`despro` AS `despro`,`clipro`.`rucpro` AS `rucpro`,
+                              `clipro`.`emailpro` AS `emailpro`,`documentos`.`desdocu` AS `desdocu`,`tenores`.`mensaje`
+    AS `textocabeza`,`tenores1`.`mensaje` AS `textopie`,`trabajadores`.`ap` AS `ap`,`trabajadores`.`am` AS `am`,
+                              `trabajadores`.`nombres` AS `nombres`,`trabajadores`.`telfijo` AS `telfijo`,`trabajadores`.`telmoviles` AS `telmoviles`,
+                              `direcciones`.`c_direc` AS `c_direc`,`x`.`punitdes` AS `punitdes`,sum(n.cant) as entregado
+                            from ((((((((((((((`public_ocompra` `coti` join `public_docompra` `x`) join
+                              `public_sociedades` `sociedades`) join
+                              `public_documentos` `documentos`) join
+                              `public_clipro` `clipro`) join
+                              `public_contactos` `contactos`) join
+                              `public_tipofacturacion` `tipofacturacion`) join
+                              `public_t_moneda` `t_moneda`) join
+                              `public_tenores` `tenores`) join
+                              `public_tenores` `tenores1`) join
+                              `public_estado` `estado`) join
+                              `public_trabajadores` `trabajadores`) join
+                              `public_direcciones` `direcciones`) join
+                              `public_ums` `ums` ) left join public_alentregas n on x.id=n.iddetcompra  ) where ((`coti`.`codsociedad` = `sociedades`.`socio`) and (`coti`.`coddocu` = `documentos`.`coddocu`) and (`coti`.`codpro` = `clipro`.`codpro`) and (`coti`.`idcontacto` = `contactos`.`id`) and (`coti`.`codtipofac` = `tipofacturacion`.`codtipofac`) and (`coti`.`moneda` = `t_moneda`.`codmoneda`) and (`coti`.`tenorsup` = `tenores`.`posicion`) and (`coti`.`coddocu` = `tenores`.`coddocu`) and (`coti`.`codsociedad` = `tenores`.`sociedad`) and (`coti`.`tenorinf` = `tenores1`.`posicion`) and (`coti`.`coddocu` = `tenores1`.`coddocu`) and (`coti`.`codsociedad` = `tenores1`.`sociedad`) and (`x`.`um` = `ums`.`um`) and (`coti`.`idguia` = `x`.`hidguia`) and (`coti`.`codestado` = `estado`.`codestado`) and (`coti`.`codresponsable` = `trabajadores`.`codigotra`) and (`coti`.`direcentrega` = `direcciones`.`n_direc`) and (`coti`.`coddocu` = `estado`.`codocu`)  )
+                            group by `coti`.`numcot` ,`coti`.`codpro`,
+`coti`.`fecdoc` ,`coti`.`codcon`,`coti`.`codestado` ,
+`coti`.`texto` ,`coti`.`textolargo`,`coti`.`tipologia` ,
+`coti`.`moneda` ,`coti`.`orcli` ,`ums`.`desum` ,`coti`.`descuento` ,`coti`.`usuario` ,`coti`.`coddocu` ,`coti`.`creado` ,
+`coti`.`modificado` ,`coti`.`creadopor` ,`coti`.`creadoel`,
+`coti`.`modificadopor` ,`coti`.`modificadoel` ,`coti`.`codtipofac` ,`coti`.`codsociedad` ,`coti`.`codgrupoventas` ,
+`coti`.`codtipocotizacion` ,`coti`.`validez` ,`coti`.`codcentro` ,`coti`.`nigv`,`coti`.`codobjeto` ,`coti`.`fechapresentacion` ,`coti`.`fechanominal` ,`coti`.`idguia` ,`x`.`id` ,`x`.`codentro` ,`x`.`codigoalma` ,`x`.`codart` ,`x`.`disp`
+,`x`.`cant` ,`x`.`punit` ,`x`.`item` ,`x`.`descri` ,
+`x`.`stock` ,`x`.`detalle` ,`x`.`tipoitem` ,coti.descuento*x.punit*x.cant/100 ,
+x.punit*x.cant*(1-coti.descuento/100) ,
+`x`.`estadodetalle` ,`x`.`um` ,`x`.`hidguia` ,`x`.`codservicio`
+,`x`.`tipoimputacion` ,(`x`.`punit` * `x`.`cant`) ,`t_moneda`.`desmon`,`tipofacturacion`.`tipofacturacion` ,
+`estado`.`estado` ,`sociedades`.`rucsoc` ,`sociedades`.`dsocio` ,`contactos`.`c_nombre`
+,`t_moneda`.`simbolo` ,`contactos`.`c_cargo` ,`contactos`.`c_tel` ,`contactos`.`c_mail` ,`clipro`.`despro` ,`clipro`.`rucpro` ,
+`clipro`.`emailpro` ,`documentos`.`desdocu` ,`tenores`.`mensaje`
+,`tenores1`.`mensaje` ,`trabajadores`.`ap` ,`trabajadores`.`am` ,
+`trabajadores`.`nombres` ,`trabajadores`.`telfijo` ,`trabajadores`.`telmoviles` ,
+`direcciones`.`c_direc` ,`x`.`punitdes`  order by `x`.`item`;
 -- Estructura para la vista `vw_ocosubtotal`
 --
 DROP TABLE IF EXISTS `vw_ocosubtotal`;

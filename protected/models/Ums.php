@@ -28,7 +28,7 @@ class Ums extends CActiveRecord
 	 */
 	public function tableName()
 	{
-        return Yii::app()->params['prefijo'].'ums';
+        return '{{ums}}';
 	}
 
 	/**

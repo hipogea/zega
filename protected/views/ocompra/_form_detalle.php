@@ -65,6 +65,12 @@
 	</div>
 
 
+	<div class="row">
+
+		<?php echo CHTML::hiddenField('codigoprove',$model->ocompra->codpro); ?>
+
+	</div>
+
 	
 
 
@@ -134,13 +140,28 @@
 		<?php echo $form->labelEx($model,'punit'); ?>
 		<?php echo $form->textField($model,'punit'); ?>
 		<?php echo $form->error($model,'punit'); ?>
+		<?php  echo Chtml::ajaxLink(
+			Chtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."package.png"),
+			CController::createUrl($this->id.'/cargaprecios'), array(
+				'type' => 'POST',
+				'url' => CController::createUrl($this->id.'/cargaprecios'), //  la acci?n que va a cargar el segundo div
+				"data"=>array(
+					"codigoprove"=>"js:codigoprove.value",
+					"codigomaterial"=>"js:Docompratemp_codart.value"
+				),
+				"update" => "#zona_precios",
+			)
+
+		);?>
+
+
+
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'disp'); ?>
-		<?php echo $form->textField($model,'disp',array('size'=>2,'maxlength'=>2)); ?>
-		<?php echo $form->error($model,'disp'); ?>
-	</div>
+<div id="zona_precios"></div>
+</div>
+
 
 
 
@@ -150,16 +171,11 @@
 
 
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'stock'); ?>
-		<?php echo $form->textField($model,'stock'); ?>
-		<?php echo $form->error($model,'stock'); ?>
-	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'iddesolpe'); ?>
-		<?php echo $form->textField($model,'iddesolpe'); ?>
-		<?php echo $form->error($model,'iddesolpe'); ?>
+
+		<?php echo $form->hiddenField($model,'iddesolpe'); ?>
+
 	</div>
 	
 	<div class="row">
@@ -168,23 +184,7 @@
 		<?php echo $form->error($model,'detalle'); ?>
 	</div>
 
-	<div class="row">
-		
-		<?php
 
-		 if ( !$model->isNewRecord) {
-
-            echo $form->labelEx($model,'estadodetalle');
-
-		  echo CHtml::textField('hola',
-   			  Estado::model()->find('codestado=:miestado and codocu=:midocumento',array(':midocumento'=>'022',':miestado'=>$model->estadodetalle))->estado,
-  			  array('id'=>'pepin','disabled'=>'disabled','size'=>20));
-
-					}
-
-		 ?>
-		
-	</div>
 
 
 
@@ -199,7 +199,7 @@
 	
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Grabar'); ?>
 	</div>
 
 

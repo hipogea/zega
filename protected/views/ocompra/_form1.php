@@ -116,7 +116,7 @@
                               'update' => '#zona_pdf',
                         ),
 
-                        'visiblex'=>array(ESTADO_ACEPTADO),
+                        'visiblex'=>array(ESTADO_ACEPTADO,ESTADO_PREVIO,ESTADO_CREADO),
 
                     ),
 

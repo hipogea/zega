@@ -183,7 +183,7 @@ public static function ExisteRegistro($nombreclase,$id)
         $solpe->textocabecera="Documento automático";
         $solpe->hidref=$id;
         $solpe->codocuref=$codocu;
-        $solpe->escompra='0';
+        $solpe->escompra<>'1';
         if(!$solpe->save()){
             print_r($solpe->getErrors());
             yii::app()->end();
@@ -477,7 +477,7 @@ public static function Borrahijoskardex($id){
     const CAMPO_CENTRO='mf_centro';
     const  CAMPO_ALEMI='mf_alemi';
     const  CAMPO_TXTMATERIAL='mf_alemi';
-
+    const ESTADO_DOCOMPRA_ANULADO='40';
 
 
 
@@ -666,9 +666,9 @@ public static function Borrahijoskardex($id){
  									d.coddocu  AS ".self::CAMPO_CODIGO_DOCUMENTO.",
  									 d.cant  AS ".self::CAMPO_CANTIDAD_MATERIAL.", 									 
  									 d.punit  AS ".self::CAMPO_PRECIO_UNITARIO_MATERIAL." , sum(x.cant) as n_sumita
- 									from  {{ocompra}}  h  INNER JOIN  ".Yii::app()->params['prefijo']."docompra d
- 									ON h.idguia=d.hidguia	LEFT JOIN ".Yii::app()->params['prefijo']."alentregas x ON d.id=x.iddetcompra
- 									WHERE  d.hidguia=".$idcompra." and tipoitem='M'
+ 									from  {{ocompra}}  h  INNER JOIN {{docompra}} d
+ 									ON h.idguia=d.hidguia	left JOIN {{alentregas}} x ON d.id=x.iddetcompra
+ 									WHERE  d.hidguia=".$idcompra." and tipoitem='M' and d.estadodetalle not in('".self::ESTADO_DOCOMPRA_ANULADO."')
  									group by d.id, d.codart,d.um, d.cant,d.punit
  									HAVING sum(x.cant) < d.cant or sum(x.cant) is null ")->queryAll();
 
@@ -1111,5 +1111,9 @@ if(!$mensaje->save())
         }
     }
 
+    public static function titulo($titulo,$imagen){
+        echo  CHtml::openTag("h1").$titulo.CHtml::closeTag("h1").CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"].$imagen.".png");
+
+    }
 
 }//fin de la clase Mifactoria

@@ -55,11 +55,7 @@ class ModeloGeneral extends CActiveRecord
 	}
 
 
-	/*esta funcion devuelve llena los impeustos para
-	los items  , x supesto que los guarad en la tabla impeustosaplicados */
-	public function colocaimpuestositem(){
 
-    }
 
 	public function devuelveimpuestos(){
 

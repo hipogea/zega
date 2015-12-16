@@ -63,7 +63,7 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'imputacion'); ?>
 		<?php
-		if ($modelopadre->escompra=='0') { //si se trata de una solped imputada
+		if ($modelopadre->escompra<>'1') { //si se trata de una solped imputada
 			if ($habilitado=='')
 
 			{	$this->widget('ext.matchcode.MatchCode',array(
@@ -164,7 +164,7 @@
 			Chtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."package.png"),
 			CController::createUrl($this->id.'/stock'), array(
 				'type' => 'POST',
-				'url' => CController::createUrl('Ums/cargaum'), //  la acci?n que va a cargar el segundo div
+				'url' => CController::createUrl($this->id.'/stock'), //  la acci?n que va a cargar el segundo div
 					"data"=>array(
 						"codiguito"=>"js:Desolpe_codart.value",
 						"centrito"=>"js:Desolpe_codal.value",
@@ -293,35 +293,7 @@ echo CHtml::ajaxSubmitButton("Ver detalle material.",
 		<?php echo $form->error($model,'textodetalle'); ?>
 	</div>
 
-	<?php
 
-
-
-	$this->widget('application.components.widgets.XHeditor',array(
-
-		'language'=>'en', //options are en, zh-cn, zh-tw
-
-		'config'=>array(
-
-			'id'=>'xh1',
-
-			'name'=>'xh',
-
-			'tools'=>'mini', // mini, simple, full or from XHeditor::$_tools, tool names are case sensitive
-
-			'width'=>'100%',
-
-			//see XHeditor::$_configurableAttributes for more
-
-		),
-
-		'contentValue'=>'Enter your text here', // default value displayed in textarea/wysiwyg editor field
-
-		'htmlOptions'=>array('rows'=>5, 'cols'=>10),// to be applied to textarea
-
-	));
-
-	?>
 
 
 

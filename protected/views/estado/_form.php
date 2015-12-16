@@ -40,9 +40,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'creadopor'); ?>
-		<?php echo $form->textField($model,'creadopor',array('size'=>25,'maxlength'=>25)); ?>
-		<?php echo $form->error($model,'creadopor'); ?>
+		<?php echo $form->labelEx($model,'nocalculable'); ?>
+		<?php echo $form->checkBox($model,'nocalculable'); ?>
+
 	</div>
 
 	<div class="row">

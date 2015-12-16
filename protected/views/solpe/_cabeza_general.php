@@ -119,15 +119,13 @@
 	
 	<div class="row">
 		<?php echo $form->labelEx($model,'escompra'); ?>
-		<?php echo $form->checkBox($model,'escompra',array( 'disabled'=>(in_array($model->estado,array(NULL)))?'':'disabled'));?>
+		<?php  $datos1 = CHtml::listData(Tiposolpe::model()->findAll("libre='1'"),'codtipo','destipo');
+		echo $form->DropDownList($model,'escompra',$datos1, array('empty'=>'--Seleccione un tipo--','disabled'=>(!$model->isNewRecord)?'disabled':'')  )  ;
+		?>
 		<?php echo $form->error($model,'escompra'); ?>
 	</div>
 
-		<div class="row">
-			<?php echo $form->labelEx($model,'externo'); ?>
-			<?php echo $form->checkBox($model,'externo',array( 'disabled'=>(in_array($model->estado,array(NULL)))?'':'disabled'));?>
-			<?php echo $form->error($model,'externo'); ?>
-		</div>
+
 	
 <div class="row">
 		<?php //echo $form->labelEx($model,'estado'); ?>

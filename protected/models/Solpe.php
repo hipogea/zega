@@ -149,7 +149,7 @@ class Solpe extends CActiveRecord
 		return array(
 			'numero' => 'Numero',
 			'tipo' => 'Tipo',
-			'escompra' => 'Es Compra?',
+			'escompra' => 'Tipo',
 			'textocabecera' => 'Textocabecera',
 			'creado' => 'Creado',
 			'autor' => 'Autor',

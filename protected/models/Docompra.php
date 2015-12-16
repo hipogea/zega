@@ -9,17 +9,22 @@ class Docompra extends ModeloGeneral
 	 * @param string $className active record class name.
 	 * @return Dcotmateriales the static model class
 	 */
+
+
+	public $estadosnototalizables=array();
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return Yii::app()->params['prefijo'].'docompra';
+		return '{{docompra}}';
 	}
 
 	public function init() {
@@ -27,6 +32,8 @@ class Docompra extends ModeloGeneral
 		$this->campoprecio='punit';
 		$this->isdocParent=false;
 		$this->documento='220';
+		$this->estadosnototalizables=Estado::estadosnocalculables($this->documento);
+		//var_dump($this->estadosnototalizables);yii::app()->end();
 	}
 
 
@@ -202,7 +209,26 @@ class Docompra extends ModeloGeneral
 	public function afterSave() {
           $this->refresh();
 		$this->colocapuentesolpe();  ///actualiza la tabla puente de la SOLPE
-		$this->colocaimpuestositem();
+
+       /* if($this->estotalizable()){*/
+		if($this->estotalizable()){
+			$this->colocaimpuestositem();
+		} else {
+			$this->retiraimpuestositem();
+		}
+
+            /*echo "bien item".$this->item."<br>";
+            var_dump($this->estadodetalle);
+            var_dump($this->estadosnototalizables);
+            yii::app()->end();
+        }else{
+            echo "mal item".$this->item."<br>";
+            var_dump($this->estadodetalle);
+            var_dump($this->estadosnototalizables);
+            yii::app()->end();
+        }*/
+
+
 		return parent::afterSave();
 	}
 
@@ -318,7 +344,18 @@ class Docompra extends ModeloGeneral
 	}
 
 public function colocaimpuestositem(){
+
 	yii::app()->impuestos->colocaimpuestos($this->id,$this->ocompra->idguia,$this->ocompra->coddocu,$this->ocompra->moneda,$this->punitdes*$this->cant);
 }
+
+	public function retiraimpuestositem(){
+
+		yii::app()->impuestos->borraimpuestos($this->id,$this->ocompra->idguia,$this->ocompra->coddocu);
+	}
+
+	private function estotalizable()
+	{
+		return !in_array($this->estadodetalle, $this->estadosnototalizables);
+	}
 
 }

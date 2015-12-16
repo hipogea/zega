@@ -268,21 +268,8 @@ public function actionconfig ()
 }
 
  public function actionRutas(){
-	 $docbloqueados=Yii::app()->db->createCommand()
-		 ->select('iddocu')
-		 ->from('{{bloqueos}}')->queryColumn();
-			//print_r($docbloqueados);
-
-
-			 $campoenlace='campoprueba';
-			 $criterio=New CDBCriteria();
-			 $criterio->addCondition("idusertemp=:idusuario");
-			 $criterio->addNotInCondition($campoenlace,$docbloqueados);
-			 $criterio->params=array(":idusuario"=>yii::app()->user->id);
-
-	 echo $criterio->condition;
-	 echo "<br>";
-	print_r( $criterio->params);
+	$data=Ocompra::historicoprecios('18005720');
+	 print_r($data->getData());
 	 yii::app()->end();
 
 

@@ -33,7 +33,7 @@ class Ocompra extends ModeloGeneral
 	 */
 	public function tableName()
 	{
-		return Yii::app()->params['prefijo'].'ocompra';
+		return '{{ocompra}}';
 	}
 
 	/**
@@ -376,7 +376,7 @@ public function agregaopcionimpuestos($codimpuesto=null)
 	
 	public function afterSave() {
 
-							      $this->agregaopcionimpuestos();
+							   //   $this->agregaopcionimpuestos();
 									return parent::afterSave();
 				}
 	
@@ -506,9 +506,52 @@ public $maximovalor;
 		$criterio->addNotInCondition('codestado',array(ESTADO_PREVIO,ESTADO_ANULADO)) ;
 
 	}
-	public static function historicoprecios($codart){
-		
+	public static function historicoprecios($codart,$codpro=null){
+		$codart=MiFactoria::cleanInput($codart);
+		/******
+		 * funcioque regresa un data provider de datos de precios para un material especificado
+		 */
+				//$cr=$this->criterimp($codocu,$idocu);
+		if(!is_null($codpro)){
+			$codpro=MiFactoria::cleanInput($codpro);
+			$rawData=Yii::app()->db->createCommand()
+				->select('a.numcot,a.codpro,a.moneda,a.fecdoc,b.codart,b.punit,b.um,y.desum as desumbase,z.desum as desum
+				    ,c.descripcion,c.um as umbase')
+				->from('{{ocompra}} a ,{{docompra b}},{{alentregas}} x,{{maestrocomponentes}} c,{{ums}} z,{{ums}} y ')
+				->where(
+					"a.idguia=b.hidguia and b.id=x.iddetcompra and b.codart=c.codigo
+					and c.um=y.um and b.um =z.um and b.codart=:vcodigo and a.codpro=:vcodpro",
+					array(":vcodigo"=>$codart,":vcodpro"=>$codpro)
+				)->queryAll();
 
-	}
+		}else {
+			$rawData=Yii::app()->db->createCommand()
+				->select('a.numcot,a.codpro,a.moneda,a.fecdoc,b.codart,b.punit,b.um,y.desum as desumbase,z.desum as desum
+				    ,c.descripcion,c.um as umbase')
+				->from('{{ocompra}} a ,{{docompra b}},{{alentregas}} x,{{maestrocomponentes}} c,{{ums}} z,{{ums}} y ')
+				->where(
+					"a.idguia=b.hidguia and b.id=x.iddetcompra and b.codart=c.codigo
+					and c.um=y.um and b.um =z.um and b.codart=:vcodigo",
+					array(":vcodigo"=>$codart))
+					->order("a.fecdoc DESC")
+				->queryAll();
+		}
+
+			//return  $rawData;
+
+			return new CArrayDataProvider
+			($rawData,
+				array(
+					'sort'=>array(
+						'attributes'=>array(
+							'codpro','numcot', 'moneda','fecdoc','codart','punit', 'umbase','um','desum','desumbase','descripcion',
+						),
+					),
+
+				)
+			);
+		}
+
+
 
 }

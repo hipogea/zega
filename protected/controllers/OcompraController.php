@@ -105,11 +105,12 @@ class OcompraController extends ControladorBase
                         if(true) {
                             if($model->save()){
                                 $this->ConfirmaBuffer($id); //Levanta temporales
+                                $this->terminabloqueo($id);
+                                //$this->terminabloqueo($id); // Desbloquea
                                 //$this->grabaitems($this->tempdpeticion_a_dpeticion($id)); //Graba temporales a la tabla Dpeticion
                                $this->ClearBuffer($id);
                                 //$this->limpiatemporaldetalle(); //Limpia temporal
-                                $this->terminabloqueo($id);
-                                //$this->terminabloqueo($id); // Desbloquea
+
 
                                 Yii::app()->user->setFlash('success', "Se grabo el documento  ".$this->SQL);
                                 //$this->render('update',array('model'=>$model));
@@ -232,7 +233,7 @@ public function actionVerDocumento($id){
         return array(
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('enviarpdf','admin','borrarimpuesto','reporte','agregarmasivamente','cargadirecciones','borraitems','sacaitem','sacaum','salir','agregaimpuesto','agregaritemsolpe','procesardocumento','refrescadescuento','VerDocumento','EditaDocumento','creadocumento','Agregardelmaletin','borraitem','imprimirsolo','cargaentregas','agregarsolpe','agregarsolpetotal','pasaatemporal','create','imprimirsolo','imprimir','imprimir2','enviarmail',
+				'actions'=>array('cargaprecios','enviarpdf','admin','borrarimpuesto','reporte','agregarmasivamente','cargadirecciones','borraitems','sacaitem','sacaum','salir','agregaimpuesto','agregaritemsolpe','procesardocumento','refrescadescuento','VerDocumento','EditaDocumento','creadocumento','Agregardelmaletin','borraitem','imprimirsolo','cargaentregas','agregarsolpe','agregarsolpetotal','pasaatemporal','create','imprimirsolo','imprimir','imprimir2','enviarmail',
 					'procesaroc','hijo','Aprobaroc','Reporteoc','Anularoc','Configuraop','Revertiroc', ///acciones de proceso
 					'libmasiva','creadetalle','Verdetalle','muestraimput','update','nada','Modificadetalle'),
 				'users'=>array('@'),
@@ -249,8 +250,15 @@ public function actionVerDocumento($id){
 public function actionborrarimpuesto($id) {
     $id=(int)MiFactoria::cleanInput($id);
     $reg=Impuestosdocuaplicado::model()->findByPk($id);
-    $reg->delete();
 
+    $criteriox=New CDBCriteria();
+    $criteriox->addCondition("hidocupadre=:viddocu AND codocu=:vcodocu AND codimpuesto=:vcodimpuesto");
+    $criteriox->params=array(":viddocu"=>$reg->iddocu,  ":vcodocu"=>$reg->codocu,":vcodimpuesto"=>$reg->codimpuesto);
+    ///tambien en la tabla impuesiosaplicados
+    $transaccion=$reg->dbConnection->beginTransaction();
+    Impuestosaplicados::model()->deleteAll($criteriox);
+    $reg->delete();
+    $transaccion->commit();
 
                     }
 
@@ -1968,13 +1976,15 @@ public function actionVerdetalle($id)
 
     private function proceso($idevento,$id) {
         $mensaje="";
+        $compra=Ocompra::model()->findByPk($id);
         switch ($idevento) {
             case 65: ///APROB
-                $filas=Ocompra::model()->findByPk($id)->detallefirme;
+                $filas=$compra->detallefirme;
                 foreach($filas as $row ) {
                    // $filafirme=Docompra::model()->findByPk($row->id);//solo si
                     //Solo si no esta anulado
-                    IF(!$row->estadodetalle==ESTADO_DOCOMPRA_ANULADO)
+                    $row->setScenario('cambiaestado');
+                  if( in_array($row->estadodetalle,Estado::estadosnocalculablesdetalle($compra->coddocu)))
                          $row->estadodetalle=ESTADO_DOCOMPRA_APROBADO;
 
                     ///AVTUALIZAR TAMBIEN EL ESTADO DE LOS REGISTROS DE LA TBLA PUENTE DESOLPECOMPRA
@@ -1990,7 +2000,7 @@ public function actionVerdetalle($id)
             case 67: ///deshacer APROBACIOPN
 
                 ///AQUI YA NNOS ETRABAJA CON EL BUFFER SE TRABAJADA CON LA TABAL ORIIGNAL
-                $filas=Ocompra::model()->findByPk($id)->detallefirme;
+                $filas=$compra->detallefirme;
                 foreach($filas as $row ) {
                     //$filafirme=Docompra::model()->findByPk($row->id);
                    if ( $row->cantidadentregada > 0) {
@@ -1998,7 +2008,8 @@ public function actionVerdetalle($id)
                    } else { //si no tiene atenciones entonces normal no mas Revertimos
 
                        $row->setScenario('cambiaestado');
-                       $row->estadodetalle=ESTADO_DOCOMPRA_CREADO;
+                       if( in_array($row->estadodetalle,Estado::estadosnocalculablesdetalle($compra->coddocu)))
+                           $row->estadodetalle=ESTADO_DOCOMPRA_CREADO;
                        $mensaje .= ($row->save()) ? "" : " No se pudo revertir  el item " . $row->item . "<br>";
                        /*print_r($row->geterrors());
                        print_r($row->geterrors());yii::app()->end();*/
@@ -2013,7 +2024,7 @@ public function actionVerdetalle($id)
 
             case 66: ///aNULAR
                 //aqui hayq ue tabajar directametne cn la tabla firme DOCOMPRA
-                $filas=Ocompra::model()->findByPk($id)->detallefirme;
+                $filas=$compra->detallefirme;
                 //aqui hayq ue tabajar directametne cn la tabla firme DOCOMPRA
                 foreach($filas as $row ) {
 
@@ -2102,5 +2113,20 @@ public function actionReporte($id){
         }
     }
 
+
+   public function actioncargaprecios(){
+       //echo "maerial ".$_POST['codigomaterial']."<br>";
+      // echo "prove ".$_POST['codigoprove']."<br>";
+      // yii::app()->end();
+           $codigo = (string)MiFactoria::cleanInput($_POST['codigomaterial']);
+
+               $codigopro = (string)MiFactoria::cleanInput($_POST['codigoprove']);
+               /*var_dump($codigo); var_dump($codigopro);
+               yii::app()->end();*/
+
+        echo   $this->renderpartial('precios',array('codigom'=>$codigo,'codprov'=>$codigopro),true,true);
+
+
+   }
 
 }

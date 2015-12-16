@@ -1,5 +1,6 @@
 <?php
 CONST ESTILO_POSICION_ABSOLUTA=" position:absolute; ";
+
 class CoordocsController extends Controller
 {
 	/**
@@ -306,8 +307,11 @@ $cadena="";
 		   {
 
 			    $criterioporpagina=New CDbCriteria;
-			   $criterioporpagina->addCondition($modelo->campofiltro."=:vidifiltrodocu");
-			   $criterioporpagina->params=ARRAY(":vidifiltrodocu"=>$idfiltrodocu);
+			  // $criterioporpagina->addCondition($modelo->campofiltro."=:vidifiltrodocu  ");
+			   $criterioporpagina->addCondition($modelo->campofiltro."= ".$idfiltrodocu);
+			   //var_dump(Estado::estadosnocalculables($modelo->codocu));yii::app()->end();
+			   $criterioporpagina->addNotInCondition($modelo->campoestado,Estado:: estadosnocalculablesdetalle($modelo->codocu));
+			  // $criterioporpagina->params=ARRAY(":vidifiltrodocu"=>$idfiltrodocu);
 			   $criterioporpagina->limit=$modelo->registrosporpagina;
 			    $criterioporpagina->offset=$modelo->registrosporpagina*($i-1);
 			    $proveedorporpagina=new Miproveedor($nombremodelo,array('pagination' => false,"criteria"=>$criterioporpagina));
@@ -323,8 +327,13 @@ $cadena="";
 
 			   $amontobase=$this->sumaarray($amontobase,$amontoagregado);
 			   if($i==$numeropaginas and $modelo->comercial=='1'){ //Si es la utima pag y ademas es doc comercial
-				   $grantotal=$amontobase[$modelo->campototal]+$amontoagregado[$modelo->campototal];
-				   $cadena.=$this->colocaimpuestos($modelo->codocu,$idfiltrodocu,$modelo->xresumen,$modelo->yresumen,$grantotal);
+
+				   if($numeropaginas==1){
+					   $grantotal=$amontobase[$modelo->campototal];
+				   }else {
+					   $grantotal=$amontobase[$modelo->campototal]+$amontoagregado[$modelo->campototal];
+				   }
+					     $cadena.=$this->colocaimpuestos($modelo->codocu,$idfiltrodocu,$modelo->xresumen,$modelo->yresumen,$grantotal);
 			   }
 
 			   $mpdf->WriteHTML($cadena,2);
@@ -346,7 +355,7 @@ $cadena="";
 
 
 		//if($file==1){
-			$ruta='assets/'.$filamuestracabecera->coddocu.$filamuestracabecera->idguia.'_'.yii::app()->user->id.'.pdf';
+			$ruta='assets/'.$modelo->codocu.$idfiltrodocu.'_'.yii::app()->user->id.'.pdf';
 			$mpdf->Output($ruta,'F');
 
 			$this->render('pdf',array('ruta'=>yii::app()->getBaseUrl(false).DIRECTORY_SEPARATOR.$ruta));

@@ -72,6 +72,7 @@ class ControladorBase extends Controller
 	{ ///Levanta la tabal temporal
 		$nametablapadre=$this->modelopadre;
 		//yii::app()->end();
+		Bloqueos::clearbloqueos();
 		foreach($this->modeloshijos as $nametablaoriginal => $nametablatemporal)
 		  {
 
@@ -188,7 +189,7 @@ class ControladorBase extends Controller
 				array(":vcodocu"=>$this->documento,":videuser"=>yii::app()->user->id)
 			)->queryColumn();
 		//recorrriendo lso modelos hijos
-		if(!is_null($id))
+		//if(!is_null($id))
 		foreach($this->modeloshijos as $clave=>$valor ){
 			$campoenlace=$this->camposlink[$valor];
 			$criterio=New CDBCriteria();

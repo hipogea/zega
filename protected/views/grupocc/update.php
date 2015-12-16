@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Grupocc', 'url'=>array('index')),
-	array('label'=>'Create Grupocc', 'url'=>array('create')),
-	array('label'=>'View Grupocc', 'url'=>array('view', 'id'=>$model->codgrupo)),
-	array('label'=>'Manage Grupocc', 'url'=>array('admin')),
+	//array('label'=>'List Grupocc', 'url'=>array('index')),
+	array('label'=>'Crear', 'url'=>array('create')),
+	//array('label'=>'View Grupocc', 'url'=>array('view', 'id'=>$model->codgrupo)),
+	array('label'=>'Listado', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Grupocc <?php echo $model->codgrupo; ?></h1>
+<?php MiFactoria::titulo('Actualizar grupo','update'); ?>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
