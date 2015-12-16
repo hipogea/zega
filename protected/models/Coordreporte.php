@@ -49,7 +49,7 @@ class Coordreporte extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, codocu, x, y, font_size, font_family, font_weight, font_color, nombre_campo, lbl_left, lbl_top, lbl_font_size, lbl_font_weight, lbl_font_family, lbl_font_color,esdetalle,visiblelabel,visiblecampo', 'safe', 'on'=>'search'),
-			array('codocu,hidreporte,esdetalle,totalizable, x, y,left_,aliascampo,longitudcampo,tipodato, top, font_size, font_family, font_weight, font_color, nombre_campo, lbl_left, lbl_top, lbl_font_size, lbl_font_weight, lbl_font_family,estilo, tienepie, lbl_font_color,visiblelabel,visiblecampo,iduser', 'safe', 'on'=>'insert,update'),
+			array('codocu,hidreporte,esdetalle,totalizable,esnumerico,adosaren, x, y,left_,aliascampo,longitudcampo,tipodato, top, font_size, font_family, font_weight, font_color, nombre_campo, lbl_left, lbl_top, lbl_font_size, lbl_font_weight, lbl_font_family,estilo, tienepie, lbl_font_color,visiblelabel,visiblecampo,iduser', 'safe', 'on'=>'insert,update'),
 
 		);
 	}
@@ -239,6 +239,19 @@ class Coordreporte extends CActiveRecord
 		}
 		return $acampos;
 	}
+
+	public static function adosables($idreporte){
+		$criteria=new CDbCriteria;
+		$acampos=array();
+		$criteria->addCondition(" adosaren  > '0'    AND hidreporte=:hidreporte");
+		$criteria->params=array(":hidreporte"=>$idreporte);
+		$filas=self::model()->findAll($criteria);
+		foreach ($filas as $fila){
+			$acampos[$fila->adosaren]=$fila->nombre_campo; //al reves para que vote que campo debe alojar el texto
+		}
+		return $acampos;
+	}
+
 
 
 

@@ -180,20 +180,36 @@ class ControladorBase extends Controller
 
 	public function ClearBuffer($id=null)
 	{
-			//recorrriendo lso modelos hijos
+		Bloqueos::clearbloqueos();
+		$docbloqueados=Yii::app()->db->createCommand()
+			->select('iddocu')
+			->from('{{bloqueos}}')
+			->where("codocu=:vcodocu AND iduser=:videuser",
+				array(":vcodocu"=>$this->documento,":videuser"=>yii::app()->user->id)
+			)->queryColumn();
+		//recorrriendo lso modelos hijos
 		if(!is_null($id))
 		foreach($this->modeloshijos as $clave=>$valor ){
-			$modtemp=new $valor;
-			$nombretabla=$modtemp->tableName();
-			unset($modtemp);
 			$campoenlace=$this->camposlink[$valor];
-			$filasborradas=Yii::app()->db->createCommand()
+			$criterio=New CDBCriteria();
+			$criterio->addCondition("idusertemp=".yii::app()->user->id);
+			$criterio->addNotInCondition($campoenlace,$docbloqueados);
+			//$criterio->params=array(":idusuario"=>yii::app()->user->id);
+			$valor::model()->deleteAll($criterio);
+			//$modtemp=new $valor;
+			//$nombretabla=$modtemp->tableName();
+			//unset($modtemp);
+			/*$filasborradas=Yii::app()->db->createCommand()
 				->delete($nombretabla," idusertemp=:idusuario AND ".$campoenlace."=:id",
-					array(":idusuario"=>yii::app()->user->id,  ":id"=>$id));
-		}
-      Bloqueos::clearbloqueos();
+					array(":idusuario"=>yii::app()->user->id,  ":id"=>$id));*/
+			/*$filasborradas=Yii::app()->db->createCommand()
+				->delete($nombretabla,$criterio->condition,	$criterio->params);
+            echo  $filasborradas->text;yii::app()->end();*/
 
-  return $filasborradas;
+		}
+
+
+  return true;
 	}
 
 
@@ -317,9 +333,9 @@ public function borraitemhijo($nombremodelohijotemp,$idmodelohijo){
 	}
 
 	public function out($id){
-		$this->ClearBuffer($id);
-		Bloqueos::clearbloqueos();
 		$this->TerminaBloqueo($id);
+		$this->ClearBuffer($id);
+
 
 	}
 

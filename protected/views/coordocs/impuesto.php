@@ -10,7 +10,13 @@
 	'columns'=>array(
 		'descripcion',
 		'abreviatura',
-		'valorap',	),
+		//'simbolo',
+		array('name'=>'valor','value'=>'"(".round($data["valor"],0)."%)"','footer'=>'TOTAL : '),
+
+		//'valor',
+		//'valorap',
+		array('name'=>'valorap','value'=>'$data["simbolo"]." ".MiFactoria::decimal($data["valorap"],2)','footer'=>$data->simbolo."  ".CHTml::openTag("span",array("style"=>"font-size:13px;font-weight:bold;")).MiFactoria::decimal($grantotal,2).CHTml::closeTag("span")),
+			),
 )); ?>
 
 	</div>

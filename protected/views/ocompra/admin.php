@@ -50,15 +50,23 @@ $('.search-form form').submit(function(){
 
       'columns' => array(
 		  ARRAY('name'=>'numcot','header'=>'Numero','type'=>'raw','value'=>'CHTml::link($data->numcot,Yii::app()->createurl("ocompra/editadocumento", array("id"=> $data->idguia ) ))'),
+		  array(
+			  'name'=>'fechanominal',
+			  'header'=>'Fec',
+			  'value'=>'date("d.m.y", strtotime($data->fechanominal))','htmlOptions'=>array('width'=>'50')
+		  ),
 		  'despro',
         'codart',
         'cant',
-        'um',
+        'desum',
         'descri',
+		  ARRAY('name'=>'entregado','type'=>'html','header'=>'Entr.','value'=>'($data->entregado>0)?$data->entregado.CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."Cast.png"):""','htmlOptions'=>array("width"=>35)),
         ARRAY('name'=>'simbolo','header'=>'.','value'=>'$data->simbolo'),
-		'punit',
-		'subto',
-      ),
+		  ARRAY('name'=>'punit','header'=>'P.unit','value'=>'MiFactoria::decimal($data->punit,2)'),
+		  ARRAY('name'=>'subto','header'=>'Subtotal','value'=>'MiFactoria::decimal($data->subto,2)'),
+		  ARRAY('name'=>'descontado','header'=>'Dcto','value'=>'MiFactoria::decimal($data->descontado,2)'),
+		  ARRAY('name'=>'totalneto','header'=>'Neto','value'=>'MiFactoria::decimal($data->totalneto,2)'),
+		      ),
     ));
 
 ?>

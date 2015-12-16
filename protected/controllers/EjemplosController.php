@@ -268,8 +268,22 @@ public function actionconfig ()
 }
 
  public function actionRutas(){
-	 /*var_dump(yii::app()->impuestos->dataimpuestos('210',135));
-	 yii::app()->end();*/
+	 $docbloqueados=Yii::app()->db->createCommand()
+		 ->select('iddocu')
+		 ->from('{{bloqueos}}')->queryColumn();
+			//print_r($docbloqueados);
+
+
+			 $campoenlace='campoprueba';
+			 $criterio=New CDBCriteria();
+			 $criterio->addCondition("idusertemp=:idusuario");
+			 $criterio->addNotInCondition($campoenlace,$docbloqueados);
+			 $criterio->params=array(":idusuario"=>yii::app()->user->id);
+
+	 echo $criterio->condition;
+	 echo "<br>";
+	print_r( $criterio->params);
+	 yii::app()->end();
 
 
 	 echo " Yii::getPathOfAlias('webroot') :  ".Yii::getPathOfAlias('webroot')."<br>";

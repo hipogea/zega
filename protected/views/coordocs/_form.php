@@ -77,6 +77,12 @@
 		<?php echo $form->error($model,'ylogo'); ?>
 	</div>
 
+		<div class="row">
+			<?php echo $form->labelEx($model,'comercial'); ?>
+			<?php echo $form->checkBox($model,'comercial'); ?>
+
+		</div>
+
 
 	<div class="row">
 	<?php
@@ -280,19 +286,7 @@
 			<div class="row">
 				<?php echo $form->labelEx($model,'campoestado'); ?>
 				<?php
-				if (!$model->isNewRecord) {
 
-					/*$criterial = new CDbCriteria;
-                    $criterial->condition='codocu=:docu';
-                    $criterial->params=array(':docu'=>$model->codocu);
-                    $datos = CHtml::listData(Estado::model()->findAll( $criterial),'codestado','estado');*/
-					$listacampos=array();
-					$modeloatrati=new $model->modelo;
-					foreach($modeloatrati->getAttributes() as $clave=>$valor){
-						$listacampos[$clave]=$clave;
-					}
-
-				}
 				echo $form->dropDownList($model,'campoestado', ($model->isNewRecord)?array():$listacampos, array(
 						'prompt' => 'Seleccione un campo' // Valor por defecto
 					)
@@ -300,6 +294,20 @@
 				?>
 				<?php echo $form->error($model,'campoestado'); ?>
 			</div>
+
+
+			<div class="row">
+				<?php echo $form->labelEx($model,'campototal'); ?>
+				<?php
+
+				echo $form->dropDownList($model,'campototal', ($model->isNewRecord)?array():$listacampos, array(
+						'prompt' => 'Seleccione un campo' // Valor por defecto
+					)
+				);
+				?>
+				<?php echo $form->error($model,'campototal'); ?>
+			</div>
+
 
 
 <div class="row">

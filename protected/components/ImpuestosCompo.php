@@ -169,7 +169,7 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
         );
         //$criterio->with = array('Impuestos');
         //$criterio->select = 't.descripcion, t1.valor';
-        $criterio->group=" a.codimpuesto,a.descripcion,a.abreviatura";
+        $criterio->group="x.simbolo, a.codimpuesto,a.descripcion,b.codmon,c.valor,a.abreviatura";
         return $criterio;
     }
 
@@ -180,9 +180,11 @@ public function colocaimpuestos($iddetalle,$iddocu,$codocu,$codmon,$monto){
 public function dataimpuestos($codocu,$idocu){
     $cr=$this->criterimp($codocu,$idocu);
     $rawData=Yii::app()->db->createCommand()
-        ->select('a.descripcion,a.abreviatura,sum(b.valor) as valorap ')
+        ->select('a.descripcion,c.valor,a.abreviatura,sum(b.valor) as valorap ,x.simbolo')
         ->from('{{impuestos}} a ')
         ->join('{{impuestosaplicados}} b', 'a.codimpuesto=b.codimpuesto')
+        ->join("{{valorimpuestos}} c", "c.hcodimpuesto=a.codimpuesto AND activo='1'")
+        ->join("{{monedas}} x", "x.codmoneda=b.codmon")
         ->where($cr->condition, $cr->params)
         ->group($cr->group)
         ->queryAll();
@@ -193,7 +195,7 @@ return new CArrayDataProvider
             array(
                 'sort'=>array(
                 'attributes'=>array(
-                                'descripcion', 'abreviatura', 'valorap',
+                                'descripcion', 'abreviatura','valor','codmon','simbolo', 'valorap',
                                     ),
                             ),
 

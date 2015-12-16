@@ -128,6 +128,8 @@ public $fecdoc1;
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'nalentregas'=>array(self::STAT, 'Alentregas', 'iddetcompra','select'=>'sum(t.cant)'),//el subtotal
+
 		);
 	}
 
@@ -285,6 +287,7 @@ public $fecdoc1;
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array('pagesize'=>100),
 		));
 	}
 

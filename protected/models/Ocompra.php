@@ -66,7 +66,7 @@ class Ocompra extends ModeloGeneral
 					array('tenorsup,tenorinf','required','message'=>'LLene los tenores'),
 				//array('codcentro','required','message'=>'El centro esta vacio'),
 				array('fechanominal','required','message'=>'Indica la fecha del documento'),
-				array('tipologia','in','range'=>range('S','T'),'message'=>'No es un tipo valido, ingresa T o S'),
+			//array('tipologia','in','range'=>range('S','T'),'message'=>'No es un tipo valido, ingresa T o S'),
 
 			array('codestado','safe','on'=>'cambiaestado'),
 			

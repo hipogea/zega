@@ -139,6 +139,26 @@
 		<?php echo $form->error($model,'totalizable'); ?>
 	</div>
 
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'esnumerico'); ?>
+		<?php echo $form->checkBox($model,'esnumerico'); ?>
+		<?php echo $form->error($model,'esnumerico'); ?>
+
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'adosaren'); ?>
+		<?php echo $form->textField($model,'adosaren',array('size'=>15,'maxlength'=>15)); ?>
+		<?php echo $form->error($model,'adosaren'); ?>
+
+	</div>
+
+
+
+
+
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

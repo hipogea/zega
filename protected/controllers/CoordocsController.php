@@ -203,29 +203,50 @@ class CoordocsController extends Controller
 
 
 	///GENERA LAS COLUMNAS DEL GRID
-public function makeColumnas($proveedorestilo,$amontobase,$amontoagregado){
+public function makeColumnas($proveedorestilo,$amontobase,$amontoagregado,$idreporte){
 	$arraycolumnas=array();
 
   // $totalesuma=$proveedordatos->Total();
 	/*var_dump($amontobase);
 	yii::app()->end();*/
+	$camposadosables=Coordreporte::adosables($idreporte); //	Obtiene los campos
+	//que alojan un campo de texto u otro valor para concatenar en la misma celda del GRID
+	// pej      array('descripcion'=>'comentario', 'preciounitario'=>'comentario2', ...etc)
 	foreach( $proveedorestilo as $registroestilo)
 	{
-		   if(($registroestilo->esdetalle+0) > 0)
+
+
+		     if(($registroestilo->esdetalle+0) > 0)
 		   {
 			  // foreach( $proveedordatos->getData() as $recorde)
 			   		//{
-						$arraycolumnas[ ] = array(
-							  'name'=>$registroestilo->nombre_campo,
-							  'header'=>$registroestilo->aliascampo,
-							'type'=>'raw',
-							//'value'=>'is_numeric($data->'.$registroestilo->nombre_campo.')?MiFactoria::decimal($data->'.$registroestilo->nombre_campo.',2):$data->'.$registroestilo->nombre_campo.'',
-							'footer'=>(in_array($registroestilo->nombre_campo,array_keys($amontobase)))? ($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo]).'':'',
-							'footer'=>($registroestilo->totalizable=='1')? ($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo]).'':'',
-							//'footer'=>
-							'htmlOptions'=> array ( 'width' => $registroestilo->longitudcampo*5 ),
-							'footerHtmlOptions'=>array('class' =>'piegrid'),
-						                      );
+			  // print_r($camposadosables);yii::app()->end();
+			  //$arreglotextos=array('htmlOptions'=> array ( 'width' => $registroestilo->longitudcampo*5 ));
+			  $arreglopropiedades=array(
+				  'name'=>$registroestilo->nombre_campo,
+				  'header'=>$registroestilo->aliascampo,
+				  'type'=>'raw',
+				 // array_keys($arreglotextos)=>array_values($arreglotextos),
+				  //'value'=>'is_numeric($data->'.$registroestilo->nombre_campo.')?MiFactoria::decimal($data->'.$registroestilo->nombre_campo.',2):$data->'.$registroestilo->nombre_campo.'',
+				  //'footer'=>(in_array($registroestilo->nombre_campo,array_keys($amontobase)))? ($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo]).'':'',
+				  'footer'=>($registroestilo->totalizable=='1')? MiFactoria::decimal(($amontobase[$registroestilo->nombre_campo]+$amontoagregado[$registroestilo->nombre_campo])).'':'',
+				  //'footer'=>
+				  'htmlOptions'=> array ( 'width' => $registroestilo->longitudcampo*5 ),
+				  'footerHtmlOptions'=>array('class' =>'piegrid'),
+			  );
+			   if($registroestilo->esnumerico=='1'){
+				   $arreglopropiedades['value']='MiFactoria::decimal($data->' . $registroestilo->nombre_campo.',2)';
+
+			   }
+
+			   IF(in_array($registroestilo->nombre_campo ,array_keys($camposadosables)))
+			   {
+				   //$arreglotextos = array('value' => '$data->' . $registroestilo->nombre_campo . '.CHtml::tag("<br>").$data->' . $camposadosables[$registroestilo->nombre_campo] . '');
+				 // if($registroestilo->{})
+				    $arreglopropiedades['value']='$data->' . $registroestilo->nombre_campo .'.CHtml::tag("br").CHtml::openTag("span",array("style"=>"font-size:9px;")).$data->'.$camposadosables[$registroestilo->nombre_campo].'.CHtml::closeTag("span")';
+
+			   }
+			   $arraycolumnas[ ] =$arreglopropiedades ;
 
 
 		   }
@@ -294,15 +315,17 @@ $cadena="";
                   $amontoagregado= $proveedorporpagina->Total();
 			 	$cadena=$this->renderpartial('reporte',
 					array(
-						'columnas' =>$this->makeColumnas($proveedorestilo,$amontobase,$amontoagregado),
+						'columnas' =>$this->makeColumnas($proveedorestilo,$amontobase,$amontoagregado,$id),
 						'cadenacabecera'=>$this->cabecera($filamuestracabecera,$proveedorestilo,$modelo),
 						'proveedordatos'=>$proveedorporpagina,
 						'modelo'=>$modelo,
 					),TRUE,	true);
-			   if($i==$numeropaginas){
-				   $cadena.=$this->colocaimpuestos($modelo->codocu,$idfiltrodocu,$modelo->xresumen,$modelo->yresumen);
-			   }
+
 			   $amontobase=$this->sumaarray($amontobase,$amontoagregado);
+			   if($i==$numeropaginas and $modelo->comercial=='1'){ //Si es la utima pag y ademas es doc comercial
+				   $grantotal=$amontobase[$modelo->campototal]+$amontoagregado[$modelo->campototal];
+				   $cadena.=$this->colocaimpuestos($modelo->codocu,$idfiltrodocu,$modelo->xresumen,$modelo->yresumen,$grantotal);
+			   }
 
 			   $mpdf->WriteHTML($cadena,2);
 			   if($i<$numeropaginas)
@@ -554,8 +577,8 @@ public function actioncargacampos(){
 		}
 	}
 
-	private function colocaimpuestos($codocu,$idocu,$xresumen,$yresumen){
-	  return $this->renderpartial("impuesto",array('xresumen'=>$xresumen,'yresumen'=>$yresumen,'codocu'=>$codocu,'idocu'=>$idocu),true,true);
+	private function colocaimpuestos($codocu,$idocu,$xresumen,$yresumen,$grantotal){
+	  return $this->renderpartial("impuesto",array('grantotal'=>$grantotal,'xresumen'=>$xresumen,'yresumen'=>$yresumen,'codocu'=>$codocu,'idocu'=>$idocu),true,true);
      }
 
 }

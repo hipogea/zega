@@ -72,35 +72,36 @@
 
 
 
+
+
+
 	<div class="row">
+		<?php //if(!$model->isnewRecord) { ?>
 		<?php echo $form->labelEx($model,'idcontacto'); ?>
 		<?php
-					
-					if ($this->eseditable($model->codestado)=='')
-		
-						{
-					$this->widget('ext.matchcode.MatchCode',array(		
-												'nombrecampo'=>'idcontacto',												
-												'ordencampo'=>1,
-												'controlador'=>$this->id,
-												'relaciones'=>$model->relations(),
-												'tamano'=>6,
-												'model'=>$model,
-												'form'=>$form,
-												'nombredialogo'=>'cru-dialog3',
-												'nombreframe'=>'cru-frame3',
-												'nombrearea'=>'fehdfjzx',
-													)
-													
-								);
-							} else{
-						echo CHtml::textField('Sssa',$model->contactos->c_nombre,array('disabled'=>'disabled','size'=>40)) ;
-				
-								}	
-			   ?>
-		
+		$criterio=new CDbCriteria;
+		$criterio->addcondition("c_hcod='".$model->codpro."'");
+		$datos1 = CHtml::listData(Contactos::model()->findAll($criterio),'id','c_nombre');
+		echo Chtml::ajaxLink(
+			Chtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."filter.png"),
+			CController::createUrl('Contactos/Contactosporprove'), array(
+				'type' => 'POST',
+				'url' => CController::createUrl('Contactos/Contactosporprove'), //  la acción que va a cargar el segundo div
+				'update' => '#Ocompra_idcontacto', // el div que se va a actualizar
+				'data'=>array('codigoprov'=>'js:Ocompra_codpro.value'),
+			)
+
+		);
+		echo $form->DropDownList($model,'idcontacto',$datos1, array('empty'=>'--Seleccione Contacto--' ) ) ;
+
+
+
+		?>
 		<?php echo $form->error($model,'idcontacto'); ?>
+		<?php //} ?>
 	</div>
+
+
 
 
 	<?php echo $form->hiddenField($model,'idguia') ;  ?>
@@ -129,7 +130,9 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'tipologia'); ?>
-		<?php echo $form->textField($model,'tipologia',array('size'=>1,'maxlength'=>1,'disabled'=>$this->eseditablebase($model->codestado))); ?>
+		<?php  $datos1c = CHtml::listData(Tipooc::model()->findAll(),'codtipo','destipo');
+		echo $form->DropDownList($model,'tipologia',$datos1c, array('empty'=>'--Seleccione tipo--','disabled'=>$this->eseditablebase($model->codestado) ) ) ;?>
+
 		<?php echo $form->error($model,'tipologia'); ?>
 	</div>
 

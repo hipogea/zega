@@ -33,7 +33,7 @@ class Coordocs extends ModeloGeneral
 			array('xgeneral, ygeneral, xlogo, ylogo', 'numerical', 'integerOnly'=>true),
 			array('codocu', 'length', 'max'=>3),
 			array('xresumen,yresumen', 'safe'),
-			array('id, xgeneral,campoestado,estilo,tienelogo,sociedad,tienepie,registrosporpagina,campofiltro,x_grilla,y_grilla, ygeneral,esdetalle,tamanopapel,nombrereporte,detalle, xlogo, ylogo,codcen,modelo, codocu', 'safe'),
+			array('id, xgeneral,campoestado,campototal,comercial,estilo,tienelogo,sociedad,tienepie,registrosporpagina,campofiltro,x_grilla,y_grilla, ygeneral,esdetalle,tamanopapel,nombrereporte,detalle, xlogo, ylogo,codcen,modelo, codocu', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, xgeneral, ygeneral, xlogo, ylogo, codocu', 'safe', 'on'=>'search'),
@@ -49,6 +49,8 @@ class Coordocs extends ModeloGeneral
 		// class name for the relations automatically generated below.
 		return array(
 			'hijos' => array(self::HAS_MANY, 'Coordreporte', 'hidreporte', 'order'=>'esdetalle ASC'),
+			///campos del tipo TEXT que seran adosados a un campo cquie elijamos
+			'hijosadosados'=>array(self::HAS_MANY, 'Coordreporte', 'hidreporte', 'condition'=>'adosaren > 0'),
 			'documento' => array(self::BELONGS_TO, 'Documentos', 'codocu'),
 		);
 	}

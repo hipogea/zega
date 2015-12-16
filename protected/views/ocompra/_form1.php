@@ -5,7 +5,7 @@
             <div class="barrasup barrasup-simple">
 
                 <?php echo CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemaimagenes'].'compra.png',"hola",array('width'=>'15','height'=>'8')); ?>
-                <span class="badge badge-success">Crear Orden de compra
+                <span class="badge badge-notice">Orden de compra
                 </span>
             </div>
 

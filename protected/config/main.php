@@ -100,7 +100,7 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'grecita',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-                'ipFilters'=>array('190.117.161.30'),
+                'ipFilters'=>array('190.117.161.62'),
 		),
 
 
