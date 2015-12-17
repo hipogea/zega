@@ -12,17 +12,31 @@
 )); ?>
 
 
+
+    <div class="row">
+        <?php
+        $botones=array(
+            'search'=>array(
+                'type'=>'A',
+                'ruta'=>array(),
+                'visiblex'=>array('10'),
+            ),
+        );
+        $this->widget('ext.toolbar.Barra',
+            array(
+                //'botones'=>MiFactoria::opcionestoolbar($model->id,$this->documento,$model->codestado),
+                'botones'=>$botones,
+                'size'=>24,
+                'extension'=>'png',
+                'status'=>'10',
+
+            )
+        ); ?>
+
+    </div>
     <div class="panelizquierdo">
 
-        <?php
-        echo "<div class='botones'>";
-        echo CHtmL::imageButton(Yii::app()->getTheme()->baseUrl.'/img/bino.png', array ( ));
-        echo "</div>";
-        echo "<div class='botones'>";
-        echo CHtml::link(Chtml::image(Yii::app()->getTheme()->baseUrl.'/img/exportar.png'),array('/solpe/imprimir2','id'=>$model->id));
-        echo "</div>";
 
-        ?>
 
 
         <div class="row">
@@ -171,9 +185,7 @@
 
 
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Search'); ?>
-	</div>
+
 </div> <!--panel derecho !-->
 <?php $this->endWidget(); ?>
 

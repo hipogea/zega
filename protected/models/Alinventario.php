@@ -769,7 +769,7 @@ public function getPrimaryKey();*/
 	 */
 	public function tableName()
 	{
-		return 'public_alinventario';
+		return '{{alinventario}}';
 	}
  	/**
 	 * @return array validation rules for model attributes.
@@ -788,7 +788,19 @@ public function getPrimaryKey();*/
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
+		$mascaraubic=yii::app()->settings->get('inventario','inventario_mascaraubicaciones');
+		//VAR_DUMP($mascaraubic);Yii::app()->end();
 		return array(
+
+			///actualizacion masiva
+			array('id,ubicacion','safe','on'=>'BATCH_UBICACIONES_UPD'),
+			array('id,ubicacion,cantlibre','safe','on'=>'BATCH_UBICACIONES_STOCK_UPD'),
+			array('cantlibre','numerical' ,'min'=>0, 'message'=>'Debe ser positivo','on'=>'BATCH_UBICACIONES_UPD,BATCH_UBICACIONES_STOCK_UPD'),
+
+
+
+
+			array('ubicacion', 'match','allowEmpty'=>true, 'pattern'=>$mascaraubic,'message'=>'Ubicacion Incorrecta'),
 			array('codalm', 'required','message'=>'Debes de ingresar el almacen', 'on'=>'insert,update'),
 				array('codcen', 'required','message'=>'Debes de ingresar el centro', 'on'=>'insert,update'),
 				array('codmon', 'required','message'=>'Ingresa la moneda','on'=>'insert,update'),
@@ -799,7 +811,7 @@ public function getPrimaryKey();*/
 			array('periodocontable, codresponsable, codcen', 'length', 'max'=>4,'on'=>'insert,update'),
 			array('codart, ubicacion, lote', 'length', 'max'=>10,'on'=>'insert,update'),
 			array('ssiduser', 'length', 'max'=>30,'on'=>'insert,update'),
-			array('creadopor, creadoel,punit, modificadopor, cantlibre, cantres, modificadoel,codmon, fechainicio, fechafin ', 'safe','on'=>'insert,update'),
+			array('punit, modificadopor, cantlibre, cantres, modificadoel,codmon, fechainicio, fechafin ', 'safe','on'=>'insert,update'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('codalm, creadopor, creadoel, modificadopor, modificadoel, fechainicio, fechafin, periodocontable, codresponsable, id, codart, codcen, um, cantlibre, canttran, cantres, ubicacion, lote', 'safe', 'on'=>'search'),

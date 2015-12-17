@@ -1,54 +1,11 @@
-<?php
-/* @var $this AlkardexController */
-/* @var $model Alkardex */
 
-$this->breadcrumbs=array(
-	'Alkardexes'=>array('index'),
-	'Manage',
-);
-
-$this->menu=array(
-	//array('label'=>'Do', 'url'=>array('index')),
-	//array('label'=>'Create Alkardex', 'url'=>array('create')),
-);
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#alkardex-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
-<?php MiFactoria::titulo('Documentos de Material','Cast')  ?>
-
-
-
-
-
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-
-
-<div class="division">
-
-
-
-
-
-
+<?php MiFactoria::titulo('Kardex del material '.$modelo->codart.' '.$modelo->maestro->descripcion,'Cast')  ?>
 
 <?php $this->widget('ext.groupgridview.GroupGridView', array(
 	'id'=>'alkardex-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$proveedor,
 		'mergeColumns' => array('numvale','movimiento'),
-	'itemsCssClass'=>'table table-striped table-bordered table-hover',
+	//'itemsCssClass'=>'table table-striped table-bordered table-hover',
 	//'filter'=>$model,
 	'columns'=>array(
 		array('name'=>'numvale','header'=>'Vale','type'=>'raw','value'=>'CHtml::link($data->numvale,Yii::app()->createurl(\'/almacendocs/update\', array(\'id\'=> $data->hidvale ) ))'),
@@ -58,9 +15,9 @@ $('.search-form form').submit(function(){
 
         array('name'=>'desum','htmlOptions' => array('width' => 10) ),
         'cant',
-        array('name'=>'descripcion',
+       /* array('name'=>'descripcion',
             'htmlOptions' => array('width' => 250)
-        ),
+        ),*/
 		array(
 			'name'=>'fecha',
 			'header'=>'Fec',
@@ -78,4 +35,3 @@ $('.search-form form').submit(function(){
 
     ),
 )); ?>
-</div>

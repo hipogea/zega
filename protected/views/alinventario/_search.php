@@ -17,22 +17,31 @@
 )); ?>
 
 
-<div class="row">
 
-		<?php 
-		echo "<div class='botones'>";
-		echo CHtmL::imageButton(Yii::app()->getTheme()->baseUrl.'/img/bino.png', array ( ));
-			echo "</div>";
-		echo "<div class='botones'>";
-		 echo CHtml::link(Chtml::image(Yii::app()->getTheme()->baseUrl.'/img/exportar.png'),array('/solpe/imprimir2','id'=>$model->id)); 
-		echo "</div>";
-         
 
-		
-          ?>
+	<div class="row">
+		<?php
+		$botones=array(
+			'search'=>array(
+				'type'=>'A',
+				'ruta'=>array(),
+				'visiblex'=>array('10'),
+			),
+		);
+		$this->widget('ext.toolbar.Barra',
+			array(
+				//'botones'=>MiFactoria::opcionestoolbar($model->id,$this->documento,$model->codestado),
+				'botones'=>$botones,
+				'size'=>24,
+				'extension'=>'png',
+				'status'=>'10',
 
+			)
+		); ?>
 
 	</div>
+
+
 	<div class="row">
 		<?php echo $form->label($model,'codalm'); ?>
 		<?php echo $form->textField($model,'codalm',array('size'=>3,'maxlength'=>3)); ?>
@@ -41,7 +50,7 @@
 <div class="row">
 		<?php echo $form->labelEx($model,'codcen'); ?>
 		<?php  $datos1 = CHtml::listData(Centros::model()->findAll(array('order'=>'nomcen')),'codcen','nomcen');
-		  echo $form->DropDownList($model,'codcen',$datos1, array('empty'=>'--Seleccione una referencia--',  
+		  echo $form->DropDownList($model,'codcen',$datos1, array('empty'=>'--Seleccione una Centro--',
 													    ) ) ;
 		?>
 		<?php echo $form->error($model,'centro'); ?>
@@ -91,6 +100,14 @@
 	<div class="row">
 		<?php echo $form->label($model,'haystock'); ?>
 		<?php echo $form->checkBox($model,'haystock'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->label($model,'hayreserva'); ?>
+		<?php echo $form->checkBox($model,'hayreserva'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->label($model,'haytransito'); ?>
+		<?php echo $form->checkBox($model,'haytransito'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

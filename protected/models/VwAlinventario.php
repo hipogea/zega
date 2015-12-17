@@ -1,31 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "vw_alinventario".
- *
- * The followings are the available columns in table 'vw_alinventario':
- * @property string $codalm
- * @property string $creadopor
- * @property string $creadoel
- * @property string $modificadopor
- * @property string $modificadoel
- * @property string $fechainicio
- * @property string $fechafin
- * @property string $periodocontable
- * @property string $codresponsable
- * @property string $codart
- * @property string $codcen
- * @property string $um
- * @property double $cantlibre
- * @property double $canttran
- * @property double $cantres
- * @property string $ubicacion
- * @property string $lote
- * @property string $siid
- * @property string $ssiduser
- * @property integer $id
- * @property string $descripcion
- */
 class VwAlinventario extends CActiveRecord
 {
 	/**
@@ -34,6 +8,8 @@ class VwAlinventario extends CActiveRecord
 	 * @return VwAlinventario the static model class
 	 */
 	public $haystock;
+	public $hayreserva;
+	public $haytransito;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -62,10 +38,10 @@ class VwAlinventario extends CActiveRecord
 			array('codart, ubicacion, lote', 'length', 'max'=>10),
 			array('ssiduser', 'length', 'max'=>30),
 			array('descripcion', 'length', 'max'=>60),
-			array('creadopor, creadoel, ptlibre,modificadopor, modificadoel, fechainicio, fechafin, siid', 'safe'),
+			array(' cantlibre, fechainicio, fechafin, siid', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('codalm, creadopor,haystock, creadoel, modificadopor, modificadoel, fechainicio, fechafin, periodocontable, codresponsable, codart, codcen, um, cantlibre, canttran, cantres, ubicacion, lote, siid, ssiduser, id, descripcion', 'safe', 'on'=>'search'),
+			array('codalm, creadopor,haystock,hayreserva,haytransito, creadoel, modificadopor, modificadoel, fechainicio, fechafin, periodocontable, codresponsable, codart, codcen, um, cantlibre, canttran, cantres, ubicacion, lote, siid, ssiduser, id, descripcion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -112,7 +88,9 @@ class VwAlinventario extends CActiveRecord
 			'ssiduser' => 'Ssiduser',
 			'id' => 'ID',
 			'descripcion' => 'Descripcion',
-			'haystock' => 'Solo stock',
+			'haystock' => 'Stock Libre',
+			'hayreserva' => 'Reservas',
+			'haytransito' => 'Transito',
 		);
 	}
 
@@ -150,6 +128,10 @@ class VwAlinventario extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		if($this->haystock=='1')
 		$criteria->addCondition("cantlibre > 0 ");
+		if($this->hayreserva=='1')
+			$criteria->addCondition("cantres > 0 ");
+		if($this->haytransito=='1')
+			$criteria->addCondition("canttran > 0 ");
       //  $criteria->addCondition("cantlibre > 0 or cantres >0 or canttran > 0");
 		 if(isset($_SESSION['sesion_Maestrocompo'])) {
 					$criteria->addInCondition('codart', $_SESSION['sesion_Maestrocompo'], 'AND');

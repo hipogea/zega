@@ -27,12 +27,9 @@ $('#alinventario-grid2').yiiGridView('update', {
 ");
 ?>
 
-<h1>Inventario</h1>
+<?php MiFactoria::titulo('Existencias','package')  ?>
 
-<?php
-echo CHtml::Link('new',Yii::app()->createurl('/alinventario/pintareservas', array('material'=> '1804233')),array('target'=>'_blank'));
 
-?>
 <?php // echo CHtml::link('Filtrar','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="">
 <?php $this->renderPartial('_search',array(
@@ -55,16 +52,17 @@ echo CHtml::Link('new',Yii::app()->createurl('/alinventario/pintareservas', arra
 	//'filter'=>$model,
 	'columns'=>array(
 		//'codart',
+		ARRAY('name'=>'id','type'=>'raw','value'=>'CHtml::link(CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."Cast.png"),"#", array("onclick"=>\'$("#cru-frame2").attr("src","\'.Yii::app()->createurl(\'/alinventario/muestrakardex\', array(\'id\'=> $data->id ) ).\'");$("#cru-dialog2").dialog("open"); return false;\' ) )'),
+		//array('name'=>'embarcacion.nomep','header'=>'EP','type'=>'raw', 'value'=>'CHtml::link("".$data->embarcacion->nomep."","#",array(\'onclick\'=>\'$("#cru-frame2").attr("src","\'.Yii::app()->createurl(\'/reportepesca/update\', array(\'id\'=> $data->id ) ).\'"); $("#cru-dialog2").dialog("open"); return false;\',))'),
 		'codalm',
 		'codcen',
 		array('name'=>'codart','type'=>'raw','value'=>'CHtml::link($data->codart,Yii::app()->createurl(\'/alinventario/update\', array(\'id\'=> $data->id ) ) )'),
-		'cantlibre',
+		//'cantlibre',
 		//'cantres',
-		array('name'=>'cantres','type'=>'raw','value'=>'CHtml::Link($data->cantres,
-							Yii::app()->createurl(\'/alinventario/pintareservas\', array(\'material\'=> $data->codart)),
-							array(\'target\'=>\'_blank\')
-		)'),
-		'canttran',
+		array('name'=>'cantlibre','type'=>'raw','value'=>'($data->cantlibre>0)?CHtml::openTag("span",array("class"=>"badge badge-success")).$data->cantlibre.CHtml::closeTag("span"):""'),
+		array('name'=>'canttran','type'=>'raw','value'=>'($data->canttran>0)?CHtml::openTag("span",array("class"=>"badge badge-important")).$data->canttran.CHtml::closeTag("span"):""'),
+		array('name'=>'cantres','type'=>'raw','value'=>'($data->cantres>0)?CHtml::Link(CHtml::openTag("span",array("class"=>"badge badge-warning")).$data->cantres.CHtml::closeTag("span"),Yii::app()->createurl("/alinventario/pintareservas", array("material"=> $data->codart)),array("target"=>"blank")):""'),
+
 		'desum',
 
 		'ubicacion',
@@ -100,6 +98,27 @@ echo CHtml::Link('new',Yii::app()->createurl('/alinventario/pintareservas', arra
 //Capture your CGridView widget on a variable
 //$gridWidget=$this->widget('bootstrap.widgets.TbGridView', array( . . .
 $this->renderExportGridButton($gridWidget,'Exportar resultados',array('class'=>'btn btn-info pull-right'));
+?>
+
+<?php
+//--------------------- begin new code --------------------------
+// add the (closed) dialog for the iframe
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+	'id'=>'cru-dialog2',
+	'options'=>array(
+		'title'=>'Kardex',
+		'autoOpen'=>false,
+		'modal'=>true,
+		'width'=>700,
+		'height'=>500,
+	),
+));
+?>
+<iframe id="cru-frame2" width="100%" height="100%"></iframe>
+<?php
+
+$this->endWidget();
+//--------------------- end new code --------------------------
 ?>
 
 

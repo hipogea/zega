@@ -30,6 +30,7 @@ public $documentos_tolerecepfacturaendias=null;
 
 	/*****inventario***/
 	public $inventario_periodocontrol;
+	public $inventario_mascaraubicaciones;
 	//public $adminnoticias;
 
 	/*****compras***/
@@ -101,7 +102,7 @@ public $documentos_tolerecepfacturaendias=null;
 					email_cuentahost',
 				'required','message'=>'Este dato es obligatorio'
 			),
-			array('documentos_selloagua,documentos_controlrecepcion','safe'),
+			array('inventario_mascaraubicaciones,documentos_selloagua,documentos_controlrecepcion','safe'),
 			array(
 				// array('transporte_tiempopermitidohastaentrega','numerical', 'integerOnly'=>true, 'min'=>0, 'max'=>100),
 				'transporte_tiempopermitidohastaentrega', 'numerical', 'integerOnly'=>true,
@@ -110,6 +111,7 @@ public $documentos_tolerecepfacturaendias=null;
 
 			//array(
 			array('inventario_periodocontrol','numerical', 'integerOnly'=>true, 'min'=>0, 'max'=>30),
+
 			//),
 			array(
 				'af_rutafotosinventario,general_rutatemaimagenes,	materiales_rutaimagenesmateriales,email_rutaficherosdeplantillas','chkdirectorio',
@@ -136,6 +138,7 @@ public $documentos_tolerecepfacturaendias=null;
 	'transporte_tiempopermitidohastaentrega'=>'Dias permitidos para anular despacho ',
 	'transporte_trancheck'=>'Restringir Mov Af por lugar',
 	'inventario_periodocontrol'=>'Periodo Dias control de inventario',
+			'inventario_mascaraubicaciones'=>'Mascara ubicaciones',
 	//public $adminnoticias;
 	'compras_restringircantidades'=>'Restringir cant en compras',
 	'af_afmascara'=>'Mascara cod AF',

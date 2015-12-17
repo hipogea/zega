@@ -111,7 +111,7 @@ class AlinventarioController extends Controller
 		return array(
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','pintareservas','create','supervision','import','pronostica','pareto','adminpareto','repinventario','prueba','buclecarga','update','cargarmat','busqueda','cargaalmacenes','cargaalmacenes1'),
+				'actions'=>array('muestrakardex','admin','pintareservas','create','supervision','import','pronostica','pareto','adminpareto','repinventario','prueba','buclecarga','update','cargarmat','busqueda','cargaalmacenes','cargaalmacenes1'),
 				'users'=>array('@'),
 			),
 
@@ -423,9 +423,10 @@ print_r($_SESSION['sesion_Maestrocompo']);
 
 		if ($this->isExportRequest()) { //<==== [[ADD THIS BLOCK BEFORE RENDER]]
 			$this->exportCSV($model->search(), array(
-					'idinventario',
+					'id',
 					'codalm',
 					'codcen',
+					'cantlibre',
 					'ubicacion',
 					'desum',
 					'um',
@@ -786,6 +787,18 @@ public function actionBusqueda()
 
 
 	public function actionCrealote(){
+
+
+	}
+
+	public function actionmuestrakardex($id){
+		$id=MiFactoria::cleanInput($id);
+	$modeloinv=$this->loadModel($id);
+			$proveedor=VwKardex::model()->search_pormaterial($modeloinv);
+			$this->layout = '//layouts/iframe';
+			$this->render('_kardex',array(
+				'proveedor'=>$proveedor,'modelo'=>$modeloinv
+			));
 
 
 	}
