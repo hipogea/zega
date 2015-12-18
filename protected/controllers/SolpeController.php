@@ -3,47 +3,34 @@ const ESTADO_PREVIO='99';
 const ESTADO_CREADO='10';
 const ESTADO_AUTORIZADO='20';
 const ESTADO_ANULADO='30';
-const CODIGO_MATERIAL_SERVICIO='10000001';
+
 const CODIGO_DOC_SOLPE='340';
-
-const ESTADO_RESERVA_CREADO='10';
-const ESTADO_RESERVA_ATENDIDO='20';
-const ESTADO_RESERVA_ANULADO='30';
-const ESTADO_RESERVA_CERRADO='70';
-
-
 
 class SolpeController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
+	
+	const DOCUMENTO_RESERVA='450';
+	const DOCUMENTO_RQ='800';
+	const ESTADO_RESERVA_CREADO='10';
+const ESTADO_RESERVA_ATENDIDO='20';
+const ESTADO_RESERVA_ANULADO='30';
+const ESTADO_RESERVA_CERRADO='70';
+const ESTADO_DESOLPE_RESERVADO='60';
+//const CODIGO_MATERIAL_SERVICIO=yii::app()->settings->get('materiales','materiales_codigoservicio');
+	
 	public $layout='//layouts/column2';
-
-
-	/**
-	 * @return array action filters
-	 */
 	public function filters()
 	{
 		return array('accessControl',array('CrugeAccessControlFilter'));
 	}
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
 	public function accessRules()
 	{
 		Yii::app()->user->loginUrl = array("/cruge/ui/login");
 		return array(
-
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('admin','pideoferta','cargaimputacion', 'index','create','detienereserva','tratareserva','creaservicio','display','reservaautomatica','cargafavorito','creafavorito','vre','Pintamensajes','muestra','limpiarcarro','cargapanel','poneralcarro','tomarcompras','anulareserva','Solpeautomatica','imprimir2','atiendesolpe','stock','pasacompra','peru','anularsolpe','reservaitem','verificadispo','cargadetalle','aprobarsolpe','procesarsolpe','creadetalle','update','liberacion','aprobar','configuraop','Borraitems','modificadetalle'),
 				'users'=>array('@'),
 			),
-
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -56,22 +43,19 @@ class SolpeController extends Controller
                 'class' => 'application.components.ExportableGridBehavior',
                 'filename' => 'Solicitudes.csv',
 				'csvDelimiter' =>(Yii::app()->user->isGuest)?",":Yii::app()->user->getField('delimitador') , //i.e. Excel friendly csv delimiter
-
 			),
 
 			'doblepost'=>array(
 				'class'=>'application.components.VerificaDoblePostBehavior'
 						),
-
-
-
 			);
     }
 
 
 	public function devuelvehijos($id){
+		$id=MiFactoria::cleanInput($id);
 		$registroshijos =Desolpe::model()->findAllBySql(" select *from
-  																".Yii::app()->params['prefijo']."desolpe1
+																	{{desolpe1}}
   																 where
   																 hidsolpe=".$id." and est <> '20'  ");
 		Return  $registroshijos;
@@ -90,9 +74,8 @@ class SolpeController extends Controller
 
 	}
 
-
-
 	public function actionreservaautomatica($id) {
+		$id=MiFactoria::cleanInput($id);
 		$model=Solpe::model()->findByPk($id);
 		if($model->escompra<>'1') {  //Solo solpes que no sean de compras
 		//
@@ -103,18 +86,19 @@ class SolpeController extends Controller
 
 					      if($row->numeroreservas == 0){
 							  $row->setScenario('Atencionreserva');
-							  $modeloreserva=New Alreserva;
+							 
+							 $modeloreserva=New Alreserva;
 							  $modeloreserva->hidesolpe=$row->id;
-							  $modeloreserva->estadoreserva=ESTADO_RESERVA_CREADO;
+							  $modeloreserva->estadoreserva=self::ESTADO_RESERVA_CREADO;
 							  $modeloreserva->fechares=date("Y-m-d H:i:s");
 							  $modeloreserva->usuario=Yii::app()->user->Name;
-							  $modeloreserva->codocu='450';
+							  $modeloreserva->codocu=self::DOCUMENTO_RESERVA;
 							  $modeloreserva1=New Alreserva;
 							  $modeloreserva1->hidesolpe=$row->id;
-							  $modeloreserva1->estadoreserva='10';
+							  $modeloreserva1->estadoreserva=self::ESTADO_RESERVA_CREADO;
 							  $modeloreserva1->fechares=date("Y-m-d H:i:s");
 							  $modeloreserva1->usuario=Yii::app()->user->Name;
-							  $modeloreserva1->codocu='800';
+							  $modeloreserva1->codocu=self::DOCUMENTO_RQ;
 
 							  $factorconversion=Alconversiones::convierte($row->codart,$row->um);
 							  //$cantidadefectiva=($row->um <>$row->maestro->um)?$row->cant*$factorconversion:$row->cant;
@@ -134,21 +118,26 @@ class SolpeController extends Controller
 							  //  echo "<br>"; echo "<br>"; echo "<br>"; echo "<br>"; echo "<br>";
 							 // echo $inventario->codcen."   ".$inventario->codalm."    ".$inventario->codart."<br>";
 
-							             $inventario->cantres+=$modeloreserva->cant*$factorconversion;
-							             $inventario->cantlibre-=$modeloreserva->cant*$factorconversion;
+							            // $inventario->cantres+=$modeloreserva->cant*$factorconversion;
+							            // $inventario->cantlibre-=$modeloreserva->cant*$factorconversion;
 							             $inventario->setScenario('modificacantidad');
-										$row->est='60';
-							         if($modeloreserva->cant > 0)
-							         if(!$modeloreserva->save())
-								      $mensa.=" No se pudo generar el registro de  reserva para el item ".$row->item." -- ".$row->txtmaterial." <br>";
-							         if($modeloreserva1->cant > 0)
-							         if(!$modeloreserva1->save())
-								      $mensa.=" No se pudo generar el registro de  reserva para el item ".$row->item." -- ".$row->txtmaterial." <br>";
-							        if(!$row->save())
-								    $mensa.=" No se pudo actualizar el estado del detalle del item ".$row->item." -- ".$row->txtmaterial." <br>";
-							       if(!$inventario->save())
-								      $mensa.=" No se pudo actualizar el registro de inventario del  item ".$row->item." -- ".$row->txtmaterial." <br>";
-
+										 if($inventario->stocklibre_a_reserva($row->cant*$factorconversion))
+										 {
+											 $row->est=self::ESTADO_DESOLPE_RESERVADO;
+											if(!( $inventario->save() and 
+												$modeloreserva->save() and
+												 ($modeloreserva1->cant>0)?$modeloreserva1->save():true and 
+								                 $row->save())) $mensa.=__CLASS_."  ".__FUNCTION__."  ".__LINE__." No se pudo grabar algun registro ";
+								  // echo "sali";yii::app()->end();
+									 
+										 }else{
+											// $transaccion->rollback();
+											// echo " no sali";yii::app()->end();
+											$mensa.="No existe suficiente stock libre para reservar el material ".$row->txtmaterial."<br>" ;
+											
+										 }
+										
+							       
 						  }
 
 				   }//fin del For
@@ -1040,7 +1029,7 @@ public function actionTomarcompras(){
 
 public function actiontratareserva($id){
 	$filtro=(int)MiFactoria::cleanInput($id);
-	$model=VwReservasPendientes::model()->find("iddesolpe=".$filtro);
+	$model=VwReservasPendientes::model()->find("idreserva=".$filtro);
 	$this->layout = '//layouts/iframe';
 	//yii::app()->user->setFlash('notice','Esta reserva ya tiene atenciones, solo puede detener el flujo');
 	if(is_null($model))
@@ -1519,9 +1508,10 @@ public function actionprocesarsolpe($id)
 		if(isset($_POST['Desolpe']))
 		{
 			$model->attributes=$_POST['Desolpe'];
+			 $transaccion=$model->dbConnection->beginTransaction();
 			if($model->save())
 			{
-                $transaccion=$model->dbConnection->beginTransaction();
+               
 					$idsolpe=$model->id;
 					$cantcompra=$model->cantidad_compras;		 
 					$cantreservada=$model->cantidad_reservada;
@@ -1530,8 +1520,8 @@ public function actionprocesarsolpe($id)
                      $modelo->hidesolpe= $idsolpe;
                      $modelo->cant=$cantreservada;
                      $modelo->flag='1';
-                    // $model->est='06'; //estado 'RESERVADO'
-                     //$modelo->codocu='045';
+                     $modelo->estadoreserva=self::ESTADO_RESERVA_CREADO;
+                     $modelo->codocu=self::DOCUMENTO_RESERVA;
                              }
 
                       if($cantcompra > 0) {
@@ -1539,19 +1529,18 @@ public function actionprocesarsolpe($id)
                                       $modelin->hidesolpe= $idsolpe;
                                       $modelin->cant=$cantcompra ;
                                       $modelin->flag='0';
-                                    //  $model->est='08'; //'SOLICITADO PARA COMPRA'
-                                    //$modelin->codocu='008';
+                                    $modelin->estadoreserva=self::ESTADO_RESERVA_CREADO;
+                                    $modelo->codocu=self::DOCUMENTO_RQ;
                         }
 
-                $modeloinventario=Alinventario::model()->findByPk($model->desolpe_alinventario->id);
-                if(!is_null($modeloinventario)) {
-                    $modeloinventario->setscenario('modificacantidad');
-                    $modeloinventario->cantlibre=$modeloinventario->cantlibre-$cantreservada*Alconversiones::model()->convierte($modeloinventario->codart,$model->um); ///;
-                    $modeloinventario->cantres=$modeloinventario->cantres+$cantreservada*Alconversiones::model()->convierte($modeloinventario->codart,$model->um);
-				}
-
-                $model->est=($cantcompra >0 and $cantreservada ==0 )?'80':'60'; ///si es una solicitud exclusiva apra compras el estado es '08'
-
+                $modeloinventario=Alinventario::model()->findByPk($model->desolpe_alinventario->id);				
+                if(is_null($modeloinventario)) 
+					throw new CHttpException(500,'No existe inventario para el material '.$model->txtmaterial);
+					$modeloinventario->setScenario('modificacantidad');
+					 $factorconversion=Alconversiones::convierte($model->codart,$model->um);
+				if($modeloinventario->stocklibre_a_reserva($cantreservada*$factorconversion)){
+					   $model->est=self::ESTADO_DESOLPE_RESERVADO; ///si es una solicitud exclusiva apra compras el estado es '08'
+								
                                  if(
                                         $model->save() and
                                         ($cantreservada>0)?$modelo->save():true and
@@ -1560,8 +1549,12 @@ public function actionprocesarsolpe($id)
                                         $transaccion->commit();
                                              } else {
                                                     $transaccion->rollback(); ///regresar todo a como estaba
-                                                    throw new CHttpException(404,'carayyyyyy');
+                                                    throw new CHttpException(404,'Hubo un error al momento de reservar');
                                             }
+				}	ELSE{
+					 throw new CHttpException(500,$modeloinventario->cantlibre. '  no EXISTE SUFEINC TESTROCK APRA RESERVA '.$cantreservada*$factorconversion);
+				}									 
+              
 
 					 if (!empty($_GET['asDialog']))
 												{

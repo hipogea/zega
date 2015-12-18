@@ -28,7 +28,7 @@
 		</div>
 
 	<div class="row">
-		<?php
+		<?php  //  var_dump($model->attributes);yii::app()->end();
 		$botones=array(
 			'save'=>array(
 				'type'=>'A',

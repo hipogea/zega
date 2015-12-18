@@ -63,11 +63,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             // 'id'=>'cajita' // the columnID for getChecked
         ),
        // 'idreserva',
-        array('name'=>'numero','type'=>'raw','value'=>'CHtml::link($data->numero,Yii::app()->createurl(\'/solpe/update\', array(\'id\'=> $data->idsolpe ) ) )'),
+        array('name'=>'numero','type'=>'raw','value'=>'CHtml::link($data->numero,Yii::app()->createurl(\'/solpe/update\', array(\'id\'=> $data->idreserva ) ) )'),
          'desdocu_reserva',
         //'estadoreserva',
         array('name'=>'fecha_reserva','value'=>'date("d.m.Y", strtotime($data->fecha_reserva))'),
-
+  'idreserva',
 		//'numsolpe',
 		'item',
         'cantdesolpe',
@@ -82,8 +82,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//array('name'=>'codal','type'=>'raw','value'=>'CHtml::link($data->codal,Yii::app()->createurl(\'/almacendocs/atiendesolpe\', array(\'id\'=> $data->hidsolpe ) ) )'),
 		//array('name'=>'codal','type'=>'raw','value'=>'($data->est=="03")?CHtml::link($data->codal,"#" , array(\'onclick\'=>\'$("#cru-detalle").attr("src","\'.Yii::app()->createurl(\'/solpe/reservaitem\', array(\'id\'=> $data->id, \'asDialog\'=>1,\'gridId\'=> $this->grid->id   ) ).\'"); $("#cru-dialogdetalle").dialog("open"); return false;\',)):$data->codal'),
 		'centro',
-        'cantidad_atendida',
-        'cantidad_pendiente',
+        array('name'=>'cantidad_atendida','value'=>'($data->cantidad_atendida>0)?MiFactoria::decimal($data->cantidad_atendida,3):""'),
+        array('name'=>'cantidad_pendiente','value'=>'($data->cantidad_pendiente>0)?MiFactoria::decimal($data->cantidad_pendiente,3):""'),
 		'usuario_reserva',
 
         array(
@@ -94,7 +94,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     array(
                         'visible'=>'true',
                         'url'=>'$this->grid->controller->createUrl("/solpe/tratareserva/",
-										    array("id"=>$data->iddesolpe,)
+										    array("id"=>$data->idreserva,)
 									    )',
                         'click'=>('function(){
 							    $("#cru-detalle").attr("src",$(this).attr("href"));

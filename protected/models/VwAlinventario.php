@@ -118,7 +118,7 @@ class VwAlinventario extends CActiveRecord
 		$criteria->compare('codcen',$this->codcen,true);
 		$criteria->compare('um',$this->um,true);
 		$criteria->compare('cantlibre',$this->cantlibre);
-		$criteria->compare('descripcion',$this->descripcion,TRUE);
+		//$criteria->compare('descripcion',$this->descripcion,TRUE);
 		$criteria->compare('canttran',$this->canttran);
 		$criteria->compare('cantres',$this->cantres);
 		$criteria->compare('ubicacion',$this->ubicacion,true);
@@ -126,6 +126,7 @@ class VwAlinventario extends CActiveRecord
 		$criteria->compare('siid',$this->siid,true);
 		$criteria->compare('ssiduser',$this->ssiduser,true);
 		$criteria->compare('id',$this->id);
+		$criteria->addcondition(" descripcion like '%".MiFactoria::cleanInput($this->descripcion)."%' ");
 		if($this->haystock=='1')
 		$criteria->addCondition("cantlibre > 0 ");
 		if($this->hayreserva=='1')
@@ -182,6 +183,7 @@ class VwAlinventario extends CActiveRecord
 		$criteria->compare('ssiduser',$this->ssiduser,true);
 		$criteria->compare('id',$this->id);
 		$criteria->addcondition('cantlibre > 0');
+
 		//  $criteria->addCondition("cantlibre > 0 or cantres >0 or canttran > 0");
 		if(isset($_SESSION['sesion_Maestrocompo'])) {
 			$criteria->addInCondition('codart', $_SESSION['sesion_Maestrocompo'], 'AND');

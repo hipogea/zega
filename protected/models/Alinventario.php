@@ -461,7 +461,7 @@ public function getPrimaryKey();*/
 
 
 	public function stocklibre_a_reserva($cant){
-		if(InventarioUtil::verificarsignocant($cant)){
+		if($cant >0 ){
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_LIBRE,$cant)){
 				$this->cantlibre-=$cant;
 				$this->cantres+=$cant;
@@ -484,7 +484,7 @@ public function getPrimaryKey();*/
 
 
 	public function  stocklibre_a_transito($cant){
-		if(InventarioUtil::verificarsignocant($cant)){
+		if($cant >0 ){
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_LIBRE,$cant)){
 				$this->{self::CAMPO_STOCK_LIBRE}-=$cant;
 				$this->{self::CAMPO_STOCK_TRANSITO}+=$cant;
@@ -505,7 +505,7 @@ public function getPrimaryKey();*/
 	}
 
 	public function  stocktransito_a_libre($cant){
-		if(InventarioUtil::verificarsignocant($cant)){
+		if($cant >0 ){
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_TRANSITO,$cant)){
 				$this->{self::CAMPO_STOCK_TRANSITO}-=$cant;
 				$this->{self::CAMPO_STOCK_LIBRE}+=$cant;
@@ -543,7 +543,7 @@ public function getPrimaryKey();*/
 				return false;
 			}
 
-			return true;
+
 
 	}
 

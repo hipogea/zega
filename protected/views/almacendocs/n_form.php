@@ -174,7 +174,7 @@
 
 
 	<?php
-	if($model->cestadovale=='20' AND $model->almacenmovimientos->signo < 0  ) {	?>
+	if($model->cestadovale==ESTADO_EFECTUADO AND $model->almacenmovimientos->signo < 0  ) {	?>
 	<div class="row">
 		<?php echo CHtml::label('Punto expedicion','lblpuntoexped'); ?>
 		<?php $datos1 = CHtml::listData ( Puntodespacho::model ()->findAll ( " codcen='" . $model->codcentro . "'" ) , 'id' , 'nombrepunto' );

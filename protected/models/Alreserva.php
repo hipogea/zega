@@ -157,7 +157,21 @@ public function detener(){
 							//Yii::app()->user->setFlash('error', "La reserva del item  ".$this->desolpe->item."  del material ".$this->desolpe->txtmaterial." No se pudo anular porque no se grabo el registro del inventario ");
 							$mensaje.= "La reserva del item  ".$this->desolpe->item."  del material ".$this->desolpe->txtmaterial." No se pudo anular porque no se grabo el registro del inventario<br> ";
 						} else{
-							$retorno=true;
+							$regde=$this->desolpe;
+							$regde->setScenario('cambiaestado');
+							///tambien actualizar el status de la desolpe
+							$regde->est='30';
+							if(!$regde->save()){
+								$mensaje.='NO se grabo la solpe';
+								$retorno=false;
+							} else {
+								$retorno=true;
+							}
+
+
+
+
+
 							//$mensaje.= "La reserva del item  ".$this->desolpe->item."  del material ".$this->desolpe->txtmaterial." No se pudo anular porque no se grabo el registro del inventario<br> ";
 
 							//Yii::app()->user->setFlash('success', "La reserva del item  ".$this->desolpe->item."  del material ".$this->desolpe->txtmaterial." Se ha anulado ");

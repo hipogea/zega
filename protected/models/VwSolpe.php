@@ -45,7 +45,7 @@ class VwSolpe extends CActiveRecord
 			array('textodetalle, fechacrea, fechaent, fechalib, hidsolpe,estado', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('numero,escompra, posicion, identidad,tipimputacion, centro, fechacrea1,fechaent1, codal, codart, txtmaterial, grupocompras, usuario, modificado, textodetalle, fechacrea, fechaent, fechalib, estadolib, imputacion, solicitanet, hidsolpe, creado, creadopor, creadoel, modificadopor, modificadoel, id, codocu, um, tipsolpe, est, cant, item, numsolpe', 'safe', 'on'=>'search'),
+			array('numero,escompra, posicion, identidad,tipimputacion, centro, fechacrea1,fechaent1, codal, codart, txtmaterial, grupocompras, usuario, modificado, textodetalle, fechacrea, fechaent, fechalib, estadolib, imputacion, solicitanet, hidsolpe, id, codocu, um, tipsolpe, est, cant, item, numsolpe', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,7 +79,7 @@ class VwSolpe extends CActiveRecord
 			'tipimputacion' => 'Imputacion',
 			'centro' => 'Centro',
 			'codal' => 'Almac',
-            'escompra'=>'Abastec',
+            'escompra'=>'Tipo Sol',
 			'codart' => 'Cod',
 			'txtmaterial' => 'Descripcion',
 			'grupocompras' => 'Gr Comp',
@@ -117,29 +117,21 @@ class VwSolpe extends CActiveRecord
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
 		$criteria=new CDbCriteria;
-
-		//$criteria->compare('numero',$this->numero,true);
 		$criteria->compare('posicion',$this->posicion,true);
 		$criteria->compare('tipimputacion',$this->tipimputacion,true);
 		$criteria->compare('centro',$this->centro,true);
 		$criteria->compare('estado',$this->estado,true);
 		$criteria->compare('codal',$this->codal,true);
 		$criteria->compare('codart',trim($this->codart),true);
-		//$criteria->compare('txtmaterial',$this->txtmaterial,true);
 		$criteria->compare('grupocompras',$this->grupocompras,true);
 		$criteria->compare('usuario',$this->usuario,true);
 		$criteria->compare('modificado',$this->modificado,true);
 		$criteria->compare('textodetalle',$this->textodetalle,true);
-		//$criteria->compare('fechacrea',$this->fechacrea,true);
-		//$criteria->compare('fechaent',$this->fechaent,true);
 		$criteria->compare('fechalib',$this->fechalib,true);
-		$criteria->compare('estadolib',$this->estadolib,true);
 		$criteria->compare('imputacion',$this->imputacion,true);
 		$criteria->compare('solicitanet',$this->solicitanet,true);
+		//$criteria->compare('txtmaterial',$this->txtmaterial,true);
 		$criteria->compare('hidsolpe',$this->hidsolpe,true);
 		$criteria->compare('id',$this->id);
 		$criteria->compare('codocu',$this->codocu,true);
@@ -148,10 +140,11 @@ class VwSolpe extends CActiveRecord
 		$criteria->compare('est',$this->est,true);
 		$criteria->compare('cant',$this->cant);
 		$criteria->compare('item',$this->item,true);
-        $criteria->compare('escompra',$this->escompra,true);
+       $criteria->compare('escompra',$this->escompra,true);
 		$criteria->compare('numsolpe',$this->numsolpe,true);
 		$criteria->addcondition("numsolpe IS NOT NULL" );
-		$criteria->addcondition(" txtmaterial like '%".$this->txtmaterial."%' ");
+		$criteria->addcondition(" txtmaterial like '%".MiFactoria::cleanInput($this->txtmaterial)."%' ");
+
 		// if((isset($this->fecdoc) && trim($this->fecdoc) != "") && (isset($this->fecdoc1) && trim($this->fecdoc1) != ""))  {
 		             //  $limite1=date("Y-m-d",strotime($this->d_fectra)-24*60*60); //UN DIA MENOS 
 					 //  $limite2=date("Y-m-d",strotime($this->d_fectra)+24*60*60); //UN DIA mas 

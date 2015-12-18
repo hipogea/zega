@@ -42,7 +42,7 @@ class Solpe extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('numero', 'required'),
+			array('escompra', 'required','on'=>'insert'),
 			ARRAY('externo', 'safe','on'=>'insert'),
 			array('numero,item','required','message'=>' Llene este dato, es obligatorio', 'on'=>'jalaitemparacompras'),
 			array('numero,item,estado,escompra','safe', 'on'=>'jalaitemparacompras'),
@@ -81,7 +81,7 @@ class Solpe extends CActiveRecord
             array('numero','checknumero','on'=>'agregaritemscompra'),
 
 
-			array('numero, tipo,escompra, textocabecera, creado, um,codocu,autor, estado, creadopor, creadoel, modificadopor, modificadoel, fechadoc, fechanec, id', 'safe', 'on'=>'search'),
+			array('numero,tipo,escompra, textocabecera, creado, um,codocu,autor, estado,  fechadoc, fechanec, id', 'safe', 'on'=>'search'),
 		);
 	}
 

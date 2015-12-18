@@ -185,7 +185,7 @@ class Desolpe extends CActiveRecord
 			 'desolpe_solpe'=>array(self::BELONGS_TO, 'Solpe', 'hidsolpe'),
 			'desolpe_alinventario'=> array(self::BELONGS_TO, 'Alinventario', array('codal'=>'codalm','centro'=>'codcen','codart'=>'codart')),
 			'desolpe_estado'=>array(self::BELONGS_TO,'Estado',array('est'=>'codestado','codocu'=>'codocu')),
-			  'numeroreservas'=>array(self::STAT, 'Alreserva', 'hidesolpe','condition'=>" codocu IN ('450','800') "),//el campo foraneo
+			  'numeroreservas'=>array(self::STAT, 'Alreserva', 'hidesolpe','condition'=>" estadoreserva <> '30' AND codocu IN ('450','800') "),//el campo foraneo
 			   'numero_reservascompras'=>array(self::STAT, 'Alreserva', 'hidesolpe','condition'=>"estadoreserva <> '30' and codocu='800' "),//el campo foraneo
 			'cant_reservada'=>array(self::STAT, 'Alreserva', 'hidesolpe','select'=>'sum(t.cant)','condition'=>"estadoreserva <> '30' AND codocu IN ('450') "),//el campo foraneo
 			'cant_solicitada'=>array(self::STAT, 'Alreserva', 'hidesolpe','select'=>'sum(t.cant)','condition'=>"estadoreserva <> '30' AND codocu IN ('800') "),//el campo foraneo
@@ -365,15 +365,12 @@ public function checktipimputacion(){
 		           $this->adderror('cantidad_reservada','La cantidad reservada excede a la solicitada' );
 	    //verifica que la cantidad a reservar no supere el stock de inventario
 		//antes asegurarse que se esta hablando de la misma unidad de medida base, emn otro caso convertir
-		if( !$this->um==Maestrocompo::model()->findByPk(trim($this->codart))->um) {
-				$cantidad_reservada_convertida=$this->cant*Alconversiones::model()->convierte($this->codart,$this->um);
-			}else{
-			  $cantidad_reservada_convertida=$this->cantidad_reservada;
-			}
+		$cantidad_reservada_convertida=Alconversiones::convierte($this->codart,$this->um)*$this->cantidad_reservada;
+		
 				 $eninventario=$this->desolpe_alinventario->cantlibre;
 				   //ahora si lo que se quiere reservar es mayot que lo que hay en inventario
 				  if( $eninventario < $cantidad_reservada_convertida)
-							$this->adderror('cantidad_reservada','La cantidad reservada es mayor de la que hay en inventario' );
+							$this->adderror('cantidad_reservada','La cantidad reservada ('.$cantidad_reservada_convertida.') es mayor de la que hay en inventario ('.$eninventario.')' );
 		
 		            if( $eninventario > 0 and  $cantidad_reservada_convertida==0 )
                         $this->adderror('cantidad_reservada','La cantidad reservada no puede ser cero, habiendo stock' );
