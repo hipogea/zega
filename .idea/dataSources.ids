@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - neologys_razzo@www.neologys.com" uuid="6e4e39ec-9457-415c-ad08-fcff7ab39f78">
+    <database-info product="MySQL" version="5.5.42-37.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="neologys_razzo"/>
+    <table name="ActiveRecordLog" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="Vw_alinventario_resumen" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="cruge_authassignment" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_authitem" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_authitemchild" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_field" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_fieldvalue" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_session" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_system" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="cruge_user" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="psps" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_activos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_alconversiones" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="um1" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="um2" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numerador" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="denominador" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="codart" sqlType="VARCHAR" precision="8" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_alconversiones_ibfk_1" columns="um1" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_alconversiones_ibfk_2" columns="um2" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fki_conamagerial" unique="false" columns="codart"/>
+      <index name="fki_flflkf" unique="false" columns="um2"/>
+      <index name="fki_ums" unique="false" columns="um1"/>
+    </table>
+    <table name="public_alentregas" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="iddetcompra" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="fecha" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="idkardex" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="usuario" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="final" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estado" sqlType="CHAR" precision="2" scale="0" nullable="false" jdbcType="1"/>
+      <column name="punit" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="CODOCU" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_alentregas_ibfk_1" columns="idkardex" ref-table="public_alkardex" ref-schema="" ref-catalog="neologys_razzo" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fki_detcvompas" unique="false" columns="iddetcompra"/>
+      <index name="fki_oetret" unique="false" columns="idkardex"/>
+    </table>
+    <table name="public_alimentacion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_alinventario" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codalm" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creadopor" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="creadoel" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="modificadopor" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="modificadoel" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="fechainicio" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="fechafin" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="periodocontable" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codresponsable" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codart" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codcen" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cantlibre" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="canttran" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="cantres" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="ubicacion" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lote" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="siid" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="ssiduser" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="punit" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="punitdif" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8" def="MA=="/>
+      <column name="codmon" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_alinventario_ibfk_1" columns="codart" ref-table="public_maestrocomponentes" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codigo" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_alinventario_ibfk_2" columns="codalm" ref-table="public_almacenes" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codalm" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="public_desolpe1_ibfk_1" table="public_desolpe1" schema="" catalog="neologys_razzo" columns="codart,codal,centro"/>
+      <index name="uk_registroinv" unique="true" columns="codart,codalm,codcen"/>
+      <index name="bk_codart" unique="false" columns="codart"/>
+      <index name="k_almacend" unique="false" columns="codalm"/>
+      <index name="k_centros" unique="false" columns="codcen"/>
+    </table>
+    <table name="public_alinventarioperiodo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_alkardex" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codart" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codmov" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="alemi" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="aldes" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fecha" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="coddoc" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numdoc" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="usuario" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="um" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="comentario" sqlType="VARCHAR" precision="40" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codocuref" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numdocref" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codcentro" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="codestado" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="prefijo" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fechadoc" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="correlativo" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numkardex" sqlType="VARCHAR" precision="14" scale="0" nullable="true" jdbcType="12"/>
+      <column name="solicitante" sqlType="VARCHAR" precision="18" scale="0" nullable="true" jdbcType="12"/>
+      <column name="hidvale" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="idref" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="lote" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="valido" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="checki" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="destino" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="preciounit" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="correlativ" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="codcendes" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="idusertemp" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="idstatus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="idtemp" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="textolargo" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="colector" sqlType="VARCHAR" precision="18" scale="0" nullable="false" jdbcType="12"/>
+      <column name="montomovido" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_alkardex_ibfk_1" columns="codart" ref-table="public_maestrocomponentes" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codigo" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_alkardex_ibfk_2" columns="um" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="public_alentregas_ibfk_1" table="public_alentregas" schema="" catalog="neologys_razzo" columns="idkardex"/>
+      <index name="bk_codcendes" unique="false" columns="codcendes"/>
+      <index name="fki_cemitr" unique="false" columns="codcentro"/>
+      <index name="fki_codigomat" unique="false" columns="codart"/>
+      <index name="fki_deod" unique="false" columns="coddoc"/>
+      <index name="fki_docirer" unique="false" columns="codocuref"/>
+      <index name="fki_movis" unique="false" columns="codmov"/>
+      <index name="fki_oetoetee" unique="false" columns="hidvale"/>
+    </table>
+    <table name="public_alkardextraslado" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_almacendocs" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="fechavale" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codmovimiento" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numvale" sqlType="CHAR" precision="12" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codtipovale" sqlType="CHAR" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codtrabajador" sqlType="CHAR" precision="4" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codalmacen" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codcentro" sqlType="CHAR" precision="4" scale="0" nullable="true" jdbcType="1"/>
+      <column name="cestadovale" sqlType="CHAR" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codocu" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="fechacont" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="fechacre" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="numdocref" sqlType="CHAR" precision="15" scale="0" nullable="true" jdbcType="1"/>
+      <column name="posic" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codocuref" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="correlativo" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="textolargo" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="codaldestino" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codcendestino" sqlType="CHAR" precision="4" scale="0" nullable="true" jdbcType="1"/>
+      <column name="codsociedad" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="ceco" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_almacendocs_ibfk_1" columns="codmovimiento" ref-table="public_almacenmovimientos" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codmov" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="public_almacenes" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codalm" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="nomal" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="desalm" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="tipo" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codcen" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codsoc" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tipovaloracion" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estructura" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hiddirec" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gestionadespacho" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="verprecios" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="novalorado" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="tolstockres" sqlType="DECIMAL" precision="4" scale="2" nullable="true" jdbcType="3"/>
+      <column name="fecharefpronostico" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="codmon" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="codalm"/>
+      <exported-key name="public_alinventario_ibfk_2" table="public_alinventario" schema="" catalog="neologys_razzo" columns="codalm"/>
+      <index name="codmon" unique="false" columns="codmon"/>
+      <index name="FKI_AL_1234" unique="false" columns="codsoc"/>
+      <index name="FKI_AL_234" unique="false" columns="codcen"/>
+    </table>
+    <table name="public_almacenkardex" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_almacenmovimientos" schema="" catalog="neologys_razzo" type="TABLE">
+      <exported-key name="public_almacendocs_ibfk_1" table="public_almacendocs" schema="" catalog="neologys_razzo" columns="codmovimiento"/>
+    </table>
+    <table name="public_alreserva" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_archivador" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_areas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_atencionreserva" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="hidreserva" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="hidkardex" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="estadoatencion" sqlType="CHAR" precision="2" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="bkhidakded4s" unique="true" columns="hidkardex"/>
+      <index name="bk_idreserva" unique="false" columns="hidreserva"/>
+      <index name="hidkardex" unique="false" columns="hidkardex"/>
+      <index name="hidreserva" unique="false" columns="hidreserva"/>
+    </table>
+    <table name="public_authassignment" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_authitem" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_authobjetos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_authobjetoslista" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_authobjetosrango" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_autorizacion_personal" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_autorizacion_personal_detalle" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_bandeja" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_bloqueos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cajachica" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_camionetas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_canales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cargamasiva" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cargamasivadet" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cargos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_carteres" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_carteres_control" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_carteres_envios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_carteres_eventos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_catvaloracion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cc" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ccgastos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_centros" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_centros_areas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_choferes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_clasecc" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_clases" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_clasesmaestro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_clipro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cnf_patrones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_confcorreo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_confignoticias" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_conformidades" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cont_categoriasvalor" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cont_determcuentas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_contactos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_contactosadicio" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_controlactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_coordocs" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="xgeneral" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ygeneral" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="xlogo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ylogo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="codocu" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="codcen" sqlType="CHAR" precision="4" scale="0" nullable="false" jdbcType="1"/>
+      <column name="modelo" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="nombrereporte" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="detalle" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="campofiltro" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tamanopapel" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="x_grilla" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="y_grilla" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="registrosporpagina" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="estilo" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tienepie" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="tienelogo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="sociedad" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="campoestado" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="xresumen" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="yresumen" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="fk_coordocu" unique="false" columns="codocu"/>
+    </table>
+    <table name="public_coordreporte" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="codocu" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="left_" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="top" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="font_size" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12" def="JzEycHgn"/>
+      <column name="font_family" sqlType="VARCHAR" precision="11" scale="0" nullable="false" jdbcType="12" def="J2FyaWFsJw=="/>
+      <column name="font_weight" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="font_color" sqlType="VARCHAR" precision="11" scale="0" nullable="true" jdbcType="12"/>
+      <column name="nombre_campo" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lbl_left" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lbl_top" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lbl_font_size" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12" def="JzEycHgn"/>
+      <column name="lbl_font_weight" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" def="J2JvbGQn"/>
+      <column name="lbl_font_family" sqlType="VARCHAR" precision="35" scale="0" nullable="false" jdbcType="12" def="J2FyaWFsJw=="/>
+      <column name="lbl_font_color" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12" def="JyMwMDAn"/>
+      <column name="visiblelabel" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1" def="JzEn"/>
+      <column name="visiblecampo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1" def="JzEn"/>
+      <column name="hidreporte" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aliascampo" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="longitudcampo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tipodato" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="esdetalle" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="esatributo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="hidcoordocs" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="totalizable" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="esnumerico" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="adosaren" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="codocu" unique="false" columns="codocu"/>
+      <index name="fk_coordreport" unique="false" columns="hidreporte"/>
+      <index name="hidcoordocs" unique="false" columns="hidcoordocs"/>
+    </table>
+    <table name="public_coti" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cruge_authassignment" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cruge_authitemchild" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cruge_grupos_mail" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cruge_lista_mail" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_cursos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dcajachica" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dcotmateriales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dcotmateriales_d" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dcottipo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_defaultguia" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_denvio" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_departamentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_desolcot" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="hidsolcot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hiddesolpe" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="codispo" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="preciounit" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="indicaciones" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="hiddesolpe" unique="false" columns="hiddesolpe"/>
+      <index name="hidsolcot" unique="false" columns="hidsolcot"/>
+    </table>
+    <table name="public_desolpe1" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="numero" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tipimputacion" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="centro" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codal" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codart" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="txtmaterial" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="grupocompras" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="usuario" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="textodetalle" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="fechacrea" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="fechaent" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="fechalib" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="imputacion" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="hidsolpe" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="codocu" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="tipsolpe" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="est" sqlType="CHAR" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <column name="cant" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="item" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="cantaten" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="posicion" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="modificado" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estadolib" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="solicitanet" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creado" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="um" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="firme" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="idreserva" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="punitplan" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8" def="MA=="/>
+      <column name="punitreal" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8" def="MA=="/>
+      <column name="codservicio" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_desolpe1_ibfk_1" columns="codart,codal,centro" ref-table="public_alinventario" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codart,codalm,codcen" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_desolpe1_ibfk_2" columns="codart" ref-table="public_maestrocomponentes" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codigo" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_desolpe1_ibfk_3" columns="um" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_desolpe1_ibfk_4" columns="um" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="bk_hidesolpe" unique="false" columns="hidsolpe"/>
+      <index name="bk_registroinv" unique="false" columns="codart,codal,centro"/>
+      <index name="fk_Pdfdffd" unique="false" columns="um"/>
+      <index name="k_centro" unique="false" columns="centro"/>
+      <index name="k_codal" unique="false" columns="codal"/>
+    </table>
+    <table name="public_desolpecompra" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_despacho" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detalimentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detcargos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detcontrolactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detdocumentoscomponentes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detgui" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detingfactura" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detot" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_detrep" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dfacrecibida" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dfactur" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_direcciones" schema="" catalog="neologys_razzo" type="TABLE">
+      <exported-key name="public_ocompra_ibfk_2" table="public_ocompra" schema="" catalog="neologys_razzo" columns="direcentrega"/>
+    </table>
+    <table name="public_direcen" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dirsociedad" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_disponiblidad" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_distritos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dlistamaeriales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_docompra" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_docompra_t" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codart" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="disp" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="punit" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="item" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="descri" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="stock" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="detalle" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="tipoitem" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="estadodetalle" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
+      <column name="coddocu" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="um" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="hidguia" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="codservicio" sqlType="VARCHAR" precision="6" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tipoimputacion" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ceco" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="orden" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codentro" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codigoalma" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="efectuado" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="iddocompra" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="idsesion" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="punitdes" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="iddesolpe" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="mensaje" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="public_docompra_t_ibfk_1" columns="codart" ref-table="public_maestrocomponentes" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codigo" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_docomprat_docu" unique="false" columns="coddocu"/>
+      <index name="fki_ordencompra" unique="false" columns="punitdes"/>
+    </table>
+    <table name="public_docompratemp" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_docu_ingresados" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_docucorreos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_documentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_documentoscomponentes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_documentosfavoritos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dpedido" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_dpeticion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_embarcaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_embarcacionesperu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_emplazamientos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_envio" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_equipo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_errores" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_errores_carteres" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_especie" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_estado" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codestado" sqlType="CHAR" precision="2" scale="0" nullable="false" jdbcType="1"/>
+      <column name="codocu" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="estado" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ordenn" sqlType="SMALLINT" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="eseditable" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="esanulable" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="nocalculable" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="i_codestado" unique="false" columns="codestado"/>
+      <index name="i_pc_estado1" unique="false" columns="codocu"/>
+    </table>
+    <table name="public_estados" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_estructura" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_eventos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_explosiones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_factur" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_fifo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_fondofijo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_grupocc" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_grupocompras" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_grupousuarios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_grupoventas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_guia" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_hcontrolactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_hpedido" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_hsolpe" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_igv" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_imagen" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_impuestos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_impuestosaplicados" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="hidocu" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="codocu" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="codimpuesto" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="valor" sqlType="DECIMAL" precision="10" scale="4" nullable="false" jdbcType="3"/>
+      <column name="hidocupadre" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="codmon" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="codocu" unique="false" columns="codocu"/>
+      <index name="FK_SSF4" unique="false" columns="hidocu,codocu"/>
+      <index name="hidocu" unique="false" columns="hidocu"/>
+    </table>
+    <table name="public_impuestosdocu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_impuestosdocuaplicado" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ingfactura" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_intereses_mant" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_inventario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_kardexcompo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_keel_cooler" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_keel_resultados" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_kits" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_listamateriales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_locales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_localidades" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_log_modificaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logcargamasiva" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logcotizaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logdesolpe" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logdocumentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logfotosinventario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logimpresiones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_loginventario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logmaestrocomponentes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logtablas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_logvalidaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_lotes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_lugares" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ma_cargos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestro_atributos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestro_grupos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestro_solicitudes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestro_valores" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestroclipro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrocomponentes" schema="" catalog="neologys_razzo" type="TABLE">
+      <exported-key name="public_alinventario_ibfk_1" table="public_alinventario" schema="" catalog="neologys_razzo" columns="codart"/>
+      <exported-key name="public_alkardex_ibfk_1" table="public_alkardex" schema="" catalog="neologys_razzo" columns="codart"/>
+      <exported-key name="public_desolpe1_ibfk_2" table="public_desolpe1" schema="" catalog="neologys_razzo" columns="codart"/>
+      <exported-key name="public_docompra_t_ibfk_1" table="public_docompra_t" schema="" catalog="neologys_razzo" columns="codart"/>
+    </table>
+    <table name="public_maestrodetalle" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrodetallecentros" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrogrupos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrosector" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestroservicios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrosolicitudescabecera" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maestrotipos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_maletin" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_master_activos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_masterequipo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_materiales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_mensajes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_mensajesd" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_menu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_menugeneral" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_modulos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_monedas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_montoinventario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_mot_mat_det" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_mot_materiales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_motivo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_movimientos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_noticias" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_novedades" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_authors" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_cities" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_pages" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_stats_date" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_users" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_nuke_users_temp" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_numerosobtenidos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_numerostemporales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_objetos_cliente" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_objetosmaster" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_obras" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_observaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_observacionesdetalle" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ocompra" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="numcot" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codpro" sqlType="VARCHAR" precision="6" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fecdoc" sqlType="CHAR" precision="19" scale="0" nullable="false" jdbcType="1"/>
+      <column name="codcon" sqlType="VARCHAR" precision="5" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codestado" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
+      <column name="texto" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="textolargo" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="tipologia" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="moneda" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="orcli" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="descuento" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="usuario" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="coddocu" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creado" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificado" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codtipofac" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codsociedad" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codgrupoventas" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codtipocotizacion" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="validez" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="codcentro" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="nigv" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="codobjeto" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fechapresentacion" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="fechanominal" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="tenorsup" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tenorinf" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="montototal" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="idguia" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idcontacto" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="correlativ" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idreporte" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="codresponsable" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="direcentrega" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="idguia"/>
+      <foreign-key name="public_ocompra_ibfk_1" columns="codresponsable" ref-table="public_trabajadores" ref-schema="" ref-catalog="neologys_razzo" ref-columns="codigotra" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_ocompra_ibfk_2" columns="direcentrega" ref-table="public_direcciones" ref-schema="" ref-catalog="neologys_razzo" ref-columns="n_direc" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="public_ocompra_ibfk_3" columns="codsociedad" ref-table="public_sociedades" ref-schema="" ref-catalog="neologys_razzo" ref-columns="socio" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="codobjeto" unique="false" columns="codobjeto"/>
+      <index name="codpro" unique="false" columns="codpro"/>
+      <index name="fk_ocompra_soc" unique="false" columns="codsociedad"/>
+      <index name="numcot" unique="false" columns="numcot"/>
+    </table>
+    <table name="public_ofertas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_oficios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_opciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_opciones_envio_muestras" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_opcionesbarra" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_opcionescamposdocu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_opcionesdocumentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_operaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_operacionesbarra" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ordenven" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ot" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_paises" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_papa" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_papi" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_parametros" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_parametrosdocumentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_paraqueva" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_pareto" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_partes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_pedido" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_periodos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_permisos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_permisoscentros" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_permisosgenerales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal_calendario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal_externo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal_periodo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal_turno_detalle" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_personal_turnos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_pescaterceros" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_peticion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_plantas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_player" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_post" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_preferencias_campos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_presupuesto" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_provincias" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_prueba" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_pruebas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_puente" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_puestos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_puntodespacho" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_pupu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_rangousuario" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_rangousuariomodulo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_reingreso" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_reparaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_reportepesca" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_reportepesca_coor" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_reportes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_repuestos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_resumenpresupuesto" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_roles" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_rolesopciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_rolestransa" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_seleccionable" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_servidorremoto" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sesiones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sesionesweb" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_settings" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sistemas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sociedades" schema="" catalog="neologys_razzo" type="TABLE">
+      <exported-key name="public_ocompra_ibfk_3" table="public_ocompra" schema="" catalog="neologys_razzo" columns="codsociedad"/>
+    </table>
+    <table name="public_solcot" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_solcotizacion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_solpe" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="numero" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tipo" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="textocabecera" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="creado" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="autor" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estado" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fechadoc" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="fechanec" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="codocu" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="escompra" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="correlativ" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="hidref" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="codocuref" sqlType="CHAR" precision="3" scale="0" nullable="false" jdbcType="1"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="externo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="codocuref" unique="false" columns="codocuref"/>
+      <index name="fki_kdfkd" unique="false" columns="estado,codocu"/>
+      <index name="fki_solpe_docu" unique="false" columns="codocu"/>
+      <index name="hidref" unique="false" columns="hidref"/>
+    </table>
+    <table name="public_subclase" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_subcomponentes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_submodulos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat01" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat05" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat06" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat07" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat08" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat14" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat15" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sunat16" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_access" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_accessforms" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_errorlogs" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_forms" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_languages" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_languageword" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_menues" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_tableconfig" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_userconfig" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_users" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_sys_words" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_conectores_idiomas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_contac" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_cuentas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_default" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_default_roles" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_departamentos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_direcc" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_letras" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_maestro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_mascaras" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_mensajes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_moneda" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_servicios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_sistemas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_ubicaciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_t_um" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tablaigv" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_albums" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_category" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_collections" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_comment" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_galleryconfig" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_menu" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_profiles" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_profiles_fields" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_topic" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tbl_users" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temp" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temp_carteres" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temp_carteres_control" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temp_guia" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempalkardex" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codart" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codmov" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cant" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="alemi" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="aldes" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fecha" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="coddoc" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numdoc" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="usuario" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="um" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="comentario" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codocuref" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numdocref" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codcentro" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codestado" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="prefijo" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fechadoc" sqlType="CHAR" precision="19" scale="0" nullable="true" jdbcType="1"/>
+      <column name="correlativo" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numkardex" sqlType="VARCHAR" precision="14" scale="0" nullable="true" jdbcType="12"/>
+      <column name="solicitante" sqlType="VARCHAR" precision="18" scale="0" nullable="true" jdbcType="12"/>
+      <column name="hidvale" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="idref" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="lote" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="valido" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="checki" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <column name="destino" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="preciounit" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="correlativ" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="codcendes" sqlType="VARCHAR" precision="4" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idusertemp" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idstatus" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idtemp" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="colector" sqlType="VARCHAR" precision="18" scale="0" nullable="false" jdbcType="12"/>
+      <column name="textolargo" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="codtrabajador" sqlType="VARCHAR" precision="6" scale="0" nullable="false" jdbcType="12"/>
+      <column name="montomovido" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="idtemp"/>
+      <foreign-key name="public_tempalkardex_ibfk_1" columns="um" ref-table="public_ums" ref-schema="" ref-catalog="neologys_razzo" ref-columns="um" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="bk_codcendes" unique="false" columns="codcendes"/>
+      <index name="fki_cemitr" unique="false" columns="codcentro"/>
+      <index name="fki_codigomat" unique="false" columns="codart"/>
+      <index name="fki_deod" unique="false" columns="coddoc"/>
+      <index name="fki_docirer" unique="false" columns="codocuref"/>
+      <index name="fki_movis" unique="false" columns="codmov"/>
+      <index name="fki_oetoetee" unique="false" columns="hidvale"/>
+    </table>
+    <table name="public_tempdetgui" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempdetingfactura" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempdetot" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempdfactur" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempdpeticion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempito" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tempo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temporadas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temporalids" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_temppeticion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tenores" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_test" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_thread" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipimputa" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipoactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipocambio" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipocargos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipofacturacion" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipoflujocaja" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipoformato" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipomaquina" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipoobjeto" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipooc" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipoperacionactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tiposolicitudesactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tiposolpe" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codtipo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1" def="Jyc="/>
+      <column name="destipo" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="libre" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="codtipo"/>
+    </table>
+    <table name="public_tipospresupuestales" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tipozarpe" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tmp_controlactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tmp_detcontrolactivos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tmpcoti" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tmpparametro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_toolbar_estados" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_trabajadores" schema="" catalog="neologys_razzo" type="TABLE">
+      <column name="codigotra" sqlType="VARCHAR" precision="6" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ap" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="am" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="nombres" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dni" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="codpuesto" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="creadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadopor" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="modificadoel" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cumple" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="fecingreso" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="domicilio" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tiposangre" sqlType="VARCHAR" precision="5" scale="0" nullable="true" jdbcType="12"/>
+      <column name="telfijo" sqlType="VARCHAR" precision="8" scale="0" nullable="true" jdbcType="12"/>
+      <column name="telmoviles" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="referencia" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="activo" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="iduser" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prefijo" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="correlativo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="alimentacion" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="codigotra"/>
+      <exported-key name="public_ocompra_ibfk_1" table="public_ocompra" schema="" catalog="neologys_razzo" columns="codresponsable"/>
+      <index name="FKI_OFICIOS" unique="false" columns="codpuesto"/>
+    </table>
+    <table name="public_trabajos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_transacciones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_transacciongrupo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_tripulantes" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ubigeos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ubl" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_ums" schema="" catalog="neologys_razzo" type="TABLE">
+      <exported-key name="public_alconversiones_ibfk_1" table="public_alconversiones" schema="" catalog="neologys_razzo" columns="um1"/>
+      <exported-key name="public_alconversiones_ibfk_2" table="public_alconversiones" schema="" catalog="neologys_razzo" columns="um2"/>
+      <exported-key name="public_alkardex_ibfk_2" table="public_alkardex" schema="" catalog="neologys_razzo" columns="um"/>
+      <exported-key name="public_desolpe1_ibfk_3" table="public_desolpe1" schema="" catalog="neologys_razzo" columns="um"/>
+      <exported-key name="public_desolpe1_ibfk_4" table="public_desolpe1" schema="" catalog="neologys_razzo" columns="um"/>
+      <exported-key name="public_tempalkardex_ibfk_1" table="public_tempalkardex" schema="" catalog="neologys_razzo" columns="um"/>
+    </table>
+    <table name="public_usuarios" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_usuarioscentro" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_usuariosfavoritos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_valorimpuestos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_vcodestado" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_vistas" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="public_vistas_campos" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="vw_activosolo" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="vw_alconversiones" schema="" catalog="neologys_razzo" type="TABLE"/>
+    <table name="vw_alinventario" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_almacendocs" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_alreservas" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_atencionessolpe" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_contactos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_controlactivos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_costos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_dee" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_despacho" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_despachogeneral" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_detalle_guia" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_detalle_stock_reservado" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_detalleingresofactura" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_docu_ingresados" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_dpeticion" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_eventos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_guia" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_hojaentrada" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_imputaciones" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_inventario" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_kardex" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_lugares" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_observaciones" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_ocompra" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_ocosubtotal" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_opcionesdocumentos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_pareto" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_peticion" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_reservas_pendientes" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_reservaspendientes2" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solcot" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solpe" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solpeatencion" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solpeparacomprar" schema="" catalog="neologys_razzo" type="VIEW">
+      <column name="numero" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estado" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="item" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="est" sqlType="CHAR" precision="2" scale="0" nullable="true" jdbcType="1"/>
+      <column name="tipimputacion" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="punitplan" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8" def="MA=="/>
+      <column name="identidad" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="fechaent" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="fechacrea" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="usuario" sqlType="VARCHAR" precision="35" scale="0" nullable="true" jdbcType="12"/>
+      <column name="um" sqlType="CHAR" precision="3" scale="0" nullable="true" jdbcType="1"/>
+      <column name="tipsolpe" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="centro" sqlType="VARCHAR" precision="4" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codal" sqlType="VARCHAR" precision="3" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codart" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="imputacion" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cant" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="desum" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="txtmaterial" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cantatendida" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="cant_pendiente" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+    </table>
+    <table name="vw_solpeparacomrpar" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solpereservas" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_solpereservas1" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_stock_por_tipos" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_stock_supervision" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_stocktotal_almacenes" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_subtotalpeticion" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_trabajadores" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_traspasospendientes" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_trazabilidad_reservas" schema="" catalog="neologys_razzo" type="VIEW"/>
+    <table name="vw_trazabilidad_solpe_1" schema="" catalog="neologys_razzo" type="VIEW"/>
+  </data-source>
+</component>

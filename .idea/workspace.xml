@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="acc7a9fa-b789-45d1-88cc-f32ed501c58b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/components/MensajesCompo.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/almacendocs/_form_detalle_ver.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/solpe/_searchsolpeparacomprar.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/themes/temita/views/layouts/columnclipro.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/ocompra/liberacion.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/site/mensajeerror.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/site/mensajeok.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/almacendocs/n_detalle_vale_ver.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/almacendocs/n_form_ver.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/almacendocs/n_vw_detalle_grilla_ver.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/protected/views/montoinventario/view_acumulado.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/img/Edit.png" afterPath="$PROJECT_DIR$/themes/temita/img/Edit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Alinventario.php" afterPath="$PROJECT_DIR$/protected/models/Alinventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/AlinventarioController.php" afterPath="$PROJECT_DIR$/protected/controllers/AlinventarioController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Alkardex.php" afterPath="$PROJECT_DIR$/protected/models/Alkardex.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Almacendocs.php" afterPath="$PROJECT_DIR$/protected/models/Almacendocs.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/AlmacendocsController.php" afterPath="$PROJECT_DIR$/protected/controllers/AlmacendocsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Almacenes.php" afterPath="$PROJECT_DIR$/protected/models/Almacenes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Alreserva.php" afterPath="$PROJECT_DIR$/protected/models/Alreserva.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Bloqueos.php" afterPath="$PROJECT_DIR$/protected/models/Bloqueos.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/CliproController.php" afterPath="$PROJECT_DIR$/protected/controllers/CliproController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/components/ControladorBase.php" afterPath="$PROJECT_DIR$/protected/components/ControladorBase.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Desolpe.php" afterPath="$PROJECT_DIR$/protected/models/Desolpe.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/EjemplosController.php" afterPath="$PROJECT_DIR$/protected/controllers/EjemplosController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Maestroclipro.php" afterPath="$PROJECT_DIR$/protected/models/Maestroclipro.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/components/MaletinCompo.php" afterPath="$PROJECT_DIR$/protected/components/MaletinCompo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/components/MiFactoria.php" afterPath="$PROJECT_DIR$/protected/components/MiFactoria.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Montoinventario.php" afterPath="$PROJECT_DIR$/protected/models/Montoinventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Ocompra.php" afterPath="$PROJECT_DIR$/protected/models/Ocompra.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/OcompraController.php" afterPath="$PROJECT_DIR$/protected/controllers/OcompraController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/SiteController.php" afterPath="$PROJECT_DIR$/protected/controllers/SiteController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Solpe.php" afterPath="$PROJECT_DIR$/protected/models/Solpe.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/SolpeController.php" afterPath="$PROJECT_DIR$/protected/controllers/SolpeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/TMonedaController.php" afterPath="$PROJECT_DIR$/protected/controllers/TMonedaController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/Tempalkardex.php" afterPath="$PROJECT_DIR$/protected/models/Tempalkardex.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/components/TipocambioCompo.php" afterPath="$PROJECT_DIR$/protected/components/TipocambioCompo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/VwKardex.php" afterPath="$PROJECT_DIR$/protected/models/VwKardex.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/VwOcompra.php" afterPath="$PROJECT_DIR$/protected/models/VwOcompra.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/VwReservasPendientes.php" afterPath="$PROJECT_DIR$/protected/models/VwReservasPendientes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/VwSolpeparacomprar.php" afterPath="$PROJECT_DIR$/protected/models/VwSolpeparacomprar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/models/VwStockSupervision.php" afterPath="$PROJECT_DIR$/protected/models/VwStockSupervision.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/_form.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/_form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/_form.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/_form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/ocompra/_form1.php" afterPath="$PROJECT_DIR$/protected/views/ocompra/_form1.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/almacendocs/_form_detalle.php" afterPath="$PROJECT_DIR$/protected/views/almacendocs/_form_detalle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/_search.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/_search.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/_searchpareto.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/_searchpareto.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/_view.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/_view.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/_view.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/_view.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/admin.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/almacendocs/admin.php" afterPath="$PROJECT_DIR$/protected/views/almacendocs/admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/admin.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/busqueda.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/busqueda.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/busqueda" afterPath="$PROJECT_DIR$/protected/views/alinventario/busqueda" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/cargainventario.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/cargainventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/cargamat.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/cargamat.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/layouts/column2.php" afterPath="$PROJECT_DIR$/themes/temita/views/layouts/column2.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/create.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/create.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/create.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/create.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/detalleinventario.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/detalleinventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/site/error.php" afterPath="$PROJECT_DIR$/themes/temita/views/site/error.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/layouts/iframe.php" afterPath="$PROJECT_DIR$/themes/temita/views/layouts/iframe.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/index.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/index.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/site/index.php" afterPath="$PROJECT_DIR$/themes/temita/views/site/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/inventario.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/inventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/config/main.php" afterPath="$PROJECT_DIR$/protected/config/main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/layouts/main.php" afterPath="$PROJECT_DIR$/themes/temita/views/layouts/main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/almacendocs/n_form.php" afterPath="$PROJECT_DIR$/protected/views/almacendocs/n_form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/almacendocs/n_vw_detalle_grilla.php" afterPath="$PROJECT_DIR$/protected/views/almacendocs/n_vw_detalle_grilla.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bd/neologys_razzo_vistas.sql" afterPath="$PROJECT_DIR$/bd/neologys_razzo_vistas.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/pareto_form.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/pareto_form.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/reservas.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/reservas.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/stocks.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/stocks.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/supervision.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/supervision.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/almacenes/tab_traspasos_pend.php" afterPath="$PROJECT_DIR$/protected/views/almacenes/tab_traspasos_pend.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/solpe/tomarsolpe.php" afterPath="$PROJECT_DIR$/protected/views/solpe/tomarsolpe.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/themes/temita/views/layouts/tpl_navigation.php" afterPath="$PROJECT_DIR$/themes/temita/views/layouts/tpl_navigation.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/update.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/update.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/update.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/update.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/view.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/view.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/tMoneda/view.php" afterPath="$PROJECT_DIR$/protected/views/tMoneda/view.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vistakardex.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vistakardex.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vistakardex" afterPath="$PROJECT_DIR$/protected/views/alinventario/vistakardex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/solpe/vistareservas.php" afterPath="$PROJECT_DIR$/protected/views/solpe/vistareservas.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/solpe/vw_detalle_solpe.php" afterPath="$PROJECT_DIR$/protected/views/solpe/vw_detalle_solpe.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_indicador.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_indicador.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_indicador_por_centro.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_indicador_por_centro.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_indicadores.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_indicadores.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_loginventario.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_loginventario.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/clipro/vw_materialesoferta.php" afterPath="$PROJECT_DIR$/protected/views/clipro/vw_materialesoferta.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_procesado.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_procesado.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_pronostico.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_pronostico.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vw_pronosticografico.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vw_pronosticografico.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vwlistadopareto.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vwlistadopareto.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/alinventario/vwpareto.php" afterPath="$PROJECT_DIR$/protected/views/alinventario/vwpareto.php" />
+    </list>
+    <ignored path="zega.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DatabaseView">
+    <option name="FLATTEN" value="false" />
+    <option name="GROUP_BY_TYPE" value="true" />
+    <option name="SORT_CHILDREN" value="false" />
+    <option name="SHOW_TABLE_CONSTRAINTS" value="true" />
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - neologys_razzo@www.neologys.com" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="neologys_razzo" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - neologys_razzo@www.neologys.com" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="neologys_razzo" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="vw_solpeparacomprar" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - neologys_razzo@www.neologys.com" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="neologys_razzo" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="public_trabajadores" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - neologys_razzo@www.neologys.com" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="neologys_razzo" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="public_tiposolpe" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="MySQL - neologys_razzo@www.neologys.com" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="neologys_razzo" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="public_impuestosaplicados" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="zega" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="SolpeController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/SolpeController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3286" max-vertical-offset="30277">
+              <caret line="199" column="31" selection-start-line="199" selection-start-column="24" selection-end-line="199" selection-end-column="31" />
+              <folding>
+                <marker date="1451646894922" expanded="true" signature="2143:2262" placeholder="select *from..." />
+                <marker date="1451646894922" expanded="true" signature="33632:33714" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+                <marker date="1451646894922" expanded="true" signature="33851:34004" placeholder="INSERT INTO ..." />
+                <marker date="1451646894922" expanded="true" signature="34282:34364" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+                <marker date="1451646894922" expanded="true" signature="34507:34661" placeholder="INSERT INTO ..." />
+                <marker date="1451646894922" expanded="true" signature="36947:37041" placeholder="select count..Yii_app_params_prefijo_desolpe1..." />
+                <marker date="1451646894922" expanded="true" signature="38173:38241" placeholder="delete from ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OcompraController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/OcompraController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="13814" max-vertical-offset="37145">
+              <caret line="821" column="34" selection-start-line="821" selection-start-column="34" selection-end-line="821" selection-end-column="34" />
+              <folding>
+                <marker date="1451652643138" expanded="true" signature="38462:38587" placeholder="select *from..Yii_app_params_prefijo_docompra..." />
+                <marker date="1451652643138" expanded="true" signature="40929:41055" placeholder="select *from..Yii_app_params_prefijo_desolpe1..." />
+                <marker date="1451652643138" expanded="true" signature="45075:45116" placeholder="SELECT min(f..public_alkardex..." />
+                <marker date="1451652643138" expanded="true" signature="55961:56038" placeholder="DELETE FROM ..." />
+                <marker date="1451652643138" expanded="true" signature="56162:56238" placeholder="DELETE FROM ..." />
+                <marker date="1451652643138" expanded="true" signature="76154:76236" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+                <marker date="1451652643138" expanded="true" signature="76378:76531" placeholder="INSERT INTO ..." />
+                <marker date="1451652643138" expanded="true" signature="76814:76896" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+                <marker date="1451652643138" expanded="true" signature="77039:77193" placeholder="INSERT INTO ..." />
+                <marker date="1451652643138" expanded="true" signature="79091:79163" placeholder="delete from ..." />
+                <marker date="1451652643138" expanded="true" signature="80279:80351" placeholder="delete from ..." />
+                <marker date="1451652643138" expanded="true" signature="81292:81364" placeholder="delete from ..." />
+                <marker date="1451652643138" expanded="true" signature="85693:85758" placeholder="update docom..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form1.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/ocompra/_form1.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5334" max-vertical-offset="7956">
+              <caret line="322" column="40" selection-start-line="322" selection-start-column="40" selection-end-line="322" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MaletinCompo.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/components/MaletinCompo.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1619" max-vertical-offset="2210">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VwSolpeparacomprar.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/VwSolpeparacomprar.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1861" max-vertical-offset="2380">
+              <caret line="127" column="29" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Desolpe.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/Desolpe.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6743" max-vertical-offset="14178">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Docompratemp.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/Docompratemp.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4762" max-vertical-offset="5508">
+              <caret line="286" column="20" selection-start-line="286" selection-start-column="20" selection-end-line="286" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Docompra.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/Docompra.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2771" max-vertical-offset="6222">
+              <caret line="167" column="24" selection-start-line="167" selection-start-column="24" selection-end-line="167" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Alkardex.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/models/Alkardex.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.03269231" vertical-offset="8585" max-vertical-offset="19363">
+              <caret line="506" column="17" selection-start-line="506" selection-start-column="17" selection-end-line="506" selection-end-column="17" />
+              <folding>
+                <marker date="1451589253693" expanded="true" signature="29774:30031" placeholder="select sum(c..Yii_app_params_prefijo_alkardex..." />
+                <marker date="1451589253693" expanded="true" signature="30103:30252" placeholder="select cant ..Yii_app_params_prefijo_alkardex..." />
+                <marker date="1451589253693" expanded="true" signature="37939:37980" placeholder="SELECT min(f..public_alkardex..." />
+                <marker date="1451589253693" expanded="true" signature="38300:38473" placeholder="SELECT sum(c..public_alkardex..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="neologys_razzo.public_desolpecompra" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_desolpecompra">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
+    <push-targets>
+      <push-target-info repo="$PROJECT_DIR$" source="master" target-remote="pajaroto" target-branch="master" />
+    </push-targets>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/protected/views/ocompra/liberacion.php" />
+        <option value="$PROJECT_DIR$/protected/views/alinventario/admin.php" />
+        <option value="$PROJECT_DIR$/protected/views/alinventario/reservas.php" />
+        <option value="$PROJECT_DIR$/protected/models/VwReservasPendientes.php" />
+        <option value="$PROJECT_DIR$/protected/views/solpe/vistareservas.php" />
+        <option value="$PROJECT_DIR$/protected/config/main.php" />
+        <option value="$PROJECT_DIR$/themes/temita/views/layouts/column2.php" />
+        <option value="$PROJECT_DIR$/protected/models/Bloqueos.php" />
+        <option value="$PROJECT_DIR$/protected/components/MensajesCompo.php" />
+        <option value="$PROJECT_DIR$/protected/models/Alreserva.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacenes/tab_traspasos_pend.php" />
+        <option value="$PROJECT_DIR$/protected/models/VwStockSupervision.php" />
+        <option value="$PROJECT_DIR$/protected/views/alinventario/detalleinventario.php" />
+        <option value="$PROJECT_DIR$/protected/models/VwKardex.php" />
+        <option value="$PROJECT_DIR$/protected/views/alinventario/vistakardex.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/mensajeerror.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/mensajeok.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/AlinventarioController.php" />
+        <option value="$PROJECT_DIR$/protected/views/alinventario/_form.php" />
+        <option value="$PROJECT_DIR$/protected/views/solpe/vw_detalle_grilla.php" />
+        <option value="$PROJECT_DIR$/protected/models/Desolpe.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/n_detalle_vale_ver.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/_form_detalle.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/n_vw_detalle_grilla.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/_form_detalle_ver.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/n_vw_detalle_grilla_ver.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/n_form.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/n_form_ver.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/AlmacendocsController.php" />
+        <option value="$PROJECT_DIR$/protected/views/almacendocs/admin.php" />
+        <option value="$PROJECT_DIR$/protected/components/ControladorBase.php" />
+        <option value="$PROJECT_DIR$/protected/models/Tempalkardex.php" />
+        <option value="$PROJECT_DIR$/protected/models/Almacendocs.php" />
+        <option value="$PROJECT_DIR$/protected/components/MiFactoria.php" />
+        <option value="$PROJECT_DIR$/protected/models/Alinventario.php" />
+        <option value="$PROJECT_DIR$/protected/models/Alkardex.php" />
+        <option value="$PROJECT_DIR$/protected/models/Solpe.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/EjemplosController.php" />
+        <option value="$PROJECT_DIR$/protected/models/Maestroclipro.php" />
+        <option value="$PROJECT_DIR$/protected/views/clipro/vw_materialesoferta.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/CliproController.php" />
+        <option value="$PROJECT_DIR$/themes/temita/views/layouts/columnclipro.php" />
+        <option value="$PROJECT_DIR$/protected/views/solpe/_searchsolpeparacomprar.php" />
+        <option value="$PROJECT_DIR$/protected/views/solpe/tomarsolpe.php" />
+        <option value="$PROJECT_DIR$/protected/components/MaletinCompo.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/SolpeController.php" />
+        <option value="$PROJECT_DIR$/protected/views/ocompra/_form1.php" />
+        <option value="$PROJECT_DIR$/protected/models/VwSolpeparacomprar.php" />
+        <option value="db-console:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/" />
+        <option value="$PROJECT_DIR$/protected/controllers/OcompraController.php" />
+        <option value="dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_desolpecompra" />
+      </list>
+    </option>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="recentsLimit" value="5" />
+    <property name="ToolWindowStructure.ShowToolbar" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\zega\protected\views\solpe" />
+      <recent name="D:\zega\themes\temita\views\layouts" />
+      <recent name="D:\zega\protected\views\almacendocs" />
+      <recent name="D:\zega\protected\views\site" />
+      <recent name="D:\zega\protected\components" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.impuesto.php">
+    <configuration default="false" name="impuesto.php" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/zega/protected/views/coordocs/impuesto.php">
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.database.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.impuesto.php" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.impuesto.php" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",VISIBILITY_SORTER" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="acc7a9fa-b789-45d1-88cc-f32ed501c58b" name="Default" comment="" />
+      <created>1449612366351</created>
+      <option name="number" value="Default" />
+      <updated>1449612366351</updated>
+    </task>
+    <task id="LOCAL-00001" summary="modificando del form detalle">
+      <created>1449617882690</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1449617882690</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18057922" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19818456" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17776097" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14750378" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24659607" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4684838" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14480409" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18568996" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.018739352" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12436116" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.03407155" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="modificando del form detalle" />
+    <option name="LAST_COMMIT_MESSAGE" value="modificando del form detalle" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/protected/views/almacendocs/n_form_ver.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.7272727" vertical-offset="2370" max-vertical-offset="3757">
+          <caret line="145" column="54" selection-start-line="145" selection-start-column="51" selection-end-line="145" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/almacendocs/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.923077" vertical-offset="1273" max-vertical-offset="1785">
+          <caret line="87" column="24" selection-start-line="87" selection-start-column="24" selection-end-line="87" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/almacendocs/_form_detalle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-78.73077" vertical-offset="248" max-vertical-offset="3825">
+          <caret line="135" column="51" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Maestrocompo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="88.30769" vertical-offset="2296" max-vertical-offset="8891">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_atencionreserva">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_authassignment">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/ControladorBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.3090909" vertical-offset="1386" max-vertical-offset="9197">
+          <caret line="89" column="53" selection-start-line="89" selection-start-column="53" selection-end-line="89" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Almacendocs.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8" vertical-offset="5575" max-vertical-offset="13736">
+          <caret line="337" column="38" selection-start-line="337" selection-start-column="38" selection-end-line="337" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Tempalkardex.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.846154" vertical-offset="3552" max-vertical-offset="7956">
+          <caret line="224" column="35" selection-start-line="224" selection-start-column="35" selection-end-line="224" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/MiFactoria.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5454545" vertical-offset="8429" max-vertical-offset="19278">
+          <caret line="517" column="74" selection-start-line="517" selection-start-column="74" selection-end-line="517" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Alinventario.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="12219" max-vertical-offset="25330">
+          <caret line="728" column="38" selection-start-line="728" selection-start-column="38" selection-end-line="728" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Solpe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="6545">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/AlmacendocsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.269231" vertical-offset="5012" max-vertical-offset="137887">
+          <caret line="309" column="69" selection-start-line="309" selection-start-column="24" selection-end-line="309" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/Correo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="71.5" vertical-offset="1859" max-vertical-offset="3009">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/SolcotController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9454546" vertical-offset="3600" max-vertical-offset="4471">
+          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/toolbar/assets/img/24/join.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/toolbar/assets/img/24/clear.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/toolbar/assets/img/24/money.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/toolbar/assets/img/24/shop.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/EjemplosController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1923075" vertical-offset="4539" max-vertical-offset="23358">
+          <caret line="278" column="23" selection-start-line="278" selection-start-column="23" selection-end-line="278" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/solcot/_form.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="24.23077" vertical-offset="630" max-vertical-offset="4794">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/VwSolcot.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="79.96154" vertical-offset="2079" max-vertical-offset="2567">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Ofertas.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="59.692307" vertical-offset="1552" max-vertical-offset="2142">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_ofertas">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_desolcot">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..vw_solcot">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/themes/temita/views/layouts/column2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-154.3077" vertical-offset="0" max-vertical-offset="4607">
+          <caret line="236" column="48" selection-start-line="236" selection-start-column="48" selection-end-line="236" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Maestroclipro.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1810" max-vertical-offset="3060">
+          <caret line="113" column="52" selection-start-line="113" selection-start-column="52" selection-end-line="113" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/CliproController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9612" max-vertical-offset="10132">
+          <caret line="582" column="26" selection-start-line="582" selection-start-column="26" selection-end-line="582" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/clipro/vw_materialesoferta.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16699411" vertical-offset="238" max-vertical-offset="2176">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/solpe/_search.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="4726">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/themes/temita/views/layouts/columnclipro.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.72098213" vertical-offset="0" max-vertical-offset="2295">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_solpe">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/VwSolpe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.384615" vertical-offset="2315" max-vertical-offset="4658">
+          <caret line="149" column="27" selection-start-line="145" selection-start-column="8" selection-end-line="153" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_tiposolpe">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/solpe/_searchsolpeparacomprar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="22.576923" vertical-offset="1539" max-vertical-offset="4726">
+          <caret line="67" column="61" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/solpe/tomarsolpe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1402" max-vertical-offset="3298">
+          <caret line="46" column="28" selection-start-line="46" selection-start-column="28" selection-end-line="46" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/MaletinCompo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1619" max-vertical-offset="2210">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/MensajesCompo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3461537" vertical-offset="882" max-vertical-offset="1632">
+          <caret line="67" column="44" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..vw_solpeparacomprar">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/VwSolpeparacomprar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1861" max-vertical-offset="2380">
+          <caret line="127" column="29" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_maletin">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/SolpeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3286" max-vertical-offset="30277">
+          <caret line="199" column="31" selection-start-line="199" selection-start-column="24" selection-end-line="199" selection-end-column="31" />
+          <folding>
+            <marker date="1451646894922" expanded="true" signature="2143:2262" placeholder="select *from..." />
+            <marker date="1451646894922" expanded="true" signature="33632:33714" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+            <marker date="1451646894922" expanded="true" signature="33851:34004" placeholder="INSERT INTO ..." />
+            <marker date="1451646894922" expanded="true" signature="34282:34364" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+            <marker date="1451646894922" expanded="true" signature="34507:34661" placeholder="INSERT INTO ..." />
+            <marker date="1451646894922" expanded="true" signature="36947:37041" placeholder="select count..Yii_app_params_prefijo_desolpe1..." />
+            <marker date="1451646894922" expanded="true" signature="38173:38241" placeholder="delete from ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/ocompra/_form1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5334" max-vertical-offset="7956">
+          <caret line="322" column="40" selection-start-line="322" selection-start-column="40" selection-end-line="322" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://db-console:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4318">
+          <caret line="0" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/OcompraController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="13814" max-vertical-offset="37145">
+          <caret line="821" column="34" selection-start-line="821" selection-start-column="34" selection-end-line="821" selection-end-column="34" />
+          <folding>
+            <marker date="1451652643138" expanded="true" signature="38462:38587" placeholder="select *from..Yii_app_params_prefijo_docompra..." />
+            <marker date="1451652643138" expanded="true" signature="40929:41055" placeholder="select *from..Yii_app_params_prefijo_desolpe1..." />
+            <marker date="1451652643138" expanded="true" signature="45075:45116" placeholder="SELECT min(f..public_alkardex..." />
+            <marker date="1451652643138" expanded="true" signature="55961:56038" placeholder="DELETE FROM ..." />
+            <marker date="1451652643138" expanded="true" signature="56162:56238" placeholder="DELETE FROM ..." />
+            <marker date="1451652643138" expanded="true" signature="76154:76236" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+            <marker date="1451652643138" expanded="true" signature="76378:76531" placeholder="INSERT INTO ..." />
+            <marker date="1451652643138" expanded="true" signature="76814:76896" placeholder="SELECT id FR..Yii_app_params_prefijo_opcionesdocumentos..." />
+            <marker date="1451652643138" expanded="true" signature="77039:77193" placeholder="INSERT INTO ..." />
+            <marker date="1451652643138" expanded="true" signature="79091:79163" placeholder="delete from ..." />
+            <marker date="1451652643138" expanded="true" signature="80279:80351" placeholder="delete from ..." />
+            <marker date="1451652643138" expanded="true" signature="81292:81364" placeholder="delete from ..." />
+            <marker date="1451652643138" expanded="true" signature="85693:85758" placeholder="update docom..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Desolpe.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6743" max-vertical-offset="14178">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Docompratemp.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4762" max-vertical-offset="5508">
+          <caret line="286" column="20" selection-start-line="286" selection-start-column="20" selection-end-line="286" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/756a40eb/6e4e39ec-9457-415c-ad08-fcff7ab39f78/neologys_razzo..public_desolpecompra">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Docompra.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2771" max-vertical-offset="6222">
+          <caret line="167" column="24" selection-start-line="167" selection-start-column="24" selection-end-line="167" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Alkardex.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03269231" vertical-offset="8585" max-vertical-offset="19363">
+          <caret line="506" column="17" selection-start-line="506" selection-start-column="17" selection-end-line="506" selection-end-column="17" />
+          <folding>
+            <marker date="1451589253693" expanded="true" signature="29774:30031" placeholder="select sum(c..Yii_app_params_prefijo_alkardex..." />
+            <marker date="1451589253693" expanded="true" signature="30103:30252" placeholder="select cant ..Yii_app_params_prefijo_alkardex..." />
+            <marker date="1451589253693" expanded="true" signature="37939:37980" placeholder="SELECT min(f..public_alkardex..." />
+            <marker date="1451589253693" expanded="true" signature="38300:38473" placeholder="SELECT sum(c..public_alkardex..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
