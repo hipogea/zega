@@ -3,6 +3,8 @@
 /* @var $model Almacendocs */
 /* @var $form CActiveForm */
 ?>
+<?php MiFactoria::titulo("Documento de Almacen :".$model->numvale."  (  ".yii::app()->user->um->loadUserById($model->iduser)->username."  )",'package');?>
+
 <div class="division">
 <div class="wide form">
 
@@ -29,7 +31,7 @@
 			'save'=>array(
 				'type'=>'A',
 				'ruta'=>array(),
-				'visiblex'=>array(ESTADO_CREADO),
+				'visiblex'=>array(ESTADO_CREADO,ESTADO_EFECTUADO),
 			),
 
 

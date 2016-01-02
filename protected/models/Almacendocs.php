@@ -7,6 +7,7 @@ CONST ESTADO_OC_APROBADA='30';
 CONST ESTADO_OC_FACTURADA='40';
 const ESTADO_VALE_CREADO='20';
 CONST CODIGO_MOVIMIENTO_INGRESO_ACTIVIDAD='68';
+CONST CODIGO_MOVIMIENTO_INICIA_TRASPASO='77';
 
 class Almacendocs extends ModeloGeneral
 {
@@ -219,6 +220,7 @@ class Almacendocs extends ModeloGeneral
 			array('codalmacen', 'checkcentros','on'=>self::PREFIJO_ESCENARIO.'78'),
 			array('codcentro', 'required', 'message'=>'Indique el centro','on'=>self::PREFIJO_ESCENARIO.'78'),
 			array('numdocref', 'required', 'message'=>'Indique el vale emisor','on'=>self::PREFIJO_ESCENARIO.'78'),
+			array('numdocref', 'chkvaletraspasa', 'message'=>'Indique el vale emisor','on'=>self::PREFIJO_ESCENARIO.'78'),
 			//array('numdocref', 'checkvaletraspaso', 'on'=>self::PREFIJO_ESCENARIO.'78'),
 			//array('codaldestino', 'required', 'message'=>'Indique el almacen destino','on'=>self::PREFIJO_ESCENARIO.'78'),
 			//array('codaldestino', 'checkcentros','on'=>self::PREFIJO_ESCENARIO.'77'),
@@ -329,6 +331,28 @@ class Almacendocs extends ModeloGeneral
 		);
 	}
 
+	public function chkvaletraspasa(){
+		$valeref=$this->existevaleref();
+		//var_dump($valeref);yii::app()->end();
+		if(!is_null($valeref)){
+			if($valeref->codmovimiento==CODIGO_MOVIMIENTO_INICIA_TRASPASO)
+			{
+				if($valeref->codaldestino==$this->codalmacen){
+
+				}else{
+					$this->adderror('numdocref','El vale referenciado no corresponde como destino  a este almacen');
+				}
+
+			}ELSE{
+				$this->adderror('numdocref','El vale referenciado no corresponde a la operacion de traslado '.$valeref->codmovimiento.' <> '.CODIGO_MOVIMIENTO_INICIA_TRASPASO);
+			}
+		}else{
+			$this->adderror('numdocref','No existe el vale referenciado');
+		}
+	}
+
+
+
     public function validacompra($attribute,$params) {
         $ordencompra=Ocompra::model()->findAll("numcot=:voi",array(":voi"=>trim($this->numdocref)));
        /* var_dump($ordencompra);
@@ -379,7 +403,7 @@ class Almacendocs extends ModeloGeneral
 	}
 
 private function existevaleref() {
-	return  (count(Almacendocs::model()->findAll("numvale=:nimi",array("nimi"=>trim($this->numdocref))))==0)?false:true;
+	return 	Almacendocs::model()->findAll("numvale=:nimi",array("nimi"=>trim($this->numdocref)))[0];
 }
 	/* Devuel si el vale ya aha iso anulado */
 
@@ -394,7 +418,7 @@ private function existevaleref() {
 
 public function checkvaleaanular($attribute,$params) {
 	  //Verfiicando que exista primero 
-		if(!$this->existevaleref()) {
+		if(is_null($this->existevaleref())) {
 		    $this->adderror('numdocref','Este vale no existe '.$this->numdocref.'-');
 			}else{
 
@@ -515,7 +539,6 @@ public function checkvaleaanular($attribute,$params) {
 
     public function checkvaleingreso($attribute,$params) {
 
-
         //Verfiicando que exista primero
         $registro=Almacendocs::model()->findAll("numvale=:nimi",array("nimi"=>trim($this->numdocref)));
 
@@ -608,59 +631,6 @@ public function checkcentros($attribute,$params) {
 
 }
 
-public function checkvalores($attribute,$params) {
-	   //verificando que se a el unico 
-	    	//Comporbando si existen valores en los matchcodes
-			
-			//En el modelo transportista 
-			$modeloprueba=Clipro::model()->find("codpro=:micodpro",array(":micodpro"=>is_null($this->c_codtra)?'':$this->c_codtra)) ;
-			 if (is_null($modeloprueba )) {
-			    $this->adderror('c_codtra','Esta empresa de transportes no existe');
-							}else{
-			//verficando que tenga una direccion fiscal por lo menos
-						$modeloprueba7=Direcciones::model()->find("c_hcod=:micodpro",array(":micodpro"=>$this->c_codtra));
-						       if (is_null($modeloprueba7 )) 
-								$this->adderror('c_codtra','Este transportista no cuenta con direccion fiscal');
-							}
-			 
-			//En el modelo destinatario
-			$modeloprueba1=Clipro::model()->find("codpro=:micodpro",array(":micodpro"=>is_null($this->c_coclig)?'':$this->c_coclig)) ;
-			 if (is_null($modeloprueba1)) {
-			    $this->adderror('c_coclig','Este destinario no existe');
-					}else{
-			//verficando que tenga una direccion fiscal por lo menos
-						$modeloprueba17=Direcciones::model()->find("c_hcod=:micodpro",array(":micodpro"=>$this->c_coclig));
-						       if (is_null($modeloprueba17 )) 
-								$this->adderror('c_coclig','Este destinatario no cuenta con direccion fiscal');
-							}
-			//En el modelo direcciones
-			$modeloprueba11=Direcciones::model()->find("n_direc=:micodpro",array(":micodpro"=>empty($this->n_direc)?0:$this->n_direc+0)) ;
-			 if (is_null($modeloprueba11 )) {
-			    $this->adderror('n_direc','Esta direccion no existe');
-			                                } else {
-
-			                     //verificando si esta direccion tiene lugares 
-			                                	//En el modelo direcciones
-														$modeloprueba15=Lugares::model()->find("n_direc=:midirec",array(":midirec"=>empty($this->n_direc)?0:$this->n_direc+0)) ;
-																		 if (is_null($modeloprueba15 )) {
-			   															 $this->adderror('n_direc','Esta direccion no tiene asignados los lugares');
-			                                											} 
-			                               
-			                                }
-			//En el modelo direcciones desl socio
-			$modeloprueba111=Direcciones::model()->find("n_direc=:micodpro",array(":micodpro"=>is_null($this->n_dirsoc)?0:$this->n_dirsoc+0)) ;
-			 if (is_null($modeloprueba111 )) 
-			    $this->adderror('n_dirsoc','Este punto de partida no Existe');
-							 
-				
-				
-				
-					
-							       
-									
-	} 
-	
-
 
 
 
@@ -689,6 +659,7 @@ public function checkvalores($attribute,$params) {
 			'almacendocs_almacenmovimientos' => array(self::BELONGS_TO, 'Almacenmovimientos', 'codmovimiento'),
 			'numeroitems'=>array(self::STAT, 'Alkardex', 'hidvale'),//el campo foraneo
 			'almacendocs_documentos'=>array(self::BELONGS_TO, 'Documentos', 'codocu'),
+			'trabajadores'=>array(self::BELONGS_TO, 'Trabajadores', 'codtrabajador'),
 
 
    			
@@ -763,7 +734,7 @@ public $maximovalor;
 							if ($this->isNewRecord) {
 									
 									    $this->creadopor=Yii::app()->user->name;
-										
+										$this->codtrabajador=yii::app()->user->um->getFieldValue(Yii::app()->user->id,'codtra');
 										//$this->codigo='34343434';
 										$this->codocu='101';
 										$this->cestadovale='99';

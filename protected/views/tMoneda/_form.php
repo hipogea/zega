@@ -3,8 +3,11 @@
 /* @var $model TMoneda */
 /* @var $form CActiveForm */
 ?>
+
+<?php MiFactoria::titulo("Cambio de ".$model->monedaref."  a   ".$model->codmon2,"package"); ?>
 <div class="division">
 <div class="wide form">
+
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'tmoneda-form',

@@ -53,6 +53,7 @@ $('#alinventario-grid2').yiiGridView('update', {
 	'columns'=>array(
 		//'codart',
 		ARRAY('name'=>'id','type'=>'raw','value'=>'CHtml::link(CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."Cast.png"),"#", array("onclick"=>\'$("#cru-frame2").attr("src","\'.Yii::app()->createurl(\'/alinventario/muestrakardex\', array(\'id\'=> $data->id ) ).\'");$("#cru-dialog2").dialog("open"); return false;\' ) )'),
+
 		//array('name'=>'embarcacion.nomep','header'=>'EP','type'=>'raw', 'value'=>'CHtml::link("".$data->embarcacion->nomep."","#",array(\'onclick\'=>\'$("#cru-frame2").attr("src","\'.Yii::app()->createurl(\'/reportepesca/update\', array(\'id\'=> $data->id ) ).\'"); $("#cru-dialog2").dialog("open"); return false;\',))'),
 		'codalm',
 		'codcen',
@@ -60,8 +61,8 @@ $('#alinventario-grid2').yiiGridView('update', {
 		//'cantlibre',
 		//'cantres',
 		array('name'=>'cantlibre','type'=>'raw','value'=>'($data->cantlibre>0)?CHtml::openTag("span",array("class"=>"badge badge-success")).$data->cantlibre.CHtml::closeTag("span"):""'),
+		array('name'=>'cantres','type'=>'raw','value'=>'($data->cantres>0)?CHtml::Link(CHtml::openTag("span",array("class"=>"badge badge-warning")).$data->cantres.CHtml::closeTag("span"),"#", array("onclick"=>\'$("#cru-frame5").attr("src","\'.Yii::app()->createurl(\'/alinventario/pintareservas\', array(\'idinventario\'=> $data->id ) ).\'");$("#cru-dialog5").dialog("open"); return false;\' ) ):""'),
 		array('name'=>'canttran','type'=>'raw','value'=>'($data->canttran>0)?CHtml::openTag("span",array("class"=>"badge badge-important")).$data->canttran.CHtml::closeTag("span"):""'),
-		array('name'=>'cantres','type'=>'raw','value'=>'($data->cantres>0)?CHtml::Link(CHtml::openTag("span",array("class"=>"badge badge-warning")).$data->cantres.CHtml::closeTag("span"),Yii::app()->createurl("/alinventario/pintareservas", array("material"=> $data->codart)),array("target"=>"blank")):""'),
 
 		'desum',
 
@@ -121,4 +122,25 @@ $this->endWidget();
 //--------------------- end new code --------------------------
 ?>
 
+
+<?php
+//--------------------- begin new code --------------------------
+// add the (closed) dialog for the iframe
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+	'id'=>'cru-dialog5',
+	'options'=>array(
+		'title'=>'Reservas pendientes',
+		'autoOpen'=>false,
+		'modal'=>true,
+		'width'=>750,
+		'height'=>600,
+	),
+));
+?>
+<iframe id="cru-frame5" width="100%" height="100%"></iframe>
+<?php
+
+$this->endWidget();
+//--------------------- end new code --------------------------
+?>
 

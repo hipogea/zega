@@ -1,7 +1,7 @@
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'detalle-grid',	
-	'dataProvider'=>Tempalkardex::model()->search_por_vale($idcabecera),
+	'dataProvider'=>Alkardex::model()->search_por_vale($idcabecera),
 	//'filter'=>$model,
 	//'cssFile' => ''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemagrid'].'grid_mediano.css',  // your version of css file
 	//'cssFile'=>Yii::app()->getTheme()->baseUrl.'/css/style-grid.css',  // your version of css file
@@ -42,7 +42,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//'c_edgui',	
 		'maestro.descripcion',
                 //array('name'=>'texto', 'type'=>'raw','header'=>'t','value'=>'(!empty($data->m_obs))?"x":""' ),
-                 array('name'=>'comentario', 'type'=>'raw','header'=>'t','value'=>'(!empty($data->textolargo))?CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."texto.png","hola"):""' ),
+		array('name'=>'comentario', 'type'=>'raw','header'=>'t','value'=>'(!empty($data->textolargo))?CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."texto.png","hola"):""' ),
 
 		//'centro',
 		//	'codal',
@@ -54,61 +54,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		array(
 			'class'=>'CButtonColumn',
 			'htmlOptions'=>array('width'=>100),
-			'template'=>'{update}',
+			'template'=>'{view}',
 			 'buttons'=>array(
 
-			 
-                        'update'=>
+                        'view'=>
                             array(
                             	   'visible'=>'true',
-                                    'url'=>'$this->grid->controller->createUrl("/almacendocs/Modificadetalle/",
-										    array("id"=>$data->idtemp,
+                                    'url'=>'$this->grid->controller->createUrl("/almacendocs/verdetalle/",
+										    array("id"=>$data->id,
                                                                                          "asDialog"=>1,
 											"gridId"=>$this->grid->id,
 											"ed"=>"si",
 
 											)
 									    )',
-                                    'click'=>('function(){ 
-							    $("#cru-detalle").attr("src",$(this).attr("href")); 
-							    $("#cru-dialogdetalle").dialog("open");  
+                                    'click'=>('function(){
+							    $("#cru-detalle").attr("src",$(this).attr("href"));
+							    $("#cru-dialogdetalle").dialog("open");
 							     return false;
 							 }'),
-								'imageUrl'=>''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemagrid'].'update.png', 
-								'label'=>'Actualizar Item', 
+								'imageUrl'=>''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemagrid'].'Open.png',
+								'label'=>'Ver detalle Item',
                                 ),
-				 'delete'=>
-
-					 array(
-						 'visible'=>'true',
-						 'url'=>'$this->grid->controller->createUrl("/almacendocs/borraitem", array("id"=>$data->idtemp))',
-						 'options' => array( 'ajax' => array('type' => 'GET',  'success' => "js:function() { $.fn.yiiGridView.update('detalle-grid'); }" ,'url'=>'js:$(this).attr("href")'),
-							 'onClick'=>'Loading.show();Loading.hide(); ',
-						 ) ,
-						 'imageUrl'=>''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemaimagenes'].'hand_point.png',
-						 'label'=>'Ver detalle',
-					 ),
-				 'view'=>
-                            array(
-                            	   'visible'=>'true',
-                                    'url'=>'$this->grid->controller->createUrl("/Almacendocs/Borraitem/",
-										    array("id"=>$data->id,
-                                                                                         "asDialog"=>1,
-											"gridId"=>$this->grid->id,
-											"ed"=>"no",
-
-											)
-									    )',
-                                    'click'=>('function(){ 
-							    $("#cru-detalle").attr("src",$(this).attr("href")); 
-							    $("#cru-dialogdetalle").dialog("open");  
-							     return false;
-							 }'),
-								'imageUrl'=>''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemagrid'].'borrador.png',
-								'label'=>'Borrar...',
-                                ),
-
-                            ),
+			                            ),
 		),
                 
                 

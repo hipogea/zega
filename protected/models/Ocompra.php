@@ -11,6 +11,8 @@ CONST ESTADO_FACTURADO_TOTAL='40';
 
 class Ocompra extends ModeloGeneral
 {
+	CONST ROL_AUTORIZACION_COMPRAS='TAREA_AUTORIZAR_COMPRAS'; //rOL DE AUTORIZACIOND E OMPRA PARA VER EL CHECKACCESS
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -552,6 +554,9 @@ public $maximovalor;
 			);
 		}
 
-
+public static  function puedeautorizar(){
+	//echo self::ROL_AUTORIZACION_COMPRAS;
+	return yii::app()->user->checkAccess(self::ROL_AUTORIZACION_COMPRAS);
+}
 
 }

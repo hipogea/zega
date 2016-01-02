@@ -39,7 +39,7 @@ class Almacenes extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public_almacenes';
+		return '{{almacenes}}';
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Almacenes extends CActiveRecord
 			array('creadoel, modificadoel', 'length', 'max'=>20),
 			array('codsoc', 'length', 'max'=>1),
 			array('estructura', 'length', 'max'=>15),
-			array('desalm,verprecios,novalorado', 'safe'),
+			array('desalm,verprecios,novalorado,codmon', 'safe'),
 			array('codalm, nomal, desalm, tipo, codcen,codmon,  codsoc, tipovaloracion, estructura,tolstockres,fecharefpronostico', 'safe', 'on'=>'insert,update'),
 
 			// The following rule is used by search().

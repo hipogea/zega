@@ -111,7 +111,7 @@ class Maestroclipro extends CActiveRecord
 			'maestroclipro_maestrocompo' => array(self::BELONGS_TO, 'Maestrocompo', 'codart'),
 			'maestroclipro_clipro' => array(self::BELONGS_TO, 'Clipro', 'codpro'),
 			'maestroclipro_centros' => array(self::BELONGS_TO, 'Centros', 'centro'),
-			'ofertas' => array(self::HAS_MANY, 'Ofertas', 'hidamaestroclipro'),
+			'ofertas' => array(self::HAS_MANY, 'Ofertas', 'hidmaestroclipro'),
 			'ofertas_pendientes' => array(self::STAT, 'Ofertas', 'hidmaestroclipro','condition'=>"tratado <> '1'"),
 
 		);

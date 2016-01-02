@@ -16,17 +16,11 @@
 
 	  <div style="width:200px;height:210px, padding:15px; margin:5px; float:left;">
 
-		  <?php
-		  echo "<div class='botones'>";
-		  echo CHtml::imageButton(Yii::app()->getTheme()->baseUrl.'/img/save.png',array('height'=>27,'width'=>27,'value'=>(!$model->isNewRecord) ?'Crear':'Grabar'));
-		  echo "</div>";
 
-		  ?>
 		<?php
-			  echo CHtml::image(
-				  "/recurso/materiales/".$model->codart.".JPG"
-				  ,"",
-				  array('width'=>'210','height'=>'210'));
+
+               Numeromaximo::Pintaimagen("/materiales/".$data->codart.".JPG","/materiales/NODISPONIBLE.JPG",100,100);
+
 			  ?>
 
 
@@ -103,7 +97,7 @@
 
 
 
-
+<?php echo $form->hiddenField($model,'id'); ?>
 
 		<div>
 
@@ -203,7 +197,21 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'ubicacion'); ?>
 		<?php echo $form->textField($model,'ubicacion',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'ubicacion'); ?>
+		<?php  echo Chtml::ajaxLink(
+			Chtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."package.png"),
+			CController::createUrl($this->id.'/updateubicacion'), array(
+				'type' => 'POST',
+				'url' => CController::createUrl($this->id.'/updateubicacion'), //  la acci?n que va a cargar el segundo div
+				"data"=>array(
+					"codubicacion"=>"js:Alinventario_ubicacion.value",
+					"id"=>"js:Alinventario_id.value"
+				),
+				"update" => "#zonamensajes",
+			)
+
+		);?>
+
+
 	</div>
 
 	<div class="row">
@@ -224,7 +232,7 @@
 		<?php echo $form->error($model,'ssiduser'); ?>
 	</div>
 
-
+			<div id="zonamensajes"></div>
 
 
 

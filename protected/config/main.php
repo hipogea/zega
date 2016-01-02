@@ -157,6 +157,10 @@ return array(
 		'tipocambio' => array (
 			'class'=>'application.components.TipocambioCompo',
 		),
+
+		'mensajes' => array (
+			'class'=>'application.components.MensajesCompo',
+		),
 		'maletin' => array (
 			'class'=>'application.components.MaletinCompo',
 		),

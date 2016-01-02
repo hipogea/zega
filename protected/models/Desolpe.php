@@ -2,6 +2,7 @@
 
 CONST ESTADO_PREVIO='99';
 CONST ESTADO_CREADO='10';
+
 CONST ESTADO_ANULADO='20';
 CONST ESTADO_APROBADO='30';
 CONST ESTADO_ATENDIDO='40';
@@ -23,7 +24,8 @@ class Desolpe extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
+	CONST ESTADO_RESERVA_CREADO='10';
+	const ESTADO_DESOLPE_RESERVADO='60';
 	
 	 public $cantidad_reservada;
       public $cantidad_compras;
@@ -57,6 +59,8 @@ class Desolpe extends CActiveRecord
 		return array(
 			//array('hidsolpe', 'required'),
 			//array('numero, codart', 'length', 'max'=>10),
+
+			array('punitreal','safe','on'=>'preciounitreal'),
 			array('tipimputacion', 'required', 'message'=>'Debe de indicar el tipo de imputacion', 'on'=>'insert,update'),
 			array('codart,id,centro,tipimputacion,codal,txtmaterial,tipsolpe,cant,um,punitplan','safe','on'=> 'ingresodesolpe'),
 
@@ -365,13 +369,14 @@ public function checktipimputacion(){
 		           $this->adderror('cantidad_reservada','La cantidad reservada excede a la solicitada' );
 	    //verifica que la cantidad a reservar no supere el stock de inventario
 		//antes asegurarse que se esta hablando de la misma unidad de medida base, emn otro caso convertir
-		$cantidad_reservada_convertida=Alconversiones::convierte($this->codart,$this->um)*$this->cantidad_reservada;
+		$cantidad_reservada_convertida=Alconversiones::convierte($this->codart,$this->um)*$this->cantidad_reservada+0;
 		
-				 $eninventario=$this->desolpe_alinventario->cantlibre;
+				 $eninventario=$this->desolpe_alinventario->cantlibre+0;
 				   //ahora si lo que se quiere reservar es mayot que lo que hay en inventario
+		/*	var_dump($this->desolpe_alinventario->cantlibre);var_dump($eninventario);
 				  if( $eninventario < $cantidad_reservada_convertida)
 							$this->adderror('cantidad_reservada','La cantidad reservada ('.$cantidad_reservada_convertida.') es mayor de la que hay en inventario ('.$eninventario.')' );
-		
+		*/
 		            if( $eninventario > 0 and  $cantidad_reservada_convertida==0 )
                         $this->adderror('cantidad_reservada','La cantidad reservada no puede ser cero, habiendo stock' );
 
@@ -448,13 +453,15 @@ public function checkvalores1($attribute,$params) {
 	public function beforeSave() {
 							if ($this->isNewRecord) {
 								
-											//$command = Yii::app()->db->createCommand(" select nextval('sq_guias') "); 
+											$this->iduser=Yii::app()->user->id;
+											//$command = Yii::app()->db->createCommand(" select nextval('sq_guias') ");
 											$this->usuario=Yii::app()->user->name;
 											$this->fechacrea=date("Y-m-d H:i:s");											
 											//$this->n_guia= $command->queryScalar();
 												$this->codocu='350';
 												//if($this->tipsolpe<>'S'){ ///Si no se trata de servicios
-													$registroinventario=Alinventario::model()->encontrarregistro($this->centro,$this->codal,$this->codart);
+								$registroinventario=$this->desolpe_alinventario;
+								//$registroinventario=Alinventario::model()->encontrarregistro($this->centro,$this->codal,$this->codart);
 								$this->punitplan=$registroinventario->punit*$this->cant*
 									Alconversiones::convierte($this->codart,$this->um)*
 									yii::app()->tipocambio->getcambio($registroinventario->almacen->codmon,
@@ -478,7 +485,7 @@ public function checkvalores1($attribute,$params) {
 										 // IF ($this->est=='99') //SI SE TRATA DE UNA GUIA NUEVA COLOCARLE 'PREVIO'
 												//$this->est='01';
 
-
+										$registroinventario=$this->desolpe_alinventario;
 
 										///si ha cambiado el material o la cantidad  , el precio debe de actualziarse
 										/*********************************************************/
@@ -489,10 +496,13 @@ public function checkvalores1($attribute,$params) {
 
 											//if($fila['codigo'] <> $this->codart or $fila['cant'] <> $this->cant)
 										if($this->tipsolpe<>'S'){ ///Si no se trata de servicios
-											if($this->oldattributes['codigo']<> $this->codart  or $this->oldattributes['cant'] <> $this->cant )
+											if($this->oldattributes['codart']<> $this->codart  or $this->oldattributes['cant'] <> $this->cant )
 											{
+												/*echo " codigo anterior".$this->oldattributes['codigo'] ."  codigo actual ".$this->codart."<br>";
+												echo " cantidad anterior".$this->oldattributes['cant'] ."   cantidad actual ".$this->cant."<br>";
+												yii::app()->end();*/
 												//$registroinventario=Alinventario::model()->encontrarregistro($this->centro,$this->codal,$this->codart);
-												$registroinventario=Alinventario::model()->encontrarregistro($this->centro,$this->codal,$this->codart);
+												//$registroinventario=Alinventario::model()->encontrarregistro($this->centro,$this->codal,$this->codart);
 												$this->punitplan=$registroinventario->punit*$this->cant*
 													Alconversiones::convierte($this->codart,$this->um)*
 													yii::app()->tipocambio->getcambio($registroinventario->almacen->codmon,
@@ -691,5 +701,129 @@ public function checkvalores1($attribute,$params) {
 
 
 	}
+
+	public function hacerreserva($cantreservar=null,$cantcomprar=null){
+		$cantsol=$this->cant;
+		$stock=$this->desolpe_alinventario->cantlibre;
+		$factor=Alconversiones::convierte($this->codart,$this->um);
+		if(is_null($cantreservar) and is_null($cantcomprar)){ //reserva automatica
+			$cantidad=$cantsol*$factor;
+			$diferencia=$cantidad-$stock;
+			if($cantidad >$stock){
+				if($stock>0){
+					$this->insertareserva('450',$stock/$factor);
+					$this->est=self::ESTADO_DESOLPE_RESERVADO;
+					if(!$this->desolpe_alinventario->reservar($stock)) {
+						$mensaje="No se pudo hacer la reserva desde el Inventario, hay una inconsistencia   cantidad libre(".$this->desolpe_alinventario->cantlibre.")  : cantidad a reservar(".$stock.")";
+						yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+					}
+				}
+				$this->insertareserva('800',$diferencia/$factor);
+				$this->est=self::ESTADO_DESOLPE_RESERVADO;
+
+			} else{
+				$this->insertareserva('450',$cantidad/$factor);
+				$this->est=self::ESTADO_DESOLPE_RESERVADO;
+				if(!$this->desolpe_alinventario->reservar($cantidad)) {
+					$mensaje="No se pudo hacer la reserva desde el Inventario, hay una inconsistencia   cantidad libre(".$this->desolpe_alinventario->cantlibre.")  : cantidad a reservar(".$cantidad.")";
+					yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+				}
+			}
+
+		}else{ //reserva manual
+			$cantidad=$this->cant*$factor;
+			if( $cantreservar > 0){
+				if($cantreservar > $cantsol){
+					$mensaje="Está intentando reservar (".$cantreservar.") mas de lo solicitado(".$cantsol.")";
+					yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+				} else{
+					if($cantcomprar >0 ){
+						//nada
+						if($cantreservar+$cantcomprar <=$cantsol){
+							$this->insertareserva('450',$cantreservar);
+							$this->insertareserva('800',$cantcomprar);
+							$this->est=self::ESTADO_DESOLPE_RESERVADO;
+							if(!$this->desolpe_alinventario->reservar($cantreservar))
+							{
+								$mensaje="No se pudo hacer la reserva desde el Inventario, hay una inconsistencia   cantidad libre(".$this->desolpe_alinventario->cantlibre.")  : cantidad a reservar(".$cantreservar.")";
+								yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+							}
+
+						}
+						else{
+							$mensaje="Lo reservado (".$cantreservar.") mas lo comprado(".$cantcomprar."), exceden a lo que se  pidio(".$cantsol.")";
+							yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+						}
+
+
+					}else{
+						//si es cero
+						if($cantidad > $stock) {
+							$mensaje="Está Solicitando (".$cantidad.") mas de lo que hay en stock (".$stock.")";
+							yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+						} else{
+							$this->insertareserva('450',$cantidad/$factor);
+							$this->est=self::ESTADO_DESOLPE_RESERVADO;
+							if(!$this->desolpe_alinventario->reservar($cantidad))
+							{
+								$mensaje="No se pudo hacer la reserva desde el Inventario, hay una inconsistencia   cantidad libre(".$this->desolpe_alinventario->cantlibre.")  : cantidad a reservar(".$cantidad.")";
+								yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+							}
+						}
+					}
+				}
+			}else {
+				if($stock==0){
+					//nada
+				}else{
+					$mensaje="La reserva no puede ser cero habiendo stock (".$stock.")";
+					yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+				}
+
+				if($cantcomprar > 0 ){
+
+					if($cantcomprar <=$cantsol){
+						$this->insertareserva('800',$cantcomprar);
+						$this->est=self::ESTADO_DESOLPE_RESERVADO;
+					} else{
+						$mensaje="La cantidad a comprar (".$cantcomprar.") excede a lo solicitado (".$cantsol.")";
+						yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+					}
+
+
+				}else{
+					$mensaje="La reserva es cero y la requisición tambien es cero";
+					yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje,'error');
+				}
+
+
+
+			}
+		}
+		$this->setScenario('Atencionreserva');
+        if(!$this->save()){
+			$mensaje="No se pudo grabar el registro de la soliictud ";
+			yii::app()->mensajes->setmessageitem('340',$this->item,$mensaje.yii::app()->mensajes->getErroresItem($this->geterrors()),'error');
+		}
+
+		return yii::app()->mensajes->hayerrores('340');
+
+
+	}
+
+	private function insertareserva($documento,$cantidad){
+		if(isset($modelo))unset($modelo);
+		$modelo = new Alreserva;
+		$modelo->hidesolpe = $this->id;
+		$modelo->cant = $cantidad;
+		$modelo->flag = '1';
+		$modelo->estadoreserva = self::ESTADO_RESERVA_CREADO;
+		$modelo->codocu = $documento;
+		$modelo->fechares=date("Y-m-d H:i:s");
+		//PRINT_R($modelo->attributes);
+		return $modelo->save();
+	}
+
+
 
 }

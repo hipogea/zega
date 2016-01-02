@@ -233,7 +233,7 @@ public function actionVerDocumento($id){
         return array(
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('cargaprecios','enviarpdf','admin','borrarimpuesto','reporte','agregarmasivamente','cargadirecciones','borraitems','sacaitem','sacaum','salir','agregaimpuesto','agregaritemsolpe','procesardocumento','refrescadescuento','VerDocumento','EditaDocumento','creadocumento','Agregardelmaletin','borraitem','imprimirsolo','cargaentregas','agregarsolpe','agregarsolpetotal','pasaatemporal','create','imprimirsolo','imprimir','imprimir2','enviarmail',
+				'actions'=>array('aprobar','cargaprecios','enviarpdf','admin','borrarimpuesto','reporte','agregarmasivamente','cargadirecciones','borraitems','sacaitem','sacaum','salir','agregaimpuesto','agregaritemsolpe','procesardocumento','refrescadescuento','VerDocumento','EditaDocumento','creadocumento','Agregardelmaletin','borraitem','imprimirsolo','cargaentregas','agregarsolpe','agregarsolpetotal','pasaatemporal','create','imprimirsolo','imprimir','imprimir2','enviarmail',
 					'procesaroc','hijo','Aprobaroc','Reporteoc','Anularoc','Configuraop','Revertiroc', ///acciones de proceso
 					'libmasiva','creadetalle','Verdetalle','muestraimput','update','nada','Modificadetalle'),
 				'users'=>array('@'),
@@ -821,7 +821,7 @@ private function pasadatosacompra($desolp,$docomp,$idguia){
             'descri'=>$desolp->txtmaterial,
             //'tipoimputacion'=>$desolp->tipimputacion,
             //'tipoitem'=>$desolp->tipsolpe,
-            'cant'=>$desolp->cant_pendiente,
+            'cant'=>$desolp->cant-(is_null($desolp->cantatendida)?0:$desolp->cantatendida),
             'um'=>$desolp->um,
             'punit'=>$desolp->punitplan,
         ),true);
@@ -942,20 +942,57 @@ private function pasadatosacompra($desolp,$docomp,$idguia){
     }
 
     /****************************************************
-     *	crea items que toma del maletin
+     *	crea items que toma del maletin,
+     * REFERENCIA SOLO  PARA SOLPES DE APROVISIONAMIENTO
+     *
      ****************************************************/
     public function actionAgregardelmaletin(){
+        $id=$_GET['id'];
+        $id=(integer)MiFactoria::cleanInput($id);
+       $registrocompra=$this->loadModel($id);
+        $mensaje="";
+        $filas=yii::app()->maletin->getvalues('Desolpe');
 
+        if(count($filas)>0 ){
+
+            foreach($filas as $fila){
+
+                $registroitemcompra=New Docompratemp('ingresodesolpe');
+                $filadesolpe=VwSolpeparacomprar::model()->findById($fila['idregistro']);
+                //verificando la consistencia de la solpe
+
+                if(is_null($filadesolpe))
+                    continue;
+               if(
+                is_null($filadesolpe->cant_pendiente)?0:$filadesolpe->cant_pendiente+
+                    is_null($filadesolpe->cantatendida)?0:$filadesolpe->cantatendida >
+                    $filadesolpe->cant
+                )continue;
+
+                $this->pasadatosacompra($filadesolpe,$registroitemcompra,$id);
+                 if(!$registroitemcompra->save())
+                {
+                   $mensaje.=yii::app()->mensajes->getErroresItem($registroitemcompra->geterrors());
+                }
+            }
+
+
+        }else{
+            $mensaje.=" No hay registros de solicitudes en el Maletín<br>";
+        }
+
+
+        echo $mensaje;
        /* echo "salio";
         yii::app()->end();*/
-        $id=(int)MiFactoria::cleanInput($_POST['idcompra']);
+     /*   $id=(int)MiFactoria::cleanInput($_POST['idcompra']);
 $cadena="";
           $modelocompra=$this->loadModel($id);
           $cest=$modelocompra->codestado;
           /*$desolpe=Desolpe::Model()->findBypK($_SESSION['350'][0]);
           $modelosolpe=Solpe::model()->findByPk($desolpe->hidsolpe);*/
 
-          if($cest=='10' OR $cest=='99') {
+       /*   if($cest=='10' OR $cest=='99') {
               //RECORRIENDO LAS DESOLPES DEL MALETIN
               foreach (Yii::app()->session['DOC350'] as $clave=>$valor) {
 
@@ -972,7 +1009,7 @@ $cadena="";
 
 
           }
-        echo $cadena;
+        echo $cadena;*/
     }
 
 
@@ -1979,21 +2016,20 @@ public function actionVerdetalle($id)
         $compra=Ocompra::model()->findByPk($id);
         switch ($idevento) {
             case 65: ///APROB
-                $filas=$compra->detallefirme;
-                foreach($filas as $row ) {
-                   // $filafirme=Docompra::model()->findByPk($row->id);//solo si
-                    //Solo si no esta anulado
-                    $row->setScenario('cambiaestado');
-                  if( in_array($row->estadodetalle,Estado::estadosnocalculablesdetalle($compra->coddocu)))
-                         $row->estadodetalle=ESTADO_DOCOMPRA_APROBADO;
+                if(Ocompra::puedeautorizar()) {
+                    $filas=$compra->detallefirme;
+                    foreach($filas as $row ) {
+                        // $filafirme=Docompra::model()->findByPk($row->id);//solo si
+                        //Solo si no esta anulado
+                        $row->setScenario('cambiaestado');
+                        if( in_array($row->estadodetalle,Estado::estadosnocalculablesdetalle($compra->coddocu)))
+                            $row->estadodetalle=ESTADO_DOCOMPRA_APROBADO;
+                        if(!$row->save())
+                            $mensaje.=" Ocurrió un error  en el item ".$row->item." al guardar los datos del estado detalle  <br>";
 
-                    ///AVTUALIZAR TAMBIEN EL ESTADO DE LOS REGISTROS DE LA TBLA PUENTE DESOLPECOMPRA
-
-                    //DE ESTO SE ENCARGA DOCOMPRA en el evento AfterSave()
-
-                    if(!$row->save())
-                        $mensaje.=" Ocurrió un error  en el item ".$row->item." al guardar los datos del estado detalle  <br>";
-
+                    }
+                }else{
+                    $mensaje.=" No tiene permisos para efectuar esta acción <br>";
                 }
                 break;
 
@@ -2128,5 +2164,16 @@ public function actionReporte($id){
 
 
    }
+
+    public function actionAprobar()
+    {
+        $model=new VwOcompra('search');
+            $proveedor=$model->search_por_liberar();
+
+        $this->render('liberacion',array(
+            'model'=>$model,'proveedor'=>$proveedor,
+        ));
+    }
+
 
 }

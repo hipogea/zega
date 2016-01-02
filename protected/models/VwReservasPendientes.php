@@ -202,7 +202,48 @@ class VwReservasPendientes extends CActiveRecord
 	}
 
 
+	public function search_reservado($idinventario)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+$idinv=MiFactoria::cleanInput($idinventario);
+		$criteria=new CDbCriteria;
 
+
+		$criteria->addcondition('cantidad_pendiente > 0 or cantidad_pendiente IS NULL ');
+		$criteria->addcondition(" estadoreserva not in ( '30','20','70') ");
+		$criteria->addcondition(" codocu='450'");
+		$criteria->addcondition("hidinventario=".$idinv);
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pagesize'=>100),
+		));
+	}
+
+	public function search_otrasreservas($iduser,$codart,$codcen,$codal)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+		$iddesolpe=(integer)MiFactoria::cleanInput($iduser);
+		$codal=MiFactoria::cleanInput($codal);
+		$codcen=MiFactoria::cleanInput($codcen);
+		$codart=MiFactoria::cleanInput($codart);
+
+		$criteria=new CDbCriteria;
+
+
+
+		$criteria->addcondition("codal=:vcodal");
+		$criteria->addcondition("centro=:vcentro");
+		$criteria->addcondition("codart=:vcodart");
+		//$criteria->addcondition("iddesolpe=".$iddesolpe);
+		$criteria->addcondition("idusersolpe <> :viduser");
+		$criteria->params=array(":viduser"=>$iduser,":vcodart"=>$codart,":vcentro"=>$codcen,":vcodal"=>$codal);
+		$criteria->addcondition('cantidad_pendiente > 0 or cantidad_pendiente IS NULL ');
+		$criteria->addcondition(" estadoreserva not in ( '30','20','70') ");
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pagesize'=>100),
+		));
+	}
 
 
 	/**

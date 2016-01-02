@@ -138,7 +138,7 @@ class SiteController extends Controller
 			->from('{{montoinventario}} a')
 			->queryScalar();
 		$tiempoult=strtotime($fecmax.'');
-		if(($tiempo-$tiempoult) > 60*60*24*3 ){
+		if(($tiempo-$tiempoult) > 60*60*24*yii::app()->settings->get('inventario','inventario_periodocontrol') ){
 			$alin=new Alinventario();
 			$stocks=$alin->getStockValAlmacen();
 
@@ -152,6 +152,7 @@ class SiteController extends Controller
 						'dia'=>$dia,
 						'mes'=>$mes,
 						'anno'=>$ani,
+						'semana'=>$ani.date('W'),
 						'iduser'=>Yii::app()->user->id,
 						'montolibre'=>round($filastock['stock_cantlibre'],0),
 						'montotran'=>round($filastock['stock_canttran'],0),

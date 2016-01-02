@@ -87,7 +87,10 @@ class ControladorBase extends Controller
 				if(is_null($existeregistro))
 				  {  ///Solo si no existe
 					$modelotempdpeticion=new $nametablatemporal;
+					 // $modelotempdpeticion->setScenario("buffer");
+					 // $row->setScenario("buffer");
 					$modelotempdpeticion->attributes=$row->attributes;
+					// print_r($row->attributes);echo "<br>";  print_r($modelotempdpeticion->attributes);yii::app()->end();
 					$modelotempdpeticion->idstatus=0; ///0 : Conectado  <> -1  eliimnado  <> +1  agregado
 					$modelotempdpeticion->idusertemp=Yii::app()->user->id;
 					if(!$modelotempdpeticion->save()){
@@ -117,9 +120,11 @@ class ControladorBase extends Controller
 			$registroshijos=MiFactoria::getRegistrosHijos($nametablatemporal,$campoenlace,$id);
 
 			foreach  ($registroshijos as $row) {
+				//$row->setScenario('buffer');
 				$modelooriginal=$nametablaoriginal::model()->findByPk($row->id);
 				if(is_null($modelooriginal)) {
 					$modelooriginal=new $nametablaoriginal;
+					//$modelooriginal->setScenario('buffer');
 				}
 				$modelooriginal->attributes=$row->attributes;
 						if($row->idstatus==-1)
@@ -182,34 +187,31 @@ class ControladorBase extends Controller
 	public function ClearBuffer($id=null)
 	{
 		Bloqueos::clearbloqueos();
-		$docbloqueados=Yii::app()->db->createCommand()
-			->select('iddocu')
-			->from('{{bloqueos}}')
-			->where("codocu=:vcodocu AND iduser=:videuser",
-				array(":vcodocu"=>$this->documento,":videuser"=>yii::app()->user->id)
-			)->queryColumn();
-		//recorrriendo lso modelos hijos
-		//if(!is_null($id))
-		foreach($this->modeloshijos as $clave=>$valor ){
-			$campoenlace=$this->camposlink[$valor];
-			$criterio=New CDBCriteria();
-			$criterio->addCondition("idusertemp=".yii::app()->user->id);
-			$criterio->addNotInCondition($campoenlace,$docbloqueados);
-			//$criterio->params=array(":idusuario"=>yii::app()->user->id);
-			$valor::model()->deleteAll($criterio);
-			//$modtemp=new $valor;
-			//$nombretabla=$modtemp->tableName();
-			//unset($modtemp);
-			/*$filasborradas=Yii::app()->db->createCommand()
-				->delete($nombretabla," idusertemp=:idusuario AND ".$campoenlace."=:id",
-					array(":idusuario"=>yii::app()->user->id,  ":id"=>$id));*/
-			/*$filasborradas=Yii::app()->db->createCommand()
-				->delete($nombretabla,$criterio->condition,	$criterio->params);
-            echo  $filasborradas->text;yii::app()->end();*/
-
+		if(is_null($id)) {
+			$docbloqueados = Yii::app()->db->createCommand()
+				->select('iddocu')
+				->from('{{bloqueos}}')
+				->where("codocu=:vcodocu AND iduser=:videuser",
+					array(":vcodocu" => $this->documento, ":videuser" => yii::app()->user->id)
+				)->queryColumn();
 		}
 
+			foreach($this->modeloshijos as $clave=>$valor ){
+			$campoenlace=$this->camposlink[$valor];
+			  if(is_null($id)){
+				  $criterio=New CDBCriteria();
+				  $criterio->addCondition("idusertemp=".yii::app()->user->id);
+				  $criterio->addInCondition($campoenlace,$docbloqueados);
+			  }else{
+				  $criterio=New CDBCriteria();
+				  $criterio->addCondition("idusertemp=".yii::app()->user->id);
+				  $criterio->addCondition($campoenlace."=".$id);
+			  }
 
+			//$criterio->params=array(":idusuario"=>yii::app()->user->id);
+			$valor::model()->deleteAll($criterio);
+
+		}
   return true;
 	}
 
@@ -449,16 +451,13 @@ public function detectaerrores(){
 	public function hubocambiodetalle($id)
 	{
 		$difiere=false; ///Asumismos que no ha variado
-    // echo "<br><br><br><br><br><br><br><br>";
-		$nombreclasepadre=$this->modelopadre;
+    		$nombreclasepadre=$this->modelopadre;
 		//Obtiene la matriz de relaciones del modelo padre
 		//recorriendo los modelos o clase hijas , puede haber mas de una OJO
 		foreach ($this->modeloshijos as $nombreclasehija=>$nombreclasetemporal)
 		{
-		   //  echo "  Recorriendo la tabla hija : ".$nombreclasehija."  <br> ";
-		     //Obteniendo dinamicamente el campo enlace para cada modelo hijo
+		      //Obteniendo dinamicamente el campo enlace para cada modelo hijo
 		     $campoenlace= $this->getFieldLink($nombreclasetemporal);
-			//echo " campo enlace ".$campoenlace;
 			$registrosoriginales =MiFactoria::getRegistrosHijos($nombreclasehija,$campoenlace,$id);
 			$registrostemporales=MiFactoria::getRegistrosHijos($nombreclasetemporal,$campoenlace,$id);
 			//if (count($registrostemporales)==0)
@@ -467,19 +466,25 @@ public function detectaerrores(){
 		if(count($registrostemporales)==count($registrosoriginales)){
 			foreach ($registrosoriginales as $roworiginal)
 			{
+				$roworiginal->setScenario("buffer");
 				//echo "  Recorriendo el grupo de regsitros originales(".count($registrosoriginales).")    registros temporales (".count($registrostemporales).") :  <br> ";
 				foreach($registrostemporales as $rowtemporal)
 				{
 					// ECHO " VERIFICAND CULA CORREPSODNE A CUAL ...<BR>";
+					//echo "id original ".$roworiginal->attributes['id']."   -     id temporal  ".$rowtemporal->attributes['id']."<br>";
 					if($roworiginal->attributes['id']==$rowtemporal->attributes['id'])
 					{ //Si son correspondientes
-							foreach($roworiginal->attributes as $nombrecampo => $valorcampo)
+							foreach($roworiginal->getSafeAttributeNames() as $clave => $nombrecampo)
 						    {
-						    			if($rowtemporal->attributes[$nombrecampo] <> $valorcampo and
+								//echo  "( ".$roworiginal->getScenario()."   ".$roworiginal->id.") El registro original  : ".$nombrecampo." ".$roworiginal->{$nombrecampo}."  es igual a   temporal? :".$nombrecampo."   :  ".$rowtemporal->{$nombrecampo}."<br>";
+								// throw new CHttpException(500,"  Se hallo diferencia El registro original  : ".$nombrecampo." ".$valorcampo."  es igual a?   temporal :".$rowtemporal->attributes[$nombrecampo]."<br>");
+
+
+								if($rowtemporal->{$nombrecampo} <> $roworiginal->{$nombrecampo} and
 							  			 $nombrecampo <> 'id' and $nombrecampo <> 'idtemp'
 										 and $nombrecampo <> 'idstatus' and  $nombrecampo <> 'idusertemp'   )
 							  			 {
-											// "El registro original  : ".$nombrecampo." ".$valorcampo."  es igual a?   temporal :".$registrostemporales->attributes[$nombrecampo]."<br>";
+											//echo  "El registro original  : ".$nombrecampo." ".$roworiginal->{$nombrecampo}."  es igual a   temporal? :".$nombrecampo."   :  ".$rowtemporal->{$nombrecampo}."<br>";
 											// throw new CHttpException(500,"  Se hallo diferencia El registro original  : ".$nombrecampo." ".$valorcampo."  es igual a?   temporal :".$rowtemporal->attributes[$nombrecampo]."<br>");
 											 $difiere=true;
 										break;
@@ -502,7 +507,9 @@ public function detectaerrores(){
 			unset($registrosoriginales);
 			if($difiere)break;
         } //Fin del bucle de los modelos hijos
+		//yii::app()->end();
     return $difiere;
+
 	}
 
 

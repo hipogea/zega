@@ -9,6 +9,7 @@ const CODIGO_DOC_SOLPE='340';
 class SolpeController extends Controller
 {
 	
+	const CODIGO_DOC_DESOLPE='350';
 	const DOCUMENTO_RESERVA='450';
 	const DOCUMENTO_RQ='800';
 	const ESTADO_RESERVA_CREADO='10';
@@ -81,13 +82,14 @@ const ESTADO_DESOLPE_RESERVADO='60';
 		//
 		$mensa="";
 		$registroshijos=$model->solpe_desolpe;
+			yii::app()->mensajes->clear();
 		$transaccion=$model->dbConnection->beginTransaction();
 		           foreach  ($registroshijos as $row) {
 
 					      if($row->numeroreservas == 0){
 							  $row->setScenario('Atencionreserva');
 							 
-							 $modeloreserva=New Alreserva;
+							 /*$modeloreserva=New Alreserva;
 							  $modeloreserva->hidesolpe=$row->id;
 							  $modeloreserva->estadoreserva=self::ESTADO_RESERVA_CREADO;
 							  $modeloreserva->fechares=date("Y-m-d H:i:s");
@@ -99,29 +101,22 @@ const ESTADO_DESOLPE_RESERVADO='60';
 							  $modeloreserva1->fechares=date("Y-m-d H:i:s");
 							  $modeloreserva1->usuario=Yii::app()->user->Name;
 							  $modeloreserva1->codocu=self::DOCUMENTO_RQ;
-
 							  $factorconversion=Alconversiones::convierte($row->codart,$row->um);
+							  $inventario=$row->desolpe_alinventario;
+							  $cantidadamoverdelstock=$row->cant*$factorconversion;
 							  //$cantidadefectiva=($row->um <>$row->maestro->um)?$row->cant*$factorconversion:$row->cant;
-
-							    						if($row->cant*$factorconversion <= $row->desolpe_alinventario->cantlibre ){  ///si hay stock sufieciente no hya probelma
+							    						if( $cantidadamoverdelstock <= $inventario->cantlibre ){  ///si hay stock sufieciente no hya probelma
 									             				 $modeloreserva->cant= $row->cant;
 									               					 $modeloreserva1->cant=0;
-									             // $mensa.=" Stock mayor al que se pide ok!  Se reservo en el item ".$row->item."  ".$modeloreserva->cant." <br> ";
-								               			 	} else {
-															$modeloreserva->cant= $row->desolpe_alinventario->cantlibre/$factorconversion; //solo reservamos lo qu esta en stock
-															$modeloreserva1->cant= $row->cant-$row->desolpe_alinventario->cantlibre/$factorconversion; ///la diferencia la solicitiamos
-									     //  $mensa.=" Stock menor al que se pide  Se reservo una parte  en el item ".$row->item."  ".$modeloreserva->cant." <br> ";
-									     // $mensa.=" Se solicita  una parte  en el item ".$row->item."  ".$modeloreserva1->cant." <br> ";
-															}
+									             	 	} else {
+															$cantidadamoverdelstock =$inventario->cantlibre;
+															$modeloreserva->cant= $cantidadamoverdelstock; //solo reservamos lo qu esta en stock
+															$modeloreserva1->cant= $row->cant-$cantidadamoverdelstock/$factorconversion; ///la diferencia la solicitiamos
+									     				}
 							             ////Luego actualizamoes el inventario
-							             $inventario=$this->devuelveinventario($row->centro,$row->codal,$row->codart);
-							  //  echo "<br>"; echo "<br>"; echo "<br>"; echo "<br>"; echo "<br>";
-							 // echo $inventario->codcen."   ".$inventario->codalm."    ".$inventario->codart."<br>";
-
-							            // $inventario->cantres+=$modeloreserva->cant*$factorconversion;
-							            // $inventario->cantlibre-=$modeloreserva->cant*$factorconversion;
-							             $inventario->setScenario('modificacantidad');
-										 if($inventario->stocklibre_a_reserva($row->cant*$factorconversion))
+							            // $inventario=$this->devuelveinventario($row->centro,$row->codal,$row->codart);
+							  			$inventario->setScenario('modificacantidad');
+										 if($inventario->stocklibre_a_reserva($cantidadamoverdelstock))
 										 {
 											 $row->est=self::ESTADO_DESOLPE_RESERVADO;
 											if(!( $inventario->save() and 
@@ -137,15 +132,22 @@ const ESTADO_DESOLPE_RESERVADO='60';
 											
 										 }
 										
-							       
+							      */
+							  $row->hacerreserva();
 						  }
 
 				   }//fin del For
 			if(strlen($mensa)==0)  { //Si s epudo actualziar
-									$transaccion->commit();
-									Yii::app()->user->setFlash('success', "Se hizo la reserva automatica del Documento ".$mensa);
+									$estoes=yii::app()->mensajes->hayerrores('340');
+									if(is_null($estoes)){
+										$transaccion->commit();
+										Yii::app()->user->setFlash('success', "Se hizo la reserva automatica del Documento ".$mensa);
 										$this->render('update',array('model'=>$model));
 										yii::app()->end();
+									}else{
+										print_r($estoes);
+									}
+
 							}     else   {
 								$transaccion->rollback();
 									Yii::app()->user->setFlash('error', "No se pudo reservar automaticamente el documento, hay  errores  :".$mensa);
@@ -195,7 +197,7 @@ const ESTADO_DESOLPE_RESERVADO='60';
 				$arrayvalores[$autoId]='Desolpe';
 
 			}
-			yii::app()->maletin->ponervalores($arrayvalores);
+			yii::app()->maletin->ponervalores($arrayvalores,self::CODIGO_DOC_DESOLPE);
 		}
 
       /*  if(!isset( $_SESSION['350']))
@@ -230,6 +232,7 @@ const ESTADO_DESOLPE_RESERVADO='60';
     public function actionSolpeautomatica($id) {
     /***primero creamos la varibale sesion si no esta creadqa     */
 		//veriifcamos UN CHISTOSO NO PASE CUALQUIER  ID POR LA UR
+		$id=(integer)MiFactoria::cleanInput($id);
 		$mensaje="";
 		      $alreserva=Alreserva::Model()->findByPk($id);
 	if(!is_null($alreserva)) {
@@ -262,11 +265,14 @@ const ESTADO_DESOLPE_RESERVADO='60';
 					if ( ! ( $solpe->estado == '10' ) )
 					{
 						//SI ESTA CREADO AGREGAR ITEMS A ESTA SOLPE, SI YA ESTA APROBADO O ANULADO, ES MEJOR CREAR UAN NUEVA SOLPE
-						$solpe2 = New Solpe;
+						$solpe2 = New Solpe('automatica');
 						//$solpe2->estado='01';
 						$solpe2->textocabecera = 'Item automaticosolpes';
-						$solpe2->save ();
+						if(!$solpe2->save ())
+							$mensaje.=" ERROR : no se pude grabr la solpe 2 ".yii::app()->mensajes->getErroresItem($solpe2->geterrors())." <br>";
+
 						$solpe2->refresh ();
+						//var_dump($solpe2->attributes);yii::app()->end();
 						$solpe3 = Solpe::model ()->findByPk ( $solpe2->id );
 						$solpe3->setScenario ( 'automatica' );
 						$solpe3->escompra = '1';
@@ -733,14 +739,9 @@ public function actionstock() {
 			$model->delete();
 			$this->redirect(array('admin'));
 		}
-
-
 		if(isset($_POST['Solpe']))
 		{
              $prefix="public_";
-			/*print_r($_POST['Solpe']);
-			echo $model->getScenario();
-			yii::app()->end();*/
 			$model->attributes=$_POST['Solpe'];
 			if($model->save()) {
 				//anexamos los items agregados 
@@ -753,8 +754,6 @@ public function actionstock() {
 				//$this->redirect(array('view','id'=>$model->id));
 			                }
 		}
-
-
 		$this->render('update', array('model'=>$model));
 	}
 
@@ -1005,20 +1004,13 @@ public function actionstock() {
 	}
 
 public function actionTomarcompras(){
-    $model=new VwSolpe('search');
+    $model=new VwSolpeparacomprar('search');
     $model->unsetAttributes();  // clear any default values
-    if(isset($_GET['VwSolpe']))
-        $model->attributes=$_GET['VwSolpe'];
-
+    if(isset($_GET['VwSolpeparacomprar']))
+        $model->attributes=$_GET['VwSolpeparacomprar'];
     if ($this->isExportRequest()) { //<==== [[ADD THIS BLOCK BEFORE RENDER]]
-        //set_time_limit(0); //Uncomment to export lage datasets
-        //Add to the csv a single line of text
-        //  $this->exportCSV(array('POSTS WITH FILTER:'), null, false);
-        //Add to the csv a single model data with 3 empty rows after the data
-        // $this->exportCSV($model, array_keys($model->attributeLabels()), false, 3);
-        //Add to the csv a lot of models from a CDataProvider
 
-        $this->exportCSV($model->search_compras(), array('numsolpe','item','cant','desum','codart','txtmaterial','fechacrea','fechaent','codal','centro','usuario','est'));
+        $this->exportCSV($model->search(), array('numero','item','cant','desum','codart','txtmaterial','fechacrea','fechaent','codal','centro','usuario','estado'));
     }
 
     $this->render('tomarsolpe',array(
@@ -1364,132 +1356,7 @@ public function actionprocesarsolpe($id)
 	   }
 
 
-
-	   /*
-
-       //$identidad=$_post["dato"];
-       $model=Alreserva::model()->findByPk($id);
-       if (is_null($model))
-           throw new CHttpException(404,'No se encontro ningun documento para estos datos');
-	   $modelodetalle=Desolpe::Model()->findByPk($model->hidesolpe);
-	   //El inventario siempre se maneja en unidad de medida base;
-	   $cantidadenjuego=$model->cant*Alconversiones::convierte($modelodetalle->codart,$modelodetalle->maestro->um);
-
-	   if($model->codocu=='450'){ //si es una reserva
-       		if($model->estadoreserva=='10') {
-
-           		 	$model->estadoreserva='30'; //anulare
-				//verificando si se puede regresar el status a la desolpe
-				///2 criterios : Si existe solo una reserva para esta desolpe se procede pero si existe
-				/// adicionalmente una SOLICITUD DE COMPRA para esta misma solped, tambien debe  de anularse
-				$reservasasociadas=$modelodetalle->numeroreservas;
-				if( $reservasasociadas > 1)
-										{ //quier decir que hay UNA SOLCIITUD DE COMNPRA ADICIONAL, tendremos que vaidar gtambien la anulacion de un SOLICITU
-										$adicional=Alreserva::model()->find("hidesolpe=".$modelodetalle->id." and id <> ".$id."");
-					   					 //Luego intentamos Anular tambien Esta solicitud
-											$consulta=Yii::app()->db->createCommand("select count(*) from ".Yii::app()->params['prefijo']."desolpe1 where est <> '20' and idreserva=".$adicional->id." ")->queryScalar();
-													if($consulta > 0 ) ///si Existe alguna solpe
-															{
-																Yii::app()->user->setFlash('error', "No se pudo anular la reserva, ".$model->id."   porque ya está asociada a una solicitud de COMPRA que esta siendo procesada  ");
-																Yii::app()->end();
-															}else {
-																	$adicional->estadoreserva='30';
-																	$modelodetalle->est='30';   //Regrear status a la desolpe
-																	$model->estadoreserva='30';
-															}
-										} else { //si no es el caso es muy papaya...
-											$modelodetalle->est='30';   //Regrear status a la desolpe
-											$model->estadoreserva='30';
-												}
-
-					//$command = Yii::app()->db->createCommand("update alreserva set estadoreserva='03'  where hidesolpe =".$id."");
-          			// $command->execute();
-					//ahora el inventario
-						$modeloinventario=Alinventario::model()->findByPk($modelodetalle->desolpe_alinventario->id);
-								if(!is_null($modeloinventario)) {
-											$modeloinventario->setscenario('modificacantidad');
-											$modeloinventario->cantlibre=$modeloinventario->cantlibre+$cantidadenjuego;
-											$modeloinventario->cantres=$modeloinventario->cantres-$cantidadenjuego;
-																} else {
-									Yii::app()->user->setFlash('error', "No se puede anular la reserva, ".$model->id."  Verifique que este material tenga registrado inventario ");
-									Yii::app()->end();
-														}
-								$transaccion=$model->dbConnection->beginTransaction();
-						if (  $model->save() and $modelodetalle->save() and $modeloinventario->save() and ( $reservasasociadas > 1)?$adicional->save():true ) {
-							  Yii::app()->user->setFlash('success', "Se  anulo la reserva, ".$model->id."   ");
-							 $transaccion->commit();
-          					}else {
-              					$transaccion->rollback();
-							Yii::app()->user->setFlash('error', "Hubo un problema al grabar los datos , en la reserva ".$model->id."  , no se pudo anular, revise los escenarios ");
-
-						}
-			    }else {///en caso de intentar anular una reserva que no tiene el status CREADO
-										Yii::app()->user->setFlash('error', "No se pudo anular la reserva, ".$model->id."  > porque ya esta ".$model->alreserva_estado->estado);
-										Yii::app()->end();
-			  }
-	     }else {  ///en caso de ser una SOLCIITU DE COMPRA
-
-
-			  				 //VERIFICANDO SI TIENE SOLPES PARA COMPRAS ACTIVAS RELACIONADAS
-		   						$consulta1=Yii::app()->db->createCommand("select count(*) from ".Yii::app()->params['prefijo']."desolpe1 where est <> '20' and idreserva=".$id." ")->queryScalar();
-		   						if($consulta1 > 0 ) ///si Existe alguna solpe
-								{
-									Yii::app()->user->setFlash('error', "No se pudo anular la reserva, ".$model->id."   porque ya se solicito a compras");
-									Yii::app()->end();
-								}else { ///si  npo hay solpes para compra srelaconadas entonces
-									    ///verificando primero que no haya una reserva asociada
-									   $adicional1=Alreserva::model()->find("hidesolpe=".$modelodetalle->id." and id <> ".$id."");
-
-									   if(!$adicional1===null) { ///si   hay reservas relacionadas
-
-											//Luego intentamos Anular tambien Esta reserva
-											                      //veamos , si es una reserva sin atenciones no hay problema
-															if($model->estadoreserva=='10') {
-
-																					$modeloinventario=Alinventario::model()->findByPk($modelodetalle->desolpe_alinventario->id);
-																					if(!is_null($modeloinventario))
-																								{
-																							$modeloinventario->setscenario('modificacantidad');
-																								$modeloinventario->cantlibre=$modeloinventario->cantlibre+$cantidadenjuego;
-																									$modeloinventario->cantres=$modeloinventario->cantres-$cantidadenjuego;
-																								} else {
-																										Yii::app()->user->setFlash('error', "No se puede anular la reserva, asociada  ".$adicional1->id."  Verifique que este material tenga registrado inventario ");
-																												Yii::app()->end();
-																					             }
-																							$modelodetalle->est='30';
-																							$model->estadoreserva='30';//anular
-																							$adicional1->estadoreserva='30'; //anular tambien la reserva
-																				} else { //aqui si hay problemas porque esta reserva asociada ya esta atendidad
-																			Yii::app()->user->setFlash('error', "No se pudo anular esta Solicitud , ".$model->id."   porque hay una reserva asociada que ya ha sido atendida");
-																			Yii::app()->end();
-																		}
-
-														} else {
-														$model->estadoreserva='30';//anular
-														$modelodetalle->est='30';//regresar el status de la solped
-													}
-									//echo "model ".gettype($model)."  modelodetalle  ".gettype($modelodetalle)."  modeloinventario  ".gettype($modeloinventario)."  adicional  ".gettype($adicional1);
-									//Yii::app()->end();
-									$transaccion=$model->dbConnection->beginTransaction();
-									if (  $model->save() and $modelodetalle->save() and (!is_null($adicional1))?$modeloinventario->save():true and (!is_null($adicional1))?$adicional1->save():true )
-									   {
-										Yii::app()->user->setFlash('success', "Se  anulo la reserva, ".$model->id."   ");
-										$transaccion->commit();
-									   }else {
-										$transaccion->rollback();
-										Yii::app()->user->setFlash('error', "Hubo un problema al grabar los datos , en la reserva ".$model->id."  , no se pudo anular, revise los escenarios ");
-									  }
-
-								}
-	              }
-	   foreach(Yii::app()->user->getFlashes() as $key => $message) {
-		   echo "*)". $message . "\n";		}
-
-
-	   */
    }
-
-
 
 
 	public function actionReservaitem($id)	{
@@ -1507,64 +1374,81 @@ public function actionprocesarsolpe($id)
 							$model->setscenario('reservar');
 		if(isset($_POST['Desolpe']))
 		{
+			yii::app()->mensajes->clear();
 			$model->attributes=$_POST['Desolpe'];
 			 $transaccion=$model->dbConnection->beginTransaction();
-			if($model->save())
-			{
-               
-					$idsolpe=$model->id;
-					$cantcompra=$model->cantidad_compras;		 
-					$cantreservada=$model->cantidad_reservada;
-                 if($cantreservada >0 ) {
-                     $modelo=new Alreserva;
-                     $modelo->hidesolpe= $idsolpe;
-                     $modelo->cant=$cantreservada;
-                     $modelo->flag='1';
-                     $modelo->estadoreserva=self::ESTADO_RESERVA_CREADO;
-                     $modelo->codocu=self::DOCUMENTO_RESERVA;
-                             }
+			/*if($model->save()) {
+				$idsolpe = $model->id;
+				$cantcompra = $model->cantidad_compras;
+				$cantreservada = $model->cantidad_reservada;
+				if ($cantreservada > 0) {
+					$modelo = new Alreserva;
+					$modelo->hidesolpe = $idsolpe;
+					$modelo->cant = $cantreservada;
+					$modelo->flag = '1';
+					$modelo->estadoreserva = self::ESTADO_RESERVA_CREADO;
+					$modelo->codocu = self::DOCUMENTO_RESERVA;
+				}
 
-                      if($cantcompra > 0) {
-                                      $modelin=new Alreserva;
-                                      $modelin->hidesolpe= $idsolpe;
-                                      $modelin->cant=$cantcompra ;
-                                      $modelin->flag='0';
-                                    $modelin->estadoreserva=self::ESTADO_RESERVA_CREADO;
-                                    $modelo->codocu=self::DOCUMENTO_RQ;
-                        }
+				if ($cantcompra > 0) {
+					$modelin = new Alreserva;
+					$modelin->hidesolpe = $idsolpe;
+					$modelin->cant = $cantcompra;
+					$modelin->flag = '0';
+					$modelin->estadoreserva = self::ESTADO_RESERVA_CREADO;
+					$modelin->codocu = self::DOCUMENTO_RQ;
+				}
 
-                $modeloinventario=Alinventario::model()->findByPk($model->desolpe_alinventario->id);				
-                if(is_null($modeloinventario)) 
-					throw new CHttpException(500,'No existe inventario para el material '.$model->txtmaterial);
-					$modeloinventario->setScenario('modificacantidad');
-					 $factorconversion=Alconversiones::convierte($model->codart,$model->um);
-				if($modeloinventario->stocklibre_a_reserva($cantreservada*$factorconversion)){
-					   $model->est=self::ESTADO_DESOLPE_RESERVADO; ///si es una solicitud exclusiva apra compras el estado es '08'
-								
-                                 if(
-                                        $model->save() and
-                                        ($cantreservada>0)?$modelo->save():true and
-                                        $modeloinventario->save() and
-                                        ($cantcompra>0)?$modelin->save():true ) {
-                                        $transaccion->commit();
-                                             } else {
-                                                    $transaccion->rollback(); ///regresar todo a como estaba
-                                                    throw new CHttpException(404,'Hubo un error al momento de reservar');
-                                            }
-				}	ELSE{
-					 throw new CHttpException(500,$modeloinventario->cantlibre. '  no EXISTE SUFEINC TESTROCK APRA RESERVA '.$cantreservada*$factorconversion);
-				}									 
-              
-
-					 if (!empty($_GET['asDialog']))
-												{
-													//Close the dialog, reset the iframe and update the grid
-													echo CHtml::script("window.parent.$('#cru-dialogdetalle').dialog('close');
+				$modeloinventario = $model->desolpe_alinventario;
+				if (is_null($modeloinventario))
+					throw new CHttpException(500, 'No existe inventario para el material ' . $model->txtmaterial);
+				$modeloinventario->setScenario('modificacantidad');
+				$factorconversion = Alconversiones::convierte($model->codart, $model->um);
+				if ($cantreservada >= 0) {
+					if ($cantreservada > 0)
+						if (!$modeloinventario->stocklibre_a_reserva($cantreservada * $factorconversion)) {
+							throw new CHttpException(500, $modeloinventario->cantlibre . '  no EXISTE SUFEINC TESTROCK APRA RESERVA ' . $cantreservada * $factorconversion);
+						}
+					$model->est=self::ESTADO_DESOLPE_RESERVADO; ///si es una solicitud exclusiva apra compras el estado es '08'
+					if(
+						$model->save() and
+						($cantreservada>0)?$modelo->save():true and
+							$modeloinventario->save() and
+							($cantcompra>0)?$modelin->save():true ) {
+						$transaccion->commit();
+					} else {
+						$transaccion->rollback(); ///regresar todo a como estaba
+						print_r($model->geterrors());echo "<br>";
+						print_r($modeloinventario->geterrors());echo "<br>";
+						print_r($modelin->geterrors());echo "<br>";
+						throw new CHttpException(500,'Hubo un error al momento de reservar');
+					}
+					if (!empty($_GET['asDialog'])) {
+						//Close the dialog, reset the iframe and update the grid
+						echo CHtml::script("window.parent.$('#cru-dialogdetalle').dialog('close');
 													                    window.parent.$('#cru-detalle').attr('src','');
 																		window.parent.$.fn.yiiGridView.update('detalle-grid');
 																		");
-														Yii::app()->end();
-												}
+						Yii::app()->end();
+					}
+				}
+			}*/
+			$resultado=$model->hacerreserva($model->cantidad_reservada,$model->cantidad_compras);
+			if (is_null($resultado)){
+				$model->save();
+				$transaccion->commit();
+				if (!empty($_GET['asDialog'])) {
+					//Close the dialog, reset the iframe and update the grid
+					echo CHtml::script("window.parent.$('#cru-dialogdetalle').dialog('close');
+													                    window.parent.$('#cru-detalle').attr('src','');
+																		window.parent.$.fn.yiiGridView.update('detalle-grid');
+																		");
+					Yii::app()->end();
+				}
+			}else {
+				$transaccion->rollback();
+				print_r($resultado);
+				Yii::app()->end();
 			}
 		}
 		

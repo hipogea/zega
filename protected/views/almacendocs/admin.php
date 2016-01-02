@@ -88,7 +88,7 @@ $('.search-form form').submit(function(){
 				'view'=>
 					array(
 						'visible'=>'true',
-						'url'=>'$this->grid->controller->createUrl("/Almacendocs/update/",array("id"=>$data->id))',
+						'url'=>'$this->grid->controller->createUrl("/Almacendocs/ver/",array("id"=>$data->id))',
 						'imageUrl'=>''.Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemagrid'].'view.png',
 						'label'=>'Visualizar...',
 					),

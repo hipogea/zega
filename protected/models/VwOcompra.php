@@ -1,70 +1,18 @@
 <?php
 
-/**
- * This is the model class for table "vw_ocompra".
- *
- * The followings are the available columns in table 'vw_ocompra':
- * @property string $numcot
- * @property string $codpro
- * @property string $fecdoc
- * @property string $codcon
- * @property string $codestado
- * @property string $texto
- * @property string $textolargo
- * @property string $tipologia
- * @property string $moneda
- * @property string $orcli
- * @property integer $descuento
- * @property string $usuario
- * @property string $coddocu
- * @property string $creado
- * @property string $modificado
- * @property string $creadopor
- * @property string $creadoel
- * @property string $modificadopor
- * @property string $modificadoel
- * @property string $codtipofac
- * @property string $codsociedad
- * @property string $codgrupoventas
- * @property string $codtipocotizacion
- * @property integer $validez
- * @property string $codcentro
- * @property double $nigv
- * @property string $codobjeto
- * @property string $fechapresentacion
- * @property string $fechanominal
- * @property integer $idguia
- * @property string $desmon
- * @property string $tipofacturacion
- * @property string $estado
- * @property string $rucsoc
- * @property string $dsocio
- * @property string $c_nombre
- * @property string $simbolo
- * @property string $c_cargo
- * @property string $despro
- * @property string $rucpro
- * @property string $emailpro
- * @property string $desdocu
- * @property string $textocabeza
- * @property string $textopie
- * @property integer $id
- * @property string $codart
- * @property string $disp
- * @property double $cant
- * @property double $punit
- * @property string $item
- * @property string $descri
- * @property double $stock
- * @property string $detalle
- * @property string $tipoitem
- * @property string $estadodetalle
- * @property string $um
- * @property string $hidguia
- * @property string $codservicio
- */
 class VwOcompra extends CActiveRecord
 {
+	CONST ESTADO_PREVIO='99';
+	CONST ESTADO_CREADO='10';
+	CONST ESTADO_ANULADO='50';
+//CONST ESTADO_MODIFICADO='50';
+	CONST ESTADO_ACEPTADO='30';
+	CONST ESTADO_CON_ENTREGAS='30';
+	CONST ESTADO_FACTURADO_PARCIAL='70';
+	CONST ESTADO_FACTURADO_TOTAL='40';
+
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -366,17 +314,29 @@ public $fecdoc1;
 
 	}
 
-	public function search_detalle($id) {
-		$criteria=new CDbCriteria;
-          // $estadoporliberar = '01';
-		$criteria->addCondition("idguia = ".$id." ");
+	public function search_detalle($id)
+	{
+		$criteria = new CDbCriteria;
+		// $estadoporliberar = '01';
+		$criteria->addCondition("idguia = " . $id . " ");
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 
+	}
 
+	public function search_por_liberar() {
+		$criteria=new CDbCriteria;
+		// $estadoporliberar = '01';
+		$criteria->addCondition("codestado = ".self::ESTADO_CREADO." ");
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pagesize'=>100),
+		));
 
 	}
+
+
 }
 
 

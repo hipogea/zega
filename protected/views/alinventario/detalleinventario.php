@@ -21,9 +21,9 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
 
 
 								   ),
-						'Stock reservado'=>array('id'=>'tab_reservado',
+						/*'Stock reservado'=>array('id'=>'tab_reservado',
 							'content'=>$this->renderpartial('detalle_stock_reservado',array('model'=>$model,   ), true),
-						),
+						),*/
 
 						'pronostico'=>array('id'=>'tab_pronostico',
 							'content'=>$this->renderpartial('vw_pronostico',array('model'=>$model,'form'=>$form   ), true),

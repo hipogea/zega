@@ -123,9 +123,6 @@ class TMonedaController extends Controller
 	{
 		$model=new Tipocambio('general');
 		//$model->unsetAttributes();  // clear any default values
-		$monedas= yii::app()->db->createCommand()->selectDistinct('codmon1')->
-		from('{{tipocambio}}')->queryColumn();
-		$monedasfirme=array_combine($monedas,$monedas);
 
 		
 		if(isset($_POST['Tipocambio'])){
@@ -134,11 +131,12 @@ class TMonedaController extends Controller
 			if ($model->validate()) {
 				yii::app ()->tipocambio->setcompra ( $model->monedaref , $model->compra );
 				yii::app ()->tipocambio->setventa ( $model->monedaref , $model->venta );
+				$this->redirect(array('cambio'));
 			}
-			$this->redirect(array('cambio'));
+
 		}
 		$this->render('_form',array(
-			'model'=>$model,'monedas'=>$monedasfirme,
+			'model'=>$model,'monedas'=>yii::app()->tipocambio->monedasexternas(),
 		));
 
 	}
@@ -157,6 +155,9 @@ class TMonedaController extends Controller
 			throw new CHttpException(500,__CLASS__.'   '.__FUNCTION__.' '.__LINE__.' ...parametro de moneda incorrecto .');
 
 		$model=Tipocambio::model()->find("codmon1='".$moneda1."' and codmon2='".$moneda2."'");
+		if(is_null($model))
+			throw new CHttpException(500,__CLASS__.'   '.__FUNCTION__.' '.__LINE__.' ...No se han encotrado cambios para esta combinacion de monedas .');
+
 		$model->setScenario('general');
 		$model->compra=yii::app()->tipocambio->getcompra($moneda2);
 		$model->venta=round(1/yii::app()->tipocambio->getventa($moneda2),2);

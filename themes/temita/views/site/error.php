@@ -70,7 +70,7 @@ $this->breadcrumbs=array(
 	echo CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params['rutatemaimagenes'].$dibujo,"hola",array('width'=>'25','height'=>'30'));
 	echo $mensaje;
 	?>
-	</division>
+	</div>
 
 
 

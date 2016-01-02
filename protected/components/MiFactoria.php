@@ -498,9 +498,12 @@ public static function Borrahijoskardex($id){
     public static function DevuelveTraspasospendientes ($idvale){
        // $numvale=Solpe::model()->find("numero=:vnumero",array(":vnumero"=>trim($numsolpe)))->id;
 
+
+     /*observe la linea    t.aldes as ".self::CAMPO_ALEMI.",   quiere defri que el campo alemi es el campo aldes en el kardex de referncia */
+
         $items = Yii::app()->db->createCommand("select t.hidvale,t.id AS ".self::CAMPO_ID_FILA.",
                                                  t.codcentro as ".self::CAMPO_CENTRO.",
-                                                               t.alemi as ".self::CAMPO_ALEMI.",
+                                                               t.aldes as ".self::CAMPO_ALEMI.",
                                                              t.id AS ".self::CAMPO_ID_REF.",
                                                         t.codart AS ".self::CAMPO_CODIGO_MATERIAL.",
                                                         t.um AS ".self::CAMPO_UM_MATERIAL.",
@@ -876,6 +879,13 @@ if(!$mensaje->save())
             case '78': //Acepta traslado
                 $id=Almacendocs::model()->find("numvale=:vnumvale",array(":vnumvale"=>trim($numdoc)))->id;
                 $registros=self::DevuelveTraspasospendientes($id);
+                break;
+
+
+            case '54': //ANULA ACEPTACION DEL TRASLADO
+
+                $id=Almacendocs::model()->find("numvale=:vnumvale",array(":vnumvale"=>trim($numdoc)))->id;
+                $registros=self::DevuelveKardexHijosconalias($id);
                 break;
             case '98':  //carag inicial no haya nada que devolver
                 $registros=array();

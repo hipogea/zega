@@ -39,7 +39,7 @@ class TipocambioCompo extends CApplicationComponent
         from('{{tipocambio}}')->
         where($citer->condition,$citer->params)->queryScalar();
          if($compra!=false)
-         {return $compra ;}else{  throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+         {return $compra ;}else{  throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
          }
 
     }
@@ -53,8 +53,9 @@ class TipocambioCompo extends CApplicationComponent
         from('{{tipocambio}}')->
         where($citer->condition,$citer->params)->queryScalar();
         if($compra!=false)
-        {return $compra;}else{  throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+        {return $compra;}else{  throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
         }
+
 
     }
 
@@ -71,7 +72,7 @@ class TipocambioCompo extends CApplicationComponent
 
 
         if($compra!=false)
-        {return $compra;}else{  throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+        {return $compra;}else{  throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
         }
 
     }
@@ -86,8 +87,8 @@ class TipocambioCompo extends CApplicationComponent
         $ultima= yii::app()->db->createCommand()->select('ultima')->
         from('{{tipocambio}}')->
         where($citer->condition,$citer->params)->queryScalar();
-        if(!$ultima!=false)
-         throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+        //if(!$ultima!=false)
+        // throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.' No se ha registrado tipo de cambio compra para la moneda '.$moneda);
         return strtotime($ultima.'');
 
     }
@@ -100,8 +101,9 @@ class TipocambioCompo extends CApplicationComponent
         $ultima= yii::app()->db->createCommand()->select('ultima')->
         from('{{tipocambio}}')->
         where($citer->condition,$citer->params)->queryScalar();
-        if(!$ultima!=false)
-            throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+        //var_dump($moneda);yii::app()->end();
+        //if(!$ultima!=false)
+          // throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
         return strtotime($ultima.'');
 
     }
@@ -113,41 +115,48 @@ class TipocambioCompo extends CApplicationComponent
         //yii::app()->end();
         if( (1/$this->getVenta($moneda) <= $valorcompra))
         if((time() - $this->lastupdateventa($moneda)) < 300)
-            throw new CHttpException(500,__CLASS__.'  El valor de  la compra '.$valorcompra.' de la moneda '.$moneda.'  no puede ser mayor que la venta '.$this->getventa($moneda));
+            throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.' El valor de  la compra '.$valorcompra.' de la moneda '.$moneda.'  no puede ser mayor que la venta '.$this->getventa($moneda));
         $citer=New CDBCriteria;
         $citer->addCondition("codmon1=:monedaacomprar AND codmon2=:monedadef");
         $citer->params=array(":monedadef"=>$this->monedadefault,":monedaacomprar"=>$moneda);
         $compra= Tipocambio::model()->find($citer);
         if(is_null($compra))
-            throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+            throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.' No se ha registrado tipo de cambio compra para la moneda '.$moneda);
         $compra->setScenario('analitica');
         $compra->setAttributes(array('cambio'=>$valorcompra,'ultima'=>date('Y-m-d H:i:s')));
             $compra->validate();
               if(count($compra->geterrors())>0)
                  // print_r($compra->geterrors());
        // yii::app()->end();
-                  throw new CHttpException(500,__CLASS__.'  No se ha podido registrar la compra de la moneda '.$moneda.'  Revise el valor del cambio ');
+                  throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha podido registrar la compra de la moneda '.$moneda.'  Revise el valor del cambio ');
             return $compra->save();
 
     }
 
     public function setventa($moneda,$valorventa){
         if( $this->getCompra($moneda) >=($valorventa) and ((time() - $this->lastupdateventa($moneda)) < (60*5)))
-            throw new CHttpException(500,__CLASS__.'  El valor de  la venta de la moneda '.$moneda.'  no puede ser menor que la compra ');
+            throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  El valor de  la venta de la moneda '.$moneda.'  no puede ser menor que la compra ');
         $citer=New CDBCriteria;
         $citer->addCondition("codmon1=:monedadef AND codmon2=:monedaacomprar");
         $citer->params=array(":monedadef"=>$this->monedadefault,":monedaacomprar"=>$moneda);
         $venta= Tipocambio::model()->find($citer);
         if(is_null($venta))
-            throw new CHttpException(500,__CLASS__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
+            throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha registrado tipo de cambio compra para la moneda '.$moneda);
        $venta->setScenario('analitica');
         $venta->setAttributes(array('cambio'=>(1/$valorventa),'ultima'=>date('Y-m-d H:i:s')));
         $venta->validate();
         if(count($venta->geterrors())>0)
             //print_r($venta->geterrors());
           //yii::app()->end();
-            throw new CHttpException(500,__CLASS__.'  No se ha podido registrar la compra de la moneda '.$moneda.'  Revise el valor del cambio ');
+            throw new CHttpException(500,__CLASS__.' '.__FUNCTION__.'  '.__LINE__.'  No se ha podido registrar la compra de la moneda '.$moneda.'  Revise el valor del cambio ');
         return $venta->save();
+
+    }
+
+    public function monedasexternas(){
+        $monedas= yii::app()->db->createCommand()->selectDistinct('codmon1')->
+        from('{{tipocambio}}')->where('codmon1 <> :vmon',array(':vmon'=>$this->monedadefault))->queryColumn();
+        return array_combine($monedas,$monedas);
 
     }
 

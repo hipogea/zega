@@ -319,10 +319,12 @@
                         'type'=>'D',
                         'ruta'=>array($this->id.'/Agregardelmaletin',array()),
                         'opajax'=>array(
-                            'type'=>'POST',
-                            'data'=>array('idcompra'=>$model->idguia),
+                            'type'=>'GET',
+                            'data'=>array('id'=>$model->idguia),
                             'url'=>Yii::app()->createUrl($this->id.'/Agregardelmaletin',array()),
-                            'success'=>'js:function(data) { $.fn.yiiGridView.update("detalle-grid"); alert(data);}',
+                            'success'=>'js:function(data) {
+                            $("#AjFlash").html(data).fadeIn().animate({opacity: 1.0}, 3000).fadeOut("slow");
+                            $.fn.yiiGridView.update("detalle-grid"); alert(data);}',
                             'beforeSend' => 'js:
                                					 function(){
                                   				 var r = confirm("¿Esta seguro de agregar los items del maletin ?");

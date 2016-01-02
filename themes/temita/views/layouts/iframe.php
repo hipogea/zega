@@ -13,24 +13,18 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-responsive.min.css');
     $cs->registerCssFile($baseUrl.'/css/abound.css');
     $cs->registerCssFile($baseUrl.'/css/miestilo.css'); ///sas
-
-   
     ?>
-    
 </head>
 <body>
 <div id="page">
-
     <?php
     $claves=array_keys(Yii::app()->user->getFlashes(false));
     $primervalor=substr($claves[0],0,strpos($claves[0],"_"));
-
     foreach(Yii::app()->user->getFlashes() as $key => $message) {
         if(strpos($key,"_")){ //sI HAYA ADICONALES
             $key=substr($key,0,strpos($key,"_"));
             if($primervalor==$key)
-                $message.="<br>";
-        }
+                $message.="<br>";        }
 
         echo '<div class="flash-' . $key . '">' . $message. "</div>\n";
     }

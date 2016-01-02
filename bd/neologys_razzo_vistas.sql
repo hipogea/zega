@@ -1,26 +1,24 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.3.8
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 24-11-2015 a las 12:26:00
--- Versión del servidor: 5.5.42-37.1
--- Versión de PHP: 5.4.23
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `neologys_razzo`
---
-
--- --------------------------------------------------------
+﻿ drop view vw_reservaspendientes2;
+create view vw_reservaspendientes2 as select j.id as hidinventario, `a`.`id` AS `idsolpe`,`d`.`id` AS `iddesolpe`,`a`.`numero` AS `numero`,
+   `b`.`imputacion` AS `imputacion`,`b`.`fechaent` AS `fechaent`,
+   `b`.`codart` AS `codart`,`b`.`item` AS `item`,`b`.`codal` AS `codal`,
+   `b`.`centro` AS `centro`,`b`.`txtmaterial` AS `txtmaterial`,
+   `d`.`desum` AS `desum`,`b`.`cant` AS `cantdesolpe`,`c`.`hidesolpe` AS `hidesolpe`,
+   `c`.`fechares` AS `fecha_reserva`,`c`.`id` AS `idreserva`,`c`.`codocu` AS `codocu`,
+   `c`.`cant` AS `cantidad_reservada`,`c`.`usuario` AS `usuario_reserva`,
+   `c`.`estadoreserva` AS `estadoreserva`,`x`.`desdocu` AS `desdocu_reserva`,
+   sum(`e`.`cant`) AS `cantidad_atendida`,(`c`.`cant` - sum(`e`.`cant`)) AS `cantidad_pendiente`
+ from (((((`public_solpe` `a` join `public_desolpe1` `b` on((`a`.`id` = `b`.`hidsolpe`))) JOIN
+     public_alinventario j on(b.codart=j.codart and b.codal=j.codalm and b.centro=j.codcen)   join
+    `public_alreserva` `c` on((`b`.`id` = `c`.`hidesolpe`))) join
+   `public_ums` `d` on((`d`.`um` = `b`.`um`))) join
+   `public_documentos` `x` on((`c`.`codocu` = `x`.`coddocu`))) left join
+   `public_atencionreserva` `e` on((`c`.`id` = `e`.`hidreserva`)))
+ group by `a`.`id`,`a`.`numero`,`c`.`estadoreserva`,`b`.`id`,
+   `b`.`fechaent`,`b`.`codart`,`b`.`item`,`b`.`codal`,`b`.`centro`,
+   `b`.`txtmaterial`,`d`.`desum`,`c`.`hidesolpe`,`c`.`fechares`,
+   `b`.`cant`,`b`.`imputacion`,`c`.`id`,`c`.`codocu`,`c`.`cant`,
+   `c`.`usuario`,`x`.`desdocu`;
 
 --
 -- Estructura Stand-in para la vista `vw_alinventario`

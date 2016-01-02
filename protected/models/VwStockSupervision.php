@@ -125,13 +125,13 @@ class VwStockSupervision extends CActiveRecord
 
 	public function colorstatus(){
 		if($this->cantlibre > $this->canteconomica)
-		{return "red";}
+		{return 4;}
 		elseif($this->cantlibre <= $this->canteconomica and $this->cantlibre > $this->cantreorden )
-		{return "green";}
+		{return 2;}
 		elseif($this->cantlibre <= $this->cantreorden and $this->cantlibre >= $this->cantreposic)
-		{return "orange";}
+		{return 3;}
 		elseif($this->cantlibre < $this->cantreposic and $this->cantlibre >= 0)
-		{return "red";}
+		{return 1;}
 
 	}
 

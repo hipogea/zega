@@ -577,6 +577,7 @@ public function ActionExcel()
 	}
 
 	public function  actionMuestraofertas(){
+		$this->layout='//layouts/columnclipro';
 
 			$externo=yii::app()->user->um->getFieldValue(yii::app()->user->id,'externo');
 			$codigoprov=yii::app()->user->um->getFieldValue(yii::app()->user->id,'codpro');

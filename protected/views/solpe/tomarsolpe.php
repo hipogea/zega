@@ -32,7 +32,7 @@ $('.search-form form').submit(function(){
 
 <?php echo CHtml::link('Filtro','#',array('class'=>'search-button')); ?>
 <div class="search-form" >
-<?php $this->renderPartial('_search',array(
+<?php $this->renderPartial('_searchsolpeparacomprar',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
@@ -46,7 +46,7 @@ $('.search-form form').submit(function(){
 
 <?php $gridWidget= $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'solpe-grid',
-	'dataProvider'=>VwSolpeparacomprar::model()->search(),
+	'dataProvider'=>$model->search(),
 	//'filter'=>$model,
 		//
 		'itemsCssClass'=>'table table-striped table-bordered table-hover',

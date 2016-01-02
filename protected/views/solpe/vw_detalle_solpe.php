@@ -175,11 +175,3 @@ $this->endWidget();
 
             			<div id="jipi">
              			</div>
-
-<script>
-function reloadGrid(data) {
-    $.fn.yiiGridView.update('detalle-grid');
-	$("#division_entregas").html("<?php echo $this->renderpartial("vw_mensajes",array());?>");
-	alert(data);
-}
-</script>

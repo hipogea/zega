@@ -196,7 +196,7 @@ class VwKardex extends CActiveRecord
 		));
 	}
 
-	public function search_pormaterial($modelito)
+	public function search_pormaterial($codcen,$codal,$codart)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
@@ -208,9 +208,9 @@ class VwKardex extends CActiveRecord
 		$criteria->addcondition('codart=:vcodart');
 		//$criteria->addcondition(" valido='1' ");
 		$criteria->addcondition(" codestado <> '99' ");
-		$criteria->params=array(':vcodalm'=>trim($modelito->codalm),
-			':vcodcen'=>trim($modelito->codcen),
-			':vcodart'=>trim($modelito->codart),
+		$criteria->params=array(':vcodalm'=>$codal,
+			':vcodcen'=>$codcen,
+			':vcodart'=>$codart,
 		);
 
 		return new CActiveDataProvider($this, array(

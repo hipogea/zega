@@ -99,7 +99,7 @@ class Bloqueos extends CActiveRecord
 		}else{
 			/*echo "se paso";
 			yii::app()->end();*/
-			throw new CHttpException( 500 , 'Ha excedido el numero de ediciones' );
+			throw new CHttpException( 500 , 'Ha excedido el numero de ediciones'.CHtml::link('hiidi','#') );
 			//return false;
 		}
 

@@ -243,10 +243,7 @@ public $maximovalor;
 
 public function beforeSave() {
 							if ($this->isNewRecord) {
-												if($this->flag=='1')
-													$this->codocu='450'; //reserva
-											    if($this->flag=='0')
-													$this->codocu='800'; //solciituyd de compra
+
 												$this->fechares=date("Y-m-d H:i:s"); 
 												$this->usuario=Yii::app()->user->name;											
 											$this->estadoreserva='10';

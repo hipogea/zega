@@ -143,7 +143,45 @@
 		<?php echo $form->error($model,'textolargo'); ?>
 	</div>
 
-	
+	<?php
+	if($model->alkardex_almacendocs->cestadovale==ESTADO_EFECTUADO AND $model->alkardex_almacendocs->almacenmovimientos->signo < 0  ) {	?>
+		<div class="row">
+			<?php echo CHtml::label('Punto expedicion','lblpuntoexped'); ?>
+			<?php $datos1 = CHtml::listData ( Puntodespacho::model ()->findAll ( " codcen='" . $model->codcentro . "'" ) , 'id' , 'nombrepunto' );
+			echo CHtml::DropDownList ( 'cbopuntoexped' , 'codtcentro' , $datos1 , array ( 'empty' => '--Selecc pto expedicion--' ,
+			) );
+			?>
+
+
+			<?php
+			echo CHtml::ajaxSubmitButton("Pick",
+				array("almacendocs/expedicion"),
+				array("type"=>"POST",
+					"data"=>array(
+						"codiguito"=>"js:cbopuntoexped.value",
+						"identidad"=>"js:Almacendocs_id.value",
+						"responsable"=>"js:cboresponsable.value",
+					),
+					"update" => "#zonadespacho",
+				), array('onClick'=>'Loading.show();Loading.hide(); return false;')
+			) ;
+			?>
+		</div>
+
+		<?php
+		if(is_null($model->alkardex_almacendocs->codtrabajador) or empty($model->alkardex_almacendocs->codtrabajador) ) {	?>
+			<div class="row">
+				<?php echo CHtml::label('Responsable','Responsable');  ?>
+				<?php  $datos = CHtml::listData(VwTrabajadores::model()->findAll(array('order'=>'ap')),'codigotra','nombrecompleto');
+				echo CHtml::DropDownList ( 'cboresponsable' , 'responsable' ,$datos, array('empty'=>'--Seleccione un responsable--')  );
+				?>
+			</div>
+		<?php } else {
+			echo CHtml::hiddenField('cboresponsable',$model->codtrabajador);
+		} ?>
+
+
+	<?php }	?>
 	
 
 	

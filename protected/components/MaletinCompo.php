@@ -36,7 +36,7 @@ class MaletinCompo extends CApplicationComponent
 
     public function flush() {
         $criteria=New CDBcriteria();
-        $criteria->addCondition(" iduser=".yii::app()->user->id."  ");
+        $criteria->addCondition(" iduser=".yii::app()->user->id."");
        yii::app()->db->createCommand()->delete($this->_tabla,$criteria->condition,array());
         unset($criteria);
     }
@@ -48,11 +48,15 @@ class MaletinCompo extends CApplicationComponent
 
     }
 
-    public function ponervalores($arrayvalores) {
+    public function ponervalores($arrayvalores,$codocu=null) {
         if(is_array($arrayvalores)){
                 foreach($arrayvalores as $clave=>$valor ){
-                    $this->insertafila($clave,$valor);
+
+                        $this->insertafila($clave,$valor,$codocu);
+
+
                 }
+
         }else{
 
         }
@@ -75,7 +79,12 @@ class MaletinCompo extends CApplicationComponent
         )->queryAll();
     }
 
-
+/*esta fuincion devuelve un registro ACTIVE RECORD , con
+solo pasar los valores almacendaos en el  maletin
+  $clase: NOmbre de la clase del modelo
+  $id:  clave principal
+ Si no encue ntrsa devbuelve null
+*/
     public function getregistroclase($clase,$id){
         $clase=MiFactoria::cleanInput($clase);
         $id=(int)MiFactoria::cleanInput($id);
@@ -87,7 +96,9 @@ class MaletinCompo extends CApplicationComponent
          }
     }
 
+/*veriofica si exist3e una regiusto en el maletin
 
+*/
     public function existefila($id,$clase){
         $clase=MiFactoria::cleanInput($clase);
         $id=(int)MiFactoria::cleanInput($id);

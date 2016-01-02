@@ -35,7 +35,7 @@ class Tempalkardex extends ModeloGeneral
 
 
 		return array(
-		//	array('codcendes, id, iduser, idusertemp, idstatus', 'required'),
+			array('id,textolargo', 'safe'),
 			array('iduser, idusertemp, idstatus', 'numerical', 'integerOnly'=>true),
 			array('cant, preciounit', 'numerical'),
 
@@ -46,10 +46,12 @@ class Tempalkardex extends ModeloGeneral
 			hidvale','required'),
 
 			//escenario para el buffer
-			array('codart,um,idstatus,numdocref,idref,preciounit,
-			codmov,alemi,
-			codocuref,codcentro,
+			array('codart,um,idstatus,numdocref,idref,preciounit,codestado,
+			codmov,alemi,textolargo,coddoc,fechadoc,valido,codocuref,codcentro,numdocref,fecha,
 			hidvale','safe','on'=>'buffer'),
+
+		///escenario para cambios despues de efectuado el vale, son limitados los campos "
+			array('textolargo,idref','safe','on'=>'EFECTUADO'),
 
 
 
@@ -122,24 +124,21 @@ public function chkcantpeticion(){
 
 	public function checkcantidad($attribute,$params) {
 		$regisin=Alinventario::model()->encontrarregistro($this->codcentro,$this->alemi,$this->codart);
-
 		if ($this->isNewrecord){
 			$cantidadlibre=$regisin->cantlibre;
 		    $umbase=$regisin->maestro->um;
+			$nombreumbase=$regisin->maestro->maestro_ums->desum;
 			//unset($regisin);
 		}else {
-
 			$cantidadlibre=$this->alkardex_alinventario->cantlibre;
 			$umbase=$this->alkardex_alinventario->maestro->um;
-
+			$nombreumbase=$this->alkardex_alinventario->maestro->maestro_ums->desum;
 		}
-
 		$nombrecampo=Almacenmovimientos::model()->findByPk($this->codmov)->campoafectadoinv;
-
 		$conversion=Alconversiones::model()->convierte($this->codart,$this->um,$umbase);
 		if (abs($this->cant*$conversion) > $regisin->{$nombrecampo}) {
 			//$matriz2=Alconversiones::model()->findAll("um1='".trim($unidad)."'");
-			$this->adderror('cant','No se puede mover : ['.$this->cant*$conversion.']   mas de los que hay en stock   '.$nombrecampo.'  : ['.$regisin->{$nombrecampo}.'] ' );
+			$this->adderror('cant','No se puede mover : ['.$this->cant*$conversion.'] '.$nombreumbase.'(s)  mas de los que hay ('.$regisin->getAttributeLabel($nombrecampo).')  : ['.$regisin->{$nombrecampo}.'] '.$nombreumbase.'(s) . Verifique por favor   ' );
 		}
 	}
 
@@ -216,18 +215,26 @@ public function chkcantpeticion(){
 			$arrayum=array('10','50','77','79','98');
 			$arraycodart=array('50','77','98');
 			$arraycolector=array('50','77');
-			$arraypreciounit=array('77','98');
+			$arraypreciounit=array('98');
 			$arraytextolargo=array('10','30','50','13','41','77','78','70','79','98','97');
 			$arraylote=array('10','30','50','13','41','77','78','70','79','98','97');
-		} else { ///Si no es editable por su estado no es editable ninguno de los campos
+		} elseif($this->alkardex_almacendocs->cestadovale=='20') {  //Si se quieren hacer modificaciones despues de efectuado el vale pero solo para algunos campos
 			$arraycant=array();
 			$arrayum=array();
 			$arraycodart=array();
 			$arraycolector=array();
 			$arraypreciounit=array();
-			$arraytextolargo=array();
+			$arraytextolargo=array('10','30','50','13','41','77','78','70','79','98','97','68');
 			$arraylote=array();
 
+		} else {///Si no es editable por su estado no es editable ninguno de los campos
+			$arraycant=array();
+			$arrayum=array();
+			$arraycodart=array();
+			$arraycolector=array();
+			$arraypreciounit=array();
+			$arraytextolargo=array('10','30','50','13','41','77','78','70','79','98','97','68');
+			$arraylote=array();
 		}
 	return	array(
 				'cant'=>$arraycant,
@@ -258,10 +265,7 @@ public function chkcantpeticion(){
 			'coddoc' => 'Coddoc',
 			'numdoc' => 'Numdoc',
 			'usuario' => 'Usuario',
-			'creadopor' => 'Creadopor',
-			'creadoel' => 'Creadoel',
-			'modificadopor' => 'Modificadopor',
-			'modificadoel' => 'Modificadoel',
+
 			'um' => 'Um',
 			'comentario' => 'Comentario',
 			'codocuref' => 'Codocuref',
@@ -384,21 +388,23 @@ public function chkcantpeticion(){
 	//public $conservarvalor=0; //Opcionpa reaverificar si se quedan lo valores predfindos en sesiones
 	public function beforeSave() {
 		if ($this->isNewRecord) {
-              $modelocabecera=Almacendocs::model()->findByPk($this->hidvale);
-			   $this->codmov=$modelocabecera->codmovimiento;
+            /* $modelocabecera=Almacendocs::model()->findByPk($this->hidvale);
+			   /*$this->codmov=$modelocabecera->codmovimiento;
 				$this->alemi=$modelocabecera->codalmacen;
-				$this->codcentro=$modelocabecera->codcentro;
-				$this->fecha=$modelocabecera->fechacont;
+				$this->codcentro=$modelocabecera->codcentro;*/
+				$this->fecha=$this->alkardex_almacendocs->fechacont;
 			    $this->iduser=Yii::app()->user->id;
 			    $this->idusertemp=Yii::app()->user->id;
 
 
 
-			$this->coddoc='460';
-			$this->codestado='99';
+			//$this->coddoc='460';
+			if(is_null($this->codestado))
+			 $this->codestado='99';
 			//$this->codobjeto='001';
+			if(is_null($this->fechadoc))
 			$this->fechadoc=date("Y-m-d H:i:s");
-			$this->valido='0';
+			//$this->valido='0';
 			//$gg=new Numeromaximo;
 			//$this->numkardex=$gg->numero($this,'correlativ','maximovalor',12,'codmov');
 

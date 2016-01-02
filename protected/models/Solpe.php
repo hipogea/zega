@@ -50,7 +50,7 @@ class Solpe extends CActiveRecord
 			array('numero','checkcompra', 'on'=>'jalaitemparacompras'),
 
 
-			array('numero,tipo,textocabecera,fechadoc','safe', 'on'=>'insert,update'),
+			array('numero,id,tipo,textocabecera,fechadoc','safe', 'on'=>'insert,update'),
 			array('escompra,externo','safe', 'on'=>'insert'),
 
 
@@ -66,7 +66,7 @@ class Solpe extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 
-			ARRAY('estado,escompra,codocuref,hidref', 'safe','on'=>'automatica'),
+			ARRAY('estado,escompra,id,codocuref,hidref', 'safe','on'=>'automatica'),
 
 
 			array('numero','checknumero','on'=>'pasacompra'),

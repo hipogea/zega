@@ -268,9 +268,47 @@ public function actionconfig ()
 }
 
  public function actionRutas(){
+	// echo Contactos::getListMailContacto ( 33 , '421' ) ;
+	 $cadena=yii::app()->correo->correo_simple (
+		 'neotegnia@gmail.com' ,
+		 'neotegnia@gmail.com' ,
+		 'SOLICITUD DE COTIZACION' ,
+		 " favor de cotizar los siguiente s mateiale   "
+	 );
+	 var_dump($cadena);
+	 yii::app()->end();
+
+
+
+	 $modelokardex=Alkardex::model()->findByPk(2408);
+	// $transacc=Yii::app()->db->beginTransaction();
+	 $nuevo=new Alkardex();
+	 $nuevo->attributes=$modelokardex->attributes;
+	 $nuevo->numdocref='PICHOx';
+	 $nuevo->save();
+	 print_r($nuevo->attributes);
+	 yii::app()->end();
+
+	 $model=new Desolpe();
+	 $model->save();
+	 yii::app()->mensajes->clear();
+	 yii::app()->mensajes->setmessageitem('350',456,"eSTE ES MI PRIMER MEJSAE ",'notice');
+	 yii::app()->mensajes->setmessageitem('350',455,"eSTE ES MI segundo MEJSAE ",'notice');
+	 yii::app()->mensajes->setmessageitem('350',455,yii::app()->mensajes->getErroresItem($model->geterrors()),'error');
+	 yii::app()->mensajes->setmessageitem('350',455,"eSTE ES MI tercer MEJSAE ",'notice');
+	 //print_r(yii::app()->session['errores']);
+	 $matriz=yii::app()->mensajes->getMessages('350');
+	 print_r($matriz); yii::app()->end();
+	 var_dump(Ocompra::puedeautorizar());
+
+	var_dump(Montoinventario::datosgrafo('mes',6,null));
+
+$mo=New Alinventario();
+	 print_r($mo->getStockValAlmacen());
+
 	$data=Ocompra::historicoprecios('18005720');
 	 print_r($data->getData());
-	 yii::app()->end();
+
 
 
 	 echo " Yii::getPathOfAlias('webroot') :  ".Yii::getPathOfAlias('webroot')."<br>";

@@ -1,12 +1,22 @@
 
 
 <?php //$this->widget('ext.groupgridview.GroupGridView', array(
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('ext.groupgridview.GroupGridView', array(
     'id'=>'solpe-gridex',
-	'dataProvider'=>VwReservasPendientes::model()->search_por_material($codigo),
+	'dataProvider'=>VwReservasPendientes::model()->search_reservado($idinventario),
    // 'mergeColumns' => array('numero','item','desum','codart','txtmaterial'),
     //'cssFile'=>Yii::app()->getTheme()->baseUrl.'/css/style-grid-pequeno.css',  // your version of css file
     'itemsCssClass'=>'table table-striped table-bordered table-hover',
+    'extraRowColumns' => array('hidinventario'),
+    'extraRowTotals' => function($data, $row, &$totals) {
+        if(!isset($totals['sum_cantidad_reservada'])) $totals['sum_cantidad_reservada'] = 0;
+        $totals['sum_cantidad_reservada']+=$data['cantidad_reservada'];
+        if(!isset($totals['sum_cantidad_atendida'])) $totals['sum_cantidad_atendida'] = 0;
+        $totals['sum_cantidad_atendida']+=$data['cantidad_atendida'];
+
+    },
+    'extraRowExpression' => '"<span style=\"font-weight: bold;color: orangered;font-size:13px;\"> Total reservado : ".MiFactoria::decimal($totals["sum_cantidad_reservada"]-$totals["sum_cantidad_atendida"],4)." </span>"',
+
     //'filter'=>$model,
 		//'itemsCssClass'=>'table table-striped table-bordered table-hover',
 			//'dataProvider'=>$gridDataProvider,
@@ -22,6 +32,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             // 'id'=>'cajita' // the columnID for getChecked
         ),
        // 'idreserva',
+        array('name'=>'usuario_reserva', 'type'=>'html','value'=>'yii::app()->user->um->LoadUserById($data->idusersolpe)->username.CHtml::image(Yii::app()->getTheme()->baseUrl.Yii::app()->params["rutatemaimagenes"]."user_business.png","",array())'),
         array('name'=>'numero','type'=>'raw','value'=>'CHtml::link($data->numero,Yii::app()->createurl(\'/solpe/update\', array(\'id\'=> $data->idsolpe ) ) )'),
          'desdocu_reserva',
         //'estadoreserva',
@@ -29,8 +40,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 		//'numsolpe',
 		'item',
-        'cantdesolpe',
-		'cantidad_reservada',
+       // 'cantdesolpe',
+	//	array('name'=>'cantidad_reservada',,
+        array('name'=>'reservado','type'=>'raw','value'=>'$data->cantidad_reservada-$data->cantidad_atendida'),
 		'desum',
 		'codart',
         array('name'=>'txtmaterial','value'=>'$data->txtmaterial','htmlOptions'=>Array('width'=>200)),
@@ -43,7 +55,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'centro',
         'cantidad_atendida',
         'cantidad_pendiente',
-		'usuario_reserva',
+		//'usuario_reserva',
 
 
 ))); ?>

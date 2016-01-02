@@ -111,7 +111,7 @@ class AlinventarioController extends Controller
 		return array(
 
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('muestrakardex','admin','pintareservas','create','supervision','import','pronostica','pareto','adminpareto','repinventario','prueba','buclecarga','update','cargarmat','busqueda','cargaalmacenes','cargaalmacenes1'),
+				'actions'=>array('updateubicacion','muestrakardex','admin','pintareservas','create','supervision','import','pronostica','pareto','adminpareto','repinventario','prueba','buclecarga','update','cargarmat','busqueda','cargaalmacenes','cargaalmacenes1'),
 				'users'=>array('@'),
 			),
 
@@ -452,10 +452,11 @@ print_r($_SESSION['sesion_Maestrocompo']);
 	}
 
 	public function actionPintareservas(){
-		$material=$_GET['material'];
+		$idinventario=MiFactoria::cleanInput($_GET['idinventario']);
 		//var_dump($material);
 		//$material='18004821';
-		echo $this->render('reservas',array('codigo'=>$material));
+		$this->layout='//layouts/iframe';
+		echo $this->render('reservas',array('idinventario'=>$idinventario));
 	}
 
 ///funcion para mostrar el llistadp o ranking de pareto
@@ -794,13 +795,29 @@ public function actionBusqueda()
 	public function actionmuestrakardex($id){
 		$id=MiFactoria::cleanInput($id);
 	$modeloinv=$this->loadModel($id);
-			$proveedor=VwKardex::model()->search_pormaterial($modeloinv);
+			$proveedor=VwKardex::model()->search_pormaterial($modeloinv->codcen,$modeloinv->codalm,$modeloinv->codart);
 			$this->layout = '//layouts/iframe';
 			$this->render('_kardex',array(
 				'proveedor'=>$proveedor,'modelo'=>$modeloinv
 			));
 
 
+	}
+
+	public function actionupdateubicacion(){
+		$xubicacion = (string)MiFactoria::cleanInput($_POST['codubicacion']);
+		$id = (integer)MiFactoria::cleanInput($_POST['id']);
+		$modelo=$this->loadModel($id);
+		$modelo->setScenario('cambiaubicaciones');
+		$modelo->ubicacion=$xubicacion;
+		if($modelo->save()){
+			$mensaje="Se actualizó la ubicacion sin problemas";
+			echo $this->renderpartial("//site/mensajeok",array('mensaje'=>$mensaje));
+		} else {
+			$mensaje="Hubo errores  : ".yii::app()->mensajes->getErroresItem($modelo->geterrors());
+			echo $this->renderpartial("//site/mensajeerror",array('mensaje'=>$mensaje));
+		}
+		unset($modelo);
 	}
 
 

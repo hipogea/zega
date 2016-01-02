@@ -278,7 +278,7 @@ public function getstockTotalmaterial($codmaterial,$adatos=null){
 			a.codalm=:vcodal and codcen=:vcodcen and
 			 codcen=:vcodcen and c.codtipo=:vcodtipo',array(":vcodcen"=>$centro,":vcodal"=>$almacen,":vcodtipo"=>$tipo))
 			//->group('a.codalm,  a.codcen')
-			->querScalar();
+			->queryScalar();
 		return ($valor!=false)?$valor:0;
 
 	}
@@ -442,19 +442,17 @@ public function getPrimaryKey();*/
 		if($this->save()){
 			//$this->insertamensaje(InventarioUtil::FLAG_SUCCESS,"Se grabo el registro".$this->getPrimaryKey());
 			//MiFactoria::Mensaje('success',__CLASS__.'=>'.__FUNCTION__.' Material : '.$this->codart.'   Se Grabó el registro de inventario ');
-
 			$retorno=true;
 		} else {
 			//$this->insertamensaje(InventarioUtil::FLAG_ERROR,"Hubo un problema al grabar el registro de Inventario :".$this->getPrimaryKey());
-			MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' Hubo un problema al grabar el registro de inventario ');
-
+			//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' Hubo un problema al grabar el registro de inventario ');
 			$retorno=false;
 		}
 		return $retorno;
 	}
 
 	public function haystocklibre(){
-		return ($this->cantlibre > 0)?true:false;
+		return ($this->{self::CAMPO_STOCK_LIBRE} > 0)?true:false;
 	}
 
 
@@ -463,21 +461,17 @@ public function getPrimaryKey();*/
 	public function stocklibre_a_reserva($cant){
 		if($cant >0 ){
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_LIBRE,$cant)){
-				$this->cantlibre-=$cant;
-				$this->cantres+=$cant;
-				// $this->insertamensaje(InventarioUtil::FLAG_SUCCESS,$this->id." :  Ok,se paso ".$cant."  del stock libre a RESERVA");
+				$this->{self::CAMPO_STOCK_LIBRE}-=$cant;
+				$this->{self::CAMPO_STOCK__RESERVADO}+=$cant;
 				return true;
 			} else {
-				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,$this->id." :La cantidad que intenta mover es mayo q elk stock libre");
-				//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta Reservar('.$cant.')  es mayor que el  stock libre ('.$this->cantlibre.')  ');
-
 				return false;
 			}
-
 			return true;
 		} else {
-			MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta Reservar('.$cant.')  no es positiva ');
-
+			if($cant==0)
+				return true;
+			//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta Reservar('.$cant.')  no es positiva ');
 			return false;
 		}
 	}
@@ -488,18 +482,16 @@ public function getPrimaryKey();*/
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_LIBRE,$cant)){
 				$this->{self::CAMPO_STOCK_LIBRE}-=$cant;
 				$this->{self::CAMPO_STOCK_TRANSITO}+=$cant;
-				// $this->insertamensaje(InventarioUtil::FLAG_SUCCESS,$this->id." :  Ok,se paso ".$cant."  del stock libre a RESERVA");
 				return true;
 			} else {
-				MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta trasladar('.$cant.')  es mayor que el  stock libre ('.$this->cantlibre.')  ');
-				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,$this->id." :La cantidad que intenta mover es mayo q elk stock libre");
+				//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta trasladar('.$cant.')  es mayor que el  stock libre ('.$this->cantlibre.')  ');
 				return false;
 			}
-
 			return true;
 		} else {
-			MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta trasladar('.$cant.')  es negativa');
-
+			if($cant==0)
+				return true;
+			//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' :La cantidad que intenta trasladar('.$cant.')  es negativa');
 			return false;
 		}
 	}
@@ -512,14 +504,16 @@ public function getPrimaryKey();*/
 				// $this->insertamensaje(InventarioUtil::FLAG_SUCCESS,$this->id." :  Ok,se paso ".$cant."  del stock libre a RESERVA");
 				return true;
 			} else {
-				$this->insertamensaje(InventarioUtil::FLAG_ERROR,$this->id." :La cantidad que intenta mover es mayo q lo del transito");
-				MiFactoria::Mensaje('error',__CLASS__.' => '.__FUNCTION__.' No existe suficiente stock ('.$cant.')  de '.$this->getAttributeLabel(self::CAMPO_STOCK_TRANSITO).' :   para mover  al   '.$this->getAttributeLabel(self::CAMPO_STOCK_LIBRE).'       material '.$this->codart );
+				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,$this->id." :La cantidad que intenta mover es mayo q lo del transito");
+				//MiFactoria::Mensaje('error',__CLASS__.' => '.__FUNCTION__.' No existe suficiente stock ('.$cant.')  de '.$this->getAttributeLabel(self::CAMPO_STOCK_TRANSITO).' :   para mover  al   '.$this->getAttributeLabel(self::CAMPO_STOCK_LIBRE).'       material '.$this->codart );
 				return false;
 			}
 
 			return true;
 		} else {
-			MiFactoria::Mensaje('error',__CLASS__.' => '.__FUNCTION__.' lA CANTIDAD ES NEGATIVA' );
+			if($cant==0)
+				return true;
+			//MiFactoria::Mensaje('error',__CLASS__.' => '.__FUNCTION__.' lA CANTIDAD ES NEGATIVA' );
 
 			return false;
 		}
@@ -530,17 +524,10 @@ public function getPrimaryKey();*/
 			if($this->verificaconsistencia_stock(self::CAMPO_STOCK_RESERVADO,$cant)){
 				$this->{self::CAMPO_STOCK_RESERVADO}-=$cant;
 				$this->{self::CAMPO_STOCK_LIBRE}+=$cant;
-				//Yii::app()->user->setFlash('success', "OK, paso la cantidad ".$cant." de material ".$this->codart." Al  stock libre ");
-				//MiFactoria::Mensaje('notice',__CLASS__.' => '.__FUNCTION__."  OK, paso la cantidad ".$cant." de material ".$this->codart." Al  stock libre ");
-
-				// $this->insertamensaje(InventarioUtil::FLAG_SUCCESS,$this->id." :  Ok,se paso ".$cant."  del stock libre a RESERVA");
 				return true;
 			} else {
-				//Yii::app()->user->setFlash('error ', " La cantidad que intenta pasar al stock libre  ".$cant." de material ".$this->codart." no se encuentra reservada ");
 				MiFactoria::Mensaje('error',__CLASS__.' => '.__FUNCTION__."  La cantidad  ".$cant." de material ".$this->codart." Que piensa devolver al stock libre no se encuentra en reserva " );
-
-				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,$this->id." :La cantidad que intenta mover es mayo q lo de LA RESERVA");
-				return false;
+					return false;
 			}
 
 
@@ -648,7 +635,7 @@ public function getPrimaryKey();*/
 				}else  {
 					//$this->insertamensaje('error',' No existe suficiente stock de  '.$this->getAttributeLabel($nombrecampostockorigen).' para mover  '.$this->cant.' '.$this->maestro->maestro_ums->desum.'(s) del material '.$this->codart);
 					//$this->insertamensaje('error',' No existe suficiente stock de  '.$this->getAttributeLabel($nombrecampostockorigen).' :  '.$this->{$nombrecampostockorigen}.'   para mover  '.$cant.'  '.$this->maestro->maestro_ums->desum.'(s) del material '.$this->codart);
-					MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' No existe suficiente stock de  '.$this->getAttributeLabel($nombrecampostockorigen).' :  '.$this->{$nombrecampostockorigen}.'   para mover  '.$cant.'  '.$this->maestro->maestro_ums->desum.'(s) del material '.$this->codart);
+					//MiFactoria::Mensaje('error',__CLASS__.'=>'.__FUNCTION__.' No existe suficiente stock de  '.$this->getAttributeLabel($nombrecampostockorigen).' :  '.$this->{$nombrecampostockorigen}.'   para mover  '.$cant.'  '.$this->maestro->maestro_ums->desum.'(s) del material '.$this->codart);
 					//echo " ups el stock e smenor <br>";
 
 					$retorno=false;
@@ -699,8 +686,8 @@ public function getPrimaryKey();*/
 				// MiFactoria::Mensaje('notice',__CLASS__.'=>'.__FUNCTION__.' Material '.$this->codart.' Se ha actualizado el  '.$this->getAttributelabel($campo).'  AGREGADO :'.$signo*$cant);
 				//echo "antes  habia :  ".$campo."  --   ". $this->{$campo}."<br>";
 				 $this->{$campo}+= $signo*$cant;
-				// echo"antes  habia :  ".$campo."  --   ". $this->{$campo}."<br>";
-
+				//echo"AHORA HAY :  ".$campo."  --   ". $this->{$campo}."<br>";
+                 //YII::APP()->END();
 				 $retorno=true;
 		     } else {
 				$retorno=false;
@@ -739,12 +726,21 @@ public function getPrimaryKey();*/
 						  if ( ! $this->save () ) {
 				  					MiFactoria::Mensaje ( 'error' , __CLASS__ . '=>' . __FUNCTION__ . ' Material ' . $this->codart . ' Hubo un problema al grabar el registro de inventario ' );
 				 				    $retorno = false;
-							         // echo " fallo al grabar <br>";
+							          //echo " fallo al grabar <br>";
 			  		                } else {
 							     $retorno=true;
+							 /* echo "-------------- <br>";
+							  echo "-----ORIGINALES--------- <br>";
+							  print_r($this->oldAttributes);
+							  echo "<br>";
+							  echo "-----ACTUALES--------- <br>";
+							  print_r($this->attributes);
+							  echo " <br><br>";*/
 						  }
 		  		} else {
-			//  echo "no hay consistencia para actualkziar invnetario";
+			  MiFactoria::Mensaje ( 'error' , __CLASS__ . '=>' . __FUNCTION__ . ' RETORNO FALSO' );
+
+			  //  echo "no hay consistencia para actualkziar invnetario";
 		  }
 
    return $retorno;
@@ -798,9 +794,10 @@ public function getPrimaryKey();*/
 			array('cantlibre','numerical' ,'min'=>0, 'message'=>'Debe ser positivo','on'=>'BATCH_UBICACIONES_UPD,BATCH_UBICACIONES_STOCK_UPD'),
 
 
+			array('ubicacion', 'safe','on'=>'cambiaubicaciones'),
 
 
-			array('ubicacion', 'match','allowEmpty'=>true, 'pattern'=>$mascaraubic,'message'=>'Ubicacion Incorrecta'),
+			array('ubicacion', 'match','allowEmpty'=>true, 'pattern'=>$mascaraubic,'message'=>'Ubicacion Incorrecta, debe de ser de la forma :'.$mascaraubic),
 			array('codalm', 'required','message'=>'Debes de ingresar el almacen', 'on'=>'insert,update'),
 				array('codcen', 'required','message'=>'Debes de ingresar el centro', 'on'=>'insert,update'),
 				array('codmon', 'required','message'=>'Ingresa la moneda','on'=>'insert,update'),
@@ -1471,5 +1468,18 @@ public function getPrimaryKey();*/
 		$cadenasumas.=", sum(".$this->getcadenacampos().") as cant_total,sum((a.".self::NOMBRE_CAMPO_PRECIO_UNITARIO."+".self::NOMBRE_CAMPO_PRECIO_DIFERENCIA_UNITARIA.")*(".$this->getcadenacampos().")*b.cambio) as stock_total";
 		return substr($cadenasumas,1);
 	}
+
+	  public function reservar($cantidad){
+		 if($this->stocklibre_a_reserva($cantidad))
+		 {
+			 $this->setScenario(self::ESCENARIO_ACTUALIZARSTOCK);
+			 if($this->save())
+				 return true;
+		 }
+
+		  return false;
+	  }
+
+
 
 }

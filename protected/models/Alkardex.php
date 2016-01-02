@@ -3,6 +3,7 @@ const CODIGO_DOCUMENTO_RQ_COMPRA='800';
 const CODIGO_DOCUMENTO_RESERVA='450';
 const CODIGO_DOCUMENTO_DETALLE_COMPRA='220';
 const CODIGO_DOCUMENTO_COMPRAS='210';
+const ESTADO_VALE_EFECTUADO='20';
 CONST SALIDA_RQ='11';
 CONST ANULA_SALIDA_RQ='12';
 
@@ -36,7 +37,7 @@ class Alkardex extends ModeloGeneral
 	 * EN OTRO CASO CADA QUE ANULAN UN VALE , estarian perdiendo por tipo de cambio
 	 */
 	public  function getMonto($idkardex=NULL){
-		//var_dump($this->alkardex_alinventario->almacen->codmon);var_dump($this->codocuref);var_dump($this->codmov);var_dump($this->isNewRecord);yii::app()->end();
+
 			//if($this->codmov=='11'){
 		//var_dump($this->alkardex_alinventario->almacen);var_dump($this->codocuref);var_dump($this->codmov);var_dump($this->isNewRecord);		//}
 			//if(is_null($this->alkardex_alinventario)){
@@ -48,7 +49,9 @@ class Alkardex extends ModeloGeneral
 
 
 		if(is_null($idkardex)){
-			RETURN $this->alkardex_alinventario->punit*$conversionmoneda*$this->cantidadbase();
+			$vasriab=$this->alkardex_alinventario->punit*$conversionmoneda*$this->cantidadbase();
+
+			RETURN $vasriab;
 		} else {
 			return Self::model()->findByPk($idkardex)->preciounit*$conversionmoneda*$this->cantidadbase();
 
@@ -117,6 +120,7 @@ public function mueveadicionales(){
 		case "10":
 			$this->InsertaAtencionReserva(CODIGO_DOCUMENTO_RESERVA);
 			$ceco=Desolpe::model()->findByPk($this->idref)->imputacion;
+			//$ceco=$this->updatesolpe()->imputacion;
 			$this->InsertaCcGastos($ceco);
 			$this->alkardex_alinventario->actualiza_stock($this->codmov,abs($this->cantidadbase()),null);
 			break;
@@ -191,7 +195,22 @@ public function mueveadicionales(){
 			$movimientoauxiliar='45';
 			$thisoriginal->alkardex_alinventario->actualiza_stock($movimientoauxiliar,abs($this->cantidadbase()),null);
 			//verificamos la moneda del almacen que emite
-			$moneda=$thisoriginal->alkardex_alinventario->almacen->codmoneda;
+			$moneda=$thisoriginal->alkardex_alinventario->almacen->codmon;
+			$this->alkardex_alinventario->actualiza_stock($this->codmov,abs($this->cantidadbase()),$this->preciounitariobase($moneda));
+          //  yii::app()->end();
+			break;
+
+
+		case "54": //ANULA EL INGRESO DEL TRASLADO
+
+			///Compensar primero el Kardex del vale del receptor
+
+			$thisoriginal=Alkardex::model()->findByPk($this->idref); ///cone sto busca el kardex del almacen emisor
+			$thisoriginal->InsertaAlkardexTraslado($this->cant);
+			$movimientoauxiliar='64';   //ANULA SALIDA TRASLADO EN KARDEX EMISOR
+			$thisoriginal->alkardex_alinventario->actualiza_stock($movimientoauxiliar,abs($this->cantidadbase()),null);
+			//verificamos la moneda del almacen que emite
+			$moneda=$thisoriginal->alkardex_alinventario->almacen->codmon;
 			$this->alkardex_alinventario->actualiza_stock($this->codmov,abs($this->cantidadbase()),$this->preciounitariobase($moneda));
 
 			break;
@@ -239,9 +258,12 @@ public function InsertaReingreso(){
 	
 	
 	public function afterSave() {
-
+		//var_dump($this->montomovido);yii::app()->end();
+		//if(in_array($this->alkardex_almacendocs->cestadovale,array(ESTADO_CREADO,ESTADO_PREVIO)) ) ///SOLO EN EL CASO DE QUE SEA CREADO
+		//IF(!$this->alkardex_almacendocs->cestadovale==ESTADO_VALE_EFECTUADO)
 		$this->mueveadicionales();
-		
+		//$this->refresh();
+   		//var_dump($this->attributes);yii::app()->end();
 		return parent::afterSave();
 	}
 
@@ -256,11 +278,13 @@ public function InsertaReingreso(){
 
 		} else
 		{
-			$this->montomovido=$this->getMonto();
+
 			/* echo "saliop carajo";	//$this->ultimares=" ".strtoupper(trim($this->usuario=Yii::app()->user->name))." ".date("H:i")." :".$this->ultimares;
             */
 		}
-
+		$this->montomovido=$this->getMonto();
+		//var_dump($this->id);
+		//var_dump($this->montomovido);yii::app()->end();
 		return parent::beforesave();
 	}
 	
@@ -392,26 +416,32 @@ public function cantidadconv($um){
 	 * 	 */
 	public function VerificaCantTrasladoDestino ($cantidaddelkardex){
 		$canttotaltrasladada=$this->cant;
-		$cantacumulada=$this->alkardex_alkardextraslado_emisor_cant;
+		$cantacumulada=$this->alkardex_alkardextraslado_emisor_cant+0;
 		$cantmovida=$cantidaddelkardex;
 		//$signomovimiento=$this->alkardex_almacenmovimientos->signo;
-
+    /* ECHO "CANTOTALTRASLADADA ".$canttotaltrasladada."<BR>";
+		ECHO "CANTACUMULADA ".$cantacumulada."<BR>";
+		ECHO "CANTMOVIDA ".$cantmovida."<BR>";yii::app()->end();*/
 		if($cantmovida < 0)
-		{	//es una ANULACION DE LA ACEPTACION DEL TRASPASO , NEGATIVA
+		{
+			//var_dump(abs($cantmovida));var_dump($cantacumulada);var_dump(abs($cantmovida) > $cantacumulada);
+		///es una ANULACION DE LA ACEPTACION DEL TRASPASO , NEGATIVA
 			//DEBEMOS ASEGURARNOS QUE NO RESTE MAS DE LO QUE SE HA ACUMULADO
 			if(abs($cantmovida) > $cantacumulada){
+
 				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,"No puede devolver mas de lo que ha TRASLADADO (ACUMULADO) ");
 				MiFactoria::Mensaje('error','Material '.$this->codart.' No puede devolver '.($cantmovida+$cantacumulada).'mas de lo que ha trasladado '.$canttotaltrasladada.', ya se paso');
 
 				$retorno=false;
 			} else {
+
 				$retorno=true;
 			}
 
 
 		}	else { //sIGNO POSITIVO, ES UNA ACEPTACION DEL TRASALDAO
 			//MiFactoria::Mensaje('error','ESTO ES UNA PRUENA  CANTMOVIDA '.$cantmovida.'  cantacumulada '.$cantacumulada.'   lo trasladado '.$canttotaltrasladada.',');
-
+			//echo " fsfsfsfsfsf";var_dump(abs($cantmovida));var_dump($cantacumulada);yii::app()->end();
 			///DEBSMO ASEGURARNOS QUE NO SOBREPASE LO QUE SE TRASLADO ORIGINALEMTNE
 			if($cantmovida > $canttotaltrasladada -$cantacumulada+0){
 				//$this->insertamensaje(InventarioUtil::FLAG_ERROR,"No puede INGRESAR MAS DE LOS QUE SE  ha TRASLADADO, ya se paso");
@@ -421,8 +451,9 @@ public function cantidadconv($um){
 			} else {
 				$retorno=true;
 			}
-     return $retorno;
+
 		}
+		return $retorno;
 
 
 	}
@@ -430,11 +461,14 @@ public function cantidadconv($um){
 	public function InsertaAtencionReserva($documento){
 		$cadena=$this->VerificaCantAtenReservas($documento);
 		if ($cadena==""){
-				$tipodoc=$documento; //RreEERVA PARA CONSUMO  O REQUISISON DE COMPRA       }
+				$tipodoc=$documento; //RreEERVA PARA CONSUMO  O REQUISISON DE COMPRA
+
 			$modeloreserva=$this->devuelvereserva($documento);
 				$model=new Atencionreserva();
 					$model->cant=-1*$this->cantidadconv($modeloreserva->desolpe->um);
-				$model->hidkardex=$this->id;
+			//	print_r($this->attributes);yii::app()->end();
+			//var_dump($documento);echo "<br>"; var_dump($modeloreserva->attributes);yii::app()->end();
+			$model->hidkardex=$this->id;
 				$model->hidreserva=$modeloreserva->id;
 				$model->estadoatencion=Atencionreserva::ESTADO_CREADO;
 				if(!$model->save())
@@ -582,6 +616,7 @@ private function esatencionRQ(){
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('textolargo,fecha', 'safe'),
 			array('cant', 'numerical'),
 			array('codart', 'length', 'max'=>10),
 			array('codmov, codestado, prefijo', 'length', 'max'=>2),
@@ -593,16 +628,28 @@ private function esatencionRQ(){
 			array('correlativo', 'length', 'max'=>12),
 			array('numkardex', 'length', 'max'=>14),
 			array('solicitante', 'length', 'max'=>18),
-			array('fecha, fechadoc,valido,checki, hidvale,montomovido', 'safe'),
+			array('fecha,idref, fechadoc,valido,checki, hidvale,montomovido', 'safe'),
+
+
+			/*  escenario para el buffer
+			//escenario para el buffer*/
+			array('codart,um,idstatus,numdocref,idref,preciounit,codestado,
+			codmov,alemi,textolargo,coddoc,fechadoc,valido,
+			codocuref,codcentro,numdocref,fecha,
+			hidvale','safe','on'=>'buffer'),
+
+
+
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('codart, codmov, cant, alemi,lote, aldes,idref, fecha, coddoc, numdoc, usuario, creadopor, creadoel, modificadopor, modificadoel, um, comentario, codocuref, numdocref, codcentro, id, codestado, prefijo, fechadoc, correlativo, numkardex, solicitante, hidvale', 'safe', 'on'=>'search'),
 
 			/*********ESCENARIO  GENERAL POR DFAULT   *******/
 
-			array('cant', 'required'),
-			array('codmov,hidvale,numdocref,codart,cant,alemi,codcentro,iduser, idusertemp, idstatus,
-			fecha,codocuref,idref,preciounit,idtemp', 'safe'),
+			//array('cant', 'required'),
+			//array('codmov,hidvale,numdocref,codart,cant,alemi,codcentro,iduser, idusertemp, idstatus,
+			//fecha,codocuref,idref,preciounit,idtemp', 'safe'),
 			/*********/
 
 
@@ -816,6 +863,7 @@ public function checknumerovale($attribute,$params) {
 		// class name for the relations automatically generated below.
 		return array(
 			'reingreso'=>array(self::HAS_MANY, 'Reingreso', 'hidkardex'),
+			'unidades'=> array(self::BELONGS_TO, 'Ums', 'um'),
 			'reingreso_cant'=>array(self::STAT, 'Reingreso', 'hidkardex','select'=>'sum(t.cant)'),
 			'codmov0' => array(self::BELONGS_TO, 'Almacenmovimientos', 'codmov'),
 			'codcentro0' => array(self::BELONGS_TO, 'Centros', 'codcentro'),
@@ -1063,4 +1111,24 @@ public function Actualizareservainventario($codmovimiento= null) {
 			'criteria'=>$criteria,
 		));
 	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */
+	public function search_por_vale($id)
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+
+		$criteria->addCondition('hidvale='.$id);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
 }
